@@ -1,0 +1,22 @@
+[set list {6 5 3 7 8 1 2 6 3 0 4 6 3 9}]
+[set i 1 /]
+items in list = '[get list]'
+
+[foreach item $list ] [format %0.2i $i] [incr i/]
+  [if {$item < 5} /]
+     item $item less than 5
+[ws/]
+  [elseif {$item == 5} ]
+[ws/]
+  [continue/]
+  [elseif {$item < 8} /]
+     item $item less than 8 greater than 5
+[ws/]
+  [elseif {$item == 8} /]
+     item $item equal to 8
+[ws/]
+  [elseif {$item == 9} ]
+  [break/]
+  [/if/]
+[/foreach]
+

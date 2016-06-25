@@ -1,0 +1,27 @@
+[comment {info and info-to commands}/]
+
+[info-to tclprocs procs ::tcl::*]
+
+[foreach proc $tclprocs /]
+    [info-to args args $proc]
+$proc { [ws/]
+
+    [foreach arg $args /]
+
+        [info-to has_default default $proc $arg default/]
+
+        [if {$has_default} /]
+
+             {[list $arg $default]} [ws/]
+
+        [else/]
+
+             $arg [ws/]
+
+        [/if/]
+
+    [/foreach/]
+
+} {[info body $proc]}
+[/foreach]
+

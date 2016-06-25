@@ -1,0 +1,14 @@
+[comment {clock and clock-to commands}/]
+
+[clock-to ms milliseconds]
+ms = $ms
+[clock-to sec seconds]
+sec = $sec
+[clock-to now format $sec -format "%a %b %d %H:%M:%S %z %Y"]
+
+(clock-to now format $sec -format "%a %b %d %H:%M:%S %z %Y)
+
+now = $now 
+     ([clock format $sec -format "%a %b %d %H:%M:%S %z %Y"])
+
+

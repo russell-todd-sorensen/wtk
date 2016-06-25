@@ -1,0 +1,5 @@
+set fileDirectory [file dirname [info script]]
+::wtk::modules::sourceFile [file join $fileDirectory db-util-procs.tcl]
+::wtk::modules::sourceFile [file join $fileDirectory schema-objects.tcl]
+::wtk::modules::sourceFile [file join $fileDirectory table-objects.tcl]
+::wtk::modules::sourceFile [file join $fileDirectory table-objects-plsql.tcl]

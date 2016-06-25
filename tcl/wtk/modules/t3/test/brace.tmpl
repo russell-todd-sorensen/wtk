@@ -1,0 +1,21 @@
+[set x {this is a test}]
+
+[get x]
+
+[foreach {a b c} {{ab cd} {ef gh} {ij kl}} ]
+
+a = [get a]
+b = [get b]
+c = [get c]
+
+[/foreach]
+
+[set y 10]
+
+[while {$y > 0} /]
+
+countdown $y[ws/]
+
+[incrn y -1]
+[/while]
+

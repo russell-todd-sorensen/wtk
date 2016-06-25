@@ -1,0 +1,11 @@
+[set data "this|is|a|string|with&two|separators&Wow"/]
+
+data = $data
+
+(split-to list-var $data "|&")
+
+[split-to list-var $data "|&"/]
+
+list-var =  ${list-var} 
+with split ([split $data "|&"])
+

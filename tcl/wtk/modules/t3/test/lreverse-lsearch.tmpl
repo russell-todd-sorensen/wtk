@@ -1,0 +1,15 @@
+[set list {a b c d e f g h i j k l m}]
+
+[lreverse-to list2 $list]
+
+list = $list
+list2 = $list2 ([lreverse $list])
+
+[set list3 {cat can curve bears badguys bees cabs naps tabs waps labs}]
+[set pattern  "[a-z]+(a(b|p))[a-z]+"]
+regexp pattern = [get pattern]
+[lsearch-to list4 -inline -all -regexp $list3 $pattern]
+
+list3 = $list3
+list4 = $list4 ([lsearch -inline -all -regexp $list3 $pattern])
+

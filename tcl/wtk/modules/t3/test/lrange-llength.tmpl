@@ -1,0 +1,19 @@
+[set list {a b c d e f g h i j k}]
+
+[lrange-to list2 $list 4 7]
+
+list = $list
+list2 = $list2
+
+list is [llength $list] elements long
+
+[llength-to listlength $list]
+
+list is $listlength elements long
+
+[llength-to list2length $list2]
+
+list2 is $list2length elements long
+
+list2 = [lrange $list 4 7] ($list2)
+

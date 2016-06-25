@@ -1,0 +1,11 @@
+[comment {try encoding to something here }/]
+
+[set data-to-encode "\xA4\xCF"/]
+
+[encoding-to HA convertfrom "euc-jp" "${data-to-encode}" ]
+
+data-to-encode = ${data-to-encode}
+
+encoded-data (HA) = $HA ([encoding convertfrom euc-jp "${data-to-encode}"])
+
+

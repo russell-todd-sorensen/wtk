@@ -1,0 +1,85 @@
+[comment {
+   create website login page 2
+}/]
+[set title "Create Website Login for $user_name" /]
+<!DOCTYPE html>
+<html lang='en_US'>
+<head>
+ <meta charset='utf-8'>
+ <link rel='stylesheet' type='text/css' href='main.css' media='all'>
+ <style type='text/css'>
+table.data {
+  width: 750px;
+}
+table.data th {
+  font-weight: bold;
+  font-size: 1.2em;
+  text-align: center;
+  text-transform: capitalize;
+  background-color: silver;
+}
+table.data td.num {
+  text-align: right;
+}
+xmp {
+  font-weight: normal;
+}
+ </style>
+ <title>$title</title>
+ <link rel='stylesheet' type='text/css' href='main.css' media='all'>
+</head>
+<body>
+<div class='nav'>
+      <li><a href='/'>home page</a> &gt;</li> 
+      <li><a href='/pg-test/'>pg-test index</a> &gt;</li>
+      <li>$title</li>
+</div>
+
+<div id='content'>
+ <h1>$title</h1>
+
+<form action='create-login-2.tcl' method='POST' enctype='multipart/form-data'>
+<table cellspacing='0' cellpadding='3' border='1'>
+<tr>
+ <th>User Name</th>
+ <td>[ws/]
+[if $goodUserName /]
+  $user_name<input type='hidden' name='user_name' value="$user_name">
+[else]
+  <input type='text' name='user_name' value='' size='30' maxsize='30'>
+[/if]</td>
+</tr>
+<tr>
+ <th>Password</th>
+ <td><input type='password' name='password' size='20'></td>
+</tr>
+<tr>
+ <th>Retype Password</th>
+ <td><input type='password' name='password2' size='20'></td>
+</tr>
+</table>
+
+</form>
+</div><!-- end content -->
+
+
+<div class='bottom'>
+ <hr>
+ <address><a href='mailto:russell@ic00408.cst.edu'>Russell Sorensen</a></address>
+[info-to script script /]
+[file-to mtime mtime $script /]
+[clock-to clockTime format $mtime -format "%+" /]
+<!-- Created $clockTime -->
+
+<span class='lastMod'>Last modified $clockTime</span>
+
+ <div id='footer'>
+  <div class='nav'>
+   <li>[<a href='..'>..</a>] |</li>
+   <li>[<a href='.'>.</a>]</li>
+  </div>
+ </div>
+</div>
+
+</body>
+</html>

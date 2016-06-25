@@ -1,0 +1,19 @@
+[set string "(5.2,-4e-2)"/]
+
+[comment {
+    # Note that the spaces before the literal parts of
+    # the scan pattern are significant, and that ")" is
+    # the Unicode character \u0029
+}/]
+
+[scan-to count $string " (%f ,%f %c" x y last /]
+
+[if {$count != 3 || $last != 0x0029 } /]
+
+  invalid coordinate string[ws/]
+
+[else/]
+
+  X=$x, Y=$y[ws/]
+
+[/if]

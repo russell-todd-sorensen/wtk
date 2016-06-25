@@ -1,0 +1,19 @@
+[set int 1/]
+[set float 5.5/]
+[set string "My string"/]
+[set intHead "Integer"/]
+[set floatHead "Float"/]
+[set stringHead "Strings and Stuff"/]
+
+[format "%8s%8s%18s" $intHead $floatHead $stringHead]
+[format "%8.3i%8.3f \"%-15s\"" $int $float $string/]
+
+[set i 1]
+[ws] [format %8s "Decimal"] | [format %5s Hex] | [format %6s ASCII]
+[while {$i<128} /]
+
+[ws] [format %8i $i] | [format %5X $i] | [format '%-c' $i /][ws/]
+[incr i /]
+[ws]
+[/while]
+

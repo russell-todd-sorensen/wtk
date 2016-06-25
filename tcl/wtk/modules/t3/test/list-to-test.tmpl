@@ -1,0 +1,26 @@
+[set list {a b c d e f g h i j k}]
+
+[linsert-to list2 $list 5 t u v w z y z]
+list = $list
+list2 = [get list2]
+
+[lsort-to list3 $list2]
+list3 = $list3
+
+[lassign-to remainder $list3 first second third fourth]
+first = $first
+second = $second
+third = $third
+fourth = $fourth
+remainder = $remainder
+
+[lassign $remainder fifth sixth seventh eighth]
+fifth = $fifth
+sixth = $sixth
+seventh = $seventh
+eighth = $eighth
+
+[lindex-to ninth $list3 8]
+
+ninth = $ninth ([lindex $list3 8])
+

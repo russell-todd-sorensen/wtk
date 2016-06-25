@@ -1,0 +1,42 @@
+[comment {Test regexp workings} /]
+
+About:[regset about -about "[0-9]+" 34523 match extraResult] 
+$about
+[regexp "[0-9]+" 34523 match extraResult]
+
+match = [get match]
+extraResult = [get extraResult]
+
+About:[regset about -about "[0-9]+" 34abc match2 extraResult2] 
+$about
+[regexp "[0-9]+" 34abc match2 extraResult2]
+
+match2 = [get match2]
+extraResult2 = [get extraResult2]
+
+[regset count -all "[0-9]+" 24ab35cd66et3309 match3 ]
+Matches: $count
+match3 = $match3
+
+[regset matches -inline -all "[0-9]+" 24ab35cd66et3309]
+
+[set i 1/]
+[foreach match $matches ]
+match $i = '$match' [incr i/]
+[/foreach]
+
+[set data 24ab35cd66et3309]
+
+[ifreg "[x-z]+" $data  match]
+
+  match = $match
+
+[elseifreg "[0-9]+" $data match]
+
+  match = $match
+
+[else]
+
+  no match
+
+[/if]

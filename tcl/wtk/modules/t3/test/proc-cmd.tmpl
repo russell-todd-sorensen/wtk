@@ -1,0 +1,29 @@
+[comment {test using namespace_eval ane proc commands }/]
+
+[namespace-eval s /]
+    [comment {initialize x and y}/]
+    [variable x 100/]
+    [variable y "Hello, World!"/]
+[/namespace-eval/]
+
+[proc s::myProc {a b {c 2}} /]
+    [variable x/]
+    [variable y/]
+    
+    [set x $a/]
+    [set y $b/]
+    [set z $c/]
+
+a=$a b=$b c=$c
+
+[/proc/]
+
+[proc s::showVars { } /]
+
+    [variable x/]
+    [variable y/]
+
+x = $x
+y = $y[ws/]
+
+[/proc/]

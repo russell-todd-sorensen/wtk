@@ -1,0 +1,2 @@
+set fileDirectory [file dirname [info script]]
+::wtk::modules::sourceFile [file join $fileDirectory cor-objects-sql.tcl]

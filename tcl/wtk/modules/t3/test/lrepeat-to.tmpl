@@ -1,0 +1,14 @@
+[comment {Example to append num items to an exisiting list, or
+    create a new list with num identical items} /]
+
+[set list {a b}]
+
+[lrepeat-to list2 3 $list]
+
+[set list3 $list2]
+
+[lrepeat-to list3 5 x y z]
+
+list1 = '$list'
+list2 = '$list2'
+list3 = '$list3'

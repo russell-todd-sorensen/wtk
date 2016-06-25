@@ -1,0 +1,12 @@
+[set list {a b c d}]
+
+[lreplace-to list2 $list 1 2 r g]
+
+list = $list
+list2 = $list2 ([lreplace $list 1 2 r g])
+
+[lrepeat-to list3 5 $list2]
+
+list3 = $list3 ([lrepeat 5 $list2])
+
+

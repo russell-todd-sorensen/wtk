@@ -1,0 +1,5 @@
+set fileDirectory [file dirname [info script]]
+::wtk::modules::sourceFile [file join $fileDirectory oop-util-procs.tcl]
+::wtk::modules::sourceFile [file join $fileDirectory OBJECTS-procs.tcl]
+::wtk::modules::sourceFile [file join $fileDirectory CLASSES-procs.tcl]
+::wtk::modules::sourceFile [file join $fileDirectory oop-compacter-procs.tcl]

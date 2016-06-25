@@ -1,0 +1,107 @@
+[comment {      
+  Constructing and using nested dictionaries:
+  # Data for one employee}/]
+              
+[dict set employeeInfo 12345-A forenames "Joe"/]
+[dict set employeeInfo 12345-A surname   "Schmoe"/]
+[dict set employeeInfo 12345-A street "147 Short Street"/]
+[dict set employeeInfo 12345-A city   "Springfield"/]
+[dict set employeeInfo 12345-A phone  "555-1234"/]
+[comment {
+ # Data for another employee
+ }/]
+[dict set employeeInfo 98372-J forenames "Anne"/]
+[dict set employeeInfo 98372-J surname   "Other"/]
+[dict set employeeInfo 98372-J street "32995 Oakdale Way"/]
+[dict set employeeInfo 98372-J city   "Springfield"/]
+[dict set employeeInfo 98372-J phone  "555-8765"/]
+[comment {
+ # The above data probably ought to come from a database...
+ # Print out some employee info
+ }/]
+
+[set i 0]
+
+There are [dict-print size $employeeInfo] employees
+
+[dict-for {id info} $employeeInfo ]
+   Employee #[incr i]: $id
+   [dict-with info ]
+   Name: $forenames $surname
+   Address: $street, $city
+   Telephone: $phone
+   [/dict-with/]
+[/dict-for/]
+
+[comment {
+ # Another way to iterate and pick out names...
+ }/]
+
+[dict-to emp_keys keys $employeeInfo/]
+
+[foreach id $emp_keys ]
+   Hello, [dict-print get $employeeInfo $id forenames]!
+[/foreach/]
+
+[comment {
+  # Set up the basic C locale
+  }/]
+
+[dict-to myDict create/]
+[dict-to capital create C $myDict/]
+
+[split-to letters {abcdefghijklmnopqrstuvwxyz} "" /]
+
+[foreach c $letters /]
+   [string-to upper toupper $c/]
+   [dict set capital C $c $upper/]
+   $c = [dict-print set capital C $c $upper]
+[/foreach/]
+
+[comment {
+  # English locales can luckily share the "C" locale
+  }/]
+
+[dict-to en get $capital C  /]
+[dict set capital en $en    /]
+[dict set capital en_US $en /]
+[dict set capital en_US.UTF-8 $en /]
+[dict set capital en_GB $en /]
+
+[comment {
+  # ... and so on for other supported languages ...
+
+  # Now get the mapping for the current locale and use it.
+  }/]
+
+[set string "Now is the Time for all good men to come to the aid of their country"/]
+
+[dict-to upperCaseMap get $capital $env(LANG)/]
+original = 
+$string
+upperCase = 
+[string map $upperCaseMap $string]
+
+
+Do dict-for/dict-with again without hyphens:
+
+[dict 	for {id info} $employeeInfo ]
+   Employee #[incr i]: $id
+   [dict 			  with info ]
+   Name: $forenames $surname
+   Address: $street, $city
+   Telephone: $phone
+   [/dict-with/]
+[/dict-for]
+
+Do dict-filter-to:
+
+[dict-to filter emps $employeeInfo key "12345*" /]
+
+[dict-for {key value} $emps /]
+ $key
+ [dict-for {key2 value2} $value /]
+   $key2 = $value2
+ [/dict-for/]
+[/dict-for]
+

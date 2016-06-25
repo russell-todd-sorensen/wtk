@@ -1,0 +1,40 @@
+[comment {join, join-to, concat, and concat-to commands}/]
+
+[set list1 {a b c d e f g h i j}]
+
+[join-to joined_list1 $list1 "-"]
+
+list1 = $list1 [set list2 $list1]
+list2 = $list2
+
+(join-to joined_list1 $list1 "-")
+
+joined_list1 = $joined_list1
+              ([join $list1 "-"])
+
+
+[set list3 {x y z}]
+
+(concat $list1 $list3)
+       [concat $list1 $list3]
+
+
+
+list1 = $list1
+
+[concat-to list1 $list1 $list3]
+
+(concat-to list1 $list1 $list3)
+
+list1 = $list1
+list2 = $list2
+
+[concat-to list4 $list2 $list3]
+(concat-to list4 $list2 $list3)
+
+list1 = $list1
+list2 = $list2
+list3 = $list3
+list4 = $list4
+
+

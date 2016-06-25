@@ -1,0 +1,11 @@
+﻿type_id,user_type,type_descr
+1,admin,Administrative user
+2,user,Normal User
+3,guest,Guest User
+4,disabled,Disabled User
+5,deleted,Deleted User
+6,suspicious,Suspicious User
+7,temp,Temporary User
+10,power,Power User
+11,audit,Audit User 
+12,readonly,ReadOnly User

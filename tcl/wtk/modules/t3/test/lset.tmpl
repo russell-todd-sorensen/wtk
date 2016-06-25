@@ -1,0 +1,29 @@
+[set list1 {{a b c} {d e f} {g h i} {j k l} {m n o} {p q r}}]
+
+[set list2 $list1]
+
+list1 = $list1
+list2 = $list2
+
+[lset list2 1 1 x]
+(lset list2 1 1 x)
+
+list1 = $list1
+list2 = $list2
+
+[lset list2 2 2 x]
+(lset list2 2 2 x)
+
+list1 = $list1
+list2 = $list2
+
+[lset list2 0 0 x]
+(lset list2 0 0 x)
+
+[lset list2 3 {x x x}]
+(lset list2 3 {x x x})
+
+list1 = $list1
+list2 = $list2
+
+

@@ -11,6 +11,5 @@
 >>
 
 #Following methods are redefined in this class:
-<< ::Sudoku::FixedCell.method forward {} {return "1"} PUBLIC >> 
-<< ::Sudoku::FixedCell.method back {} {return "-1"} PUBLIC >> 
-
+<< ::Sudoku::FixedCell.method forward {} {return "1"} PUBLIC >>
+<< ::Sudoku::FixedCell.method back {} {return "-1"} PUBLIC >>

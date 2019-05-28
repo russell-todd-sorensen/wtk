@@ -4,7 +4,7 @@
 
 --DROP TABLE cordb.cor_attribute_types;
 
-CREATE TABLE cordb.cor_attribute_types 
+CREATE TABLE cordb.cor_attribute_types
 (
  attr_type_id int
   CONSTRAINT cor_cat_attr_id_pk PRIMARY KEY
@@ -42,7 +42,7 @@ CREATE TABLE cordb.cor_attributes
   CONSTRAINT cor_att_attribute_id_pk PRIMARY KEY
   CONSTRAINT cor_att_attribute_id_nn  NOT NULL
   CONSTRAINT cor_att_attribute_id_fk references cordb.cor_objects(object_id),
- class_id int 
+ class_id int
   CONSTRAINT cor_att_class_id_fk references cordb.cor_classes
   CONSTRAINT cor_att_class_id_nn NOT NULL,
  attr_type_id int
@@ -50,8 +50,8 @@ CREATE TABLE cordb.cor_attributes
   CONSTRAINT cor_att_attr_type_id_fk references cordb.cor_attribute_types(attr_type_id),
  attr_order int
   CONSTRAINT cor_att_attr_order_nn NOT NULL,
- attr_name varchar(128) 
-  CONSTRAINT cor_att_attr_name_nn NOT NULL,	
+ attr_name varchar(128)
+  CONSTRAINT cor_att_attr_name_nn NOT NULL,
  attr_comment text
   CONSTRAINT cor_att_attr_comment_nn NOT NULL,
  CONSTRAINT cor_att_class_id_attr_name_un UNIQUE (class_id, attr_name)

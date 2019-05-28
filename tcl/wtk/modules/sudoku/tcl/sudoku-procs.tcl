@@ -6,5 +6,3 @@ set fileDirectory [file dirname [info script]]
 ::wtk::modules::sourceFile [file join $fileDirectory sudoku-datacell-procs.tcl]
 ::wtk::modules::sourceFile [file join $fileDirectory sudoku-fixedcell-procs.tcl]
 ::wtk::modules::sourceFile [file join $fileDirectory sudoku-activecell-procs.tcl]
-
-

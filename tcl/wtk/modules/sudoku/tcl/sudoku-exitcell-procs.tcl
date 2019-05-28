@@ -13,7 +13,7 @@
     +METHODS forward +METHODS back\
 >>
 
-<< ::Sudoku::ExitCell.method forward {} {return 0} PUBLIC >> 
+<< ::Sudoku::ExitCell.method forward {} {return 0} PUBLIC >>
 << ::Sudoku::ExitCell.method back {} {::wtk::log::log Notice "ExitCell...exiting"; return 0} PUBLIC >>
 
 ::wtk::log::log Debug "...........!!! End ExitCell Definition"

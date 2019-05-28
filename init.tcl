@@ -7,8 +7,9 @@ set script  [info script]
 set dirname [file normalize [file join $pwd [file dirname $script]]]
 
 if {![llength [info commands lassign]]} {
- source [file join $dirname lassign.tcl]
+    source [file join $dirname lassign.tcl]
 }
+
 puts stderr "script = [file join $dirname $script]"
 
 #set WTKDirectory
@@ -20,9 +21,7 @@ puts stderr "WTKLibrary = $WTKLibrary"
 puts stderr "WTKBootstrapFile = $WTKBootstrapFile"
 
 puts stderr "Loading bootstrap $WTKBootstrapFile"
+
 source $WTKBootstrapFile
+
 ::wtk::log::log Notice "Loaded bootstrap $WTKBootstrapFile"
-
-
-
-

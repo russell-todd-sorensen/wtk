@@ -9,7 +9,7 @@
     -ObjCounter 0 \
     +METHODS forward +METHODS back\
     -InitCode {
-	{set type Print}
+        {set type Print}
     }\
 >>
 
@@ -19,6 +19,6 @@
     << $puzzle.print >>
     return -1
 
-} PUBLIC >> 
+} PUBLIC >>
 
 << ::Sudoku::PrintCell.method back {} {return 0} PUBLIC >>

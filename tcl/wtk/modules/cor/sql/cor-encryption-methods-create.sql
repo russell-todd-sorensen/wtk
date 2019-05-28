@@ -14,8 +14,7 @@ CREATE TABLE cordb.cor_encryption_methods
   CONSTRAINT cor_enc_method_descr_nn NOT NULL
 );
 
-insert into cordb.cor_encryption_methods values 
+insert into cordb.cor_encryption_methods values
 (1, 'None', 'No Encryption'),
 (2, 'sha1', 'Secure Hash Algorithm 1 256 bits'),
 (3, 'sha512', 'Secure Hash Algorithm 512 bits');
-

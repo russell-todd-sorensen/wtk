@@ -17,13 +17,13 @@ set corTables [list]
 # Classes table:
 
 lappend corTables [<< ::wtk::db::Table\
-		       -name classes\
-		       -singular class\
-		       -abbrev cla\
-		       -module $myModule\
-		       -primaryKeys {class_id}\
-		       +tableConstraints {pk {class_id}}\
-		       +comments "COR Classes table" >>]
+    -name classes\
+    -singular class\
+    -abbrev cla\
+    -module $myModule\
+    -primaryKeys {class_id}\
+    +tableConstraints {pk {class_id}}\
+    +comments "COR Classes table" >>]
 
 << [lindex $corTables end].addColumns {
     {class_id integer {{nn ""}}}
@@ -33,12 +33,12 @@ lappend corTables [<< ::wtk::db::Table\
 } >>
 
 lappend corTables [<< ::wtk::db::Table\
-		       -name objects\
-		       -singular object\
-		       -abbrev obj\
-		       -module $myModule\
-		       -primaryKeys {object_id}\
-		       +comments "COR Objects table" >>]
+    -name objects\
+    -singular object\
+    -abbrev obj\
+    -module $myModule\
+    -primaryKeys {object_id}\
+    +comments "COR Objects table" >>]
 
 << [lindex $corTables end].addColumns {
     {object_id integer {{pk ""} {nn ""}}}
@@ -50,12 +50,12 @@ lappend corTables [<< ::wtk::db::Table\
 } >>
 
 lappend corTables [<< ::wtk::db::Table\
-		       -name attribute_types\
-		       -singular attribute_type\
-		       -abbrev cat\
-		       -module $myModule\
-		       -primaryKeys {attr_type_id}\
-		       +comments "COR Attributes Table" >>]
+    -name attribute_types\
+    -singular attribute_type\
+    -abbrev cat\
+    -module $myModule\
+    -primaryKeys {attr_type_id}\
+    +comments "COR Attributes Table" >>]
 
 << [lindex $corTables end].addColumns {
     {attr_type_id integer {{pk ""} {nn ""}}}
@@ -65,12 +65,12 @@ lappend corTables [<< ::wtk::db::Table\
 } >>
 
 lappend corTables [<< ::wtk::db::Table\
-		       -name attributes\
-		       -singular attribute\
-		       -abbrev att\
-		       -module $myModule\
-		       -primaryKeys {attribute_id}\
-		       +tableConstraints {un {class_id attr_name}} >>]
+    -name attributes\
+    -singular attribute\
+    -abbrev att\
+    -module $myModule\
+    -primaryKeys {attribute_id}\
+    +tableConstraints {un {class_id attr_name}} >>]
 
 << [lindex $corTables end].addColumns {
     {attribute_id integer {{pk ""} {nn ""} {fk {objects object_id}}}}
@@ -85,14 +85,14 @@ lappend corTables [<< ::wtk::db::Table\
 ######### RELATIONS TABLE
 
 lappend corTables [<< ::wtk::db::Table\
-		       -name relations\
-		       -singular relation\
-		       -abbrev rel\
-		       -module $myModule\
-		       -primaryKeys {subject_id predicate_id object_id}\
-		       +tableConstraints {pk {subject_id predicate_id object_id}}\
-		       +tableConstraints {un {subject_id object_id predicate_id}}\
-		       +tableConstraints {un {object_id predicate_id subject_id}} >>]
+    -name relations\
+    -singular relation\
+    -abbrev rel\
+    -module $myModule\
+    -primaryKeys {subject_id predicate_id object_id}\
+    +tableConstraints {pk {subject_id predicate_id object_id}}\
+    +tableConstraints {un {subject_id object_id predicate_id}}\
+    +tableConstraints {un {object_id predicate_id subject_id}} >>]
 
 << [lindex $corTables end].addColumns {
     {subject_id integer {{nn ""} {fk {objects object_id}}}}
@@ -105,12 +105,12 @@ lappend corTables [<< ::wtk::db::Table\
 ########## IDENTITY TYPES TABLE #############
 
 lappend corTables [<< ::wtk::db::Table\
-		       -name identity_types\
-		       -singular identity_type\
-		       -abbrev itp\
-		       -module $myModule\
-		       -primaryKeys {type_id} >>]
-		       
+    -name identity_types\
+    -singular identity_type\
+    -abbrev itp\
+    -module $myModule\
+    -primaryKeys {type_id} >>]
+
 << [lindex $corTables end].addColumns {
     {type_id integer {{nn ""} {pk ""}}}
     {identity_type_name "varchar(128)" {{nn ""} {un ""}}}
@@ -121,11 +121,11 @@ lappend corTables [<< ::wtk::db::Table\
 ######### DOMAINS TABLE ###############
 
 lappend corTables [<< ::wtk::db::Table\
-		       -name domains\
-		       -singular domain\
-		       -abbrev dom\
-		       -module $myModule\
-		       -primaryKeys {domain_id} >>]
+    -name domains\
+    -singular domain\
+    -abbrev dom\
+    -module $myModule\
+    -primaryKeys {domain_id} >>]
 
 << [lindex $corTables end].addColumns {
     {domain_id integer {{nn ""} {pk ""} {fk {objects object_id}}}}
@@ -137,11 +137,11 @@ lappend corTables [<< ::wtk::db::Table\
 ####### ENCRYPTION METHODS TABLE #####
 
 lappend corTables [<< ::wtk::db::Table\
-		       -name encryption_methods\
-		       -singular encryption_method\
-		       -abbrev enc\
-		       -module $myModule\
-		       -primaryKeys {method_id} >>]
+    -name encryption_methods\
+    -singular encryption_method\
+    -abbrev enc\
+    -module $myModule\
+    -primaryKeys {method_id} >>]
 
 << [lindex $corTables end].addColumns {
     {method_id integer {{nn ""} {pk ""}}}
@@ -153,13 +153,13 @@ lappend corTables [<< ::wtk::db::Table\
 ######### Identities table ###########
 
 lappend corTables [<< ::wtk::db::Table\
-		       -name identities\
-		       -singular identity\
-		       -abbrev idt\
-		       -module $myModule\
-		       -primaryKeys [list identity_id]\
-		       +comments "This is the Identities table"\
-		       +tableConstraints {un "ident_domain_id ident_login_name"} >>]
+    -name identities\
+    -singular identity\
+    -abbrev idt\
+    -module $myModule\
+    -primaryKeys [list identity_id]\
+    +comments "This is the Identities table"\
+    +tableConstraints {un "ident_domain_id ident_login_name"} >>]
 
 << [lindex $corTables end].addColumns {
     {identity_id integer {{pk ""} {fk "objects object_id"} {nn ""}} }
@@ -176,11 +176,11 @@ lappend corTables [<< ::wtk::db::Table\
 ################## USER TYPES TABLE ############
 
 lappend corTables [<< ::wtk::db::Table\
-		       -name user_types\
-		       -singular user_type\
-		       -abbrev ust\
-		       -module $myModule\
-		       -primaryKeys {type_id} >>]
+    -name user_types\
+    -singular user_type\
+    -abbrev ust\
+    -module $myModule\
+    -primaryKeys {type_id} >>]
 
 << [lindex $corTables end].addColumns {
     {type_id integer {{nn ""} {pk ""}}}
@@ -192,11 +192,11 @@ lappend corTables [<< ::wtk::db::Table\
 ################## USERS TABLE ############
 
 lappend corTables [<< ::wtk::db::Table\
-		       -name users\
-		       -singular user\
-		       -abbrev usr\
-		       -module $myModule\
-		       -primaryKeys {user_id} >>]
+    -name users\
+    -singular user\
+    -abbrev usr\
+    -module $myModule\
+    -primaryKeys {user_id} >>]
 
 << [lindex $corTables end].addColumns {
     {user_id integer {{nn ""} {pk ""} {fk {identities identity_id}}}}

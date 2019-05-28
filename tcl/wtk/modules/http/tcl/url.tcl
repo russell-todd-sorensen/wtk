@@ -16,30 +16,27 @@ set urls {
 foreach url $urls {
     array unset x
     regexp -expanded -nocase -- {
-	(http(s)?://)?
-	([a-zA-Z0-9\.\:]+)?
+        (http(s)?://)?
+        ([a-zA-Z0-9\.\:]+)?
         (/)
-	([^\?\#]{0,})?
-	(([?\#])((.){0,})?)?
+        ([^\?\#]{0,})?
+        (([?\#])((.){0,})?)?
     } $url x(match) x(proto) x(https) x(host) x(slash) x(path)\
-	x(query+) x(qorh) x(query-) x(extra1) x(extra2) x(extra3)
+        x(query+) x(qorh) x(query-) x(extra1) x(extra2) x(extra3)
 
     puts "***********************************\n"
     puts "**** [format %7s url] = $url  *****"
     if {[array exists x]} {
 
-	foreach key {url match proto https host slash path query+ qorh query- extra1 extra2 extra3} {
+        foreach key {url match proto https host slash path query+ qorh query- extra1 extra2 extra3} {
 
-	    if {[info exists x($key)]} {
-		puts "[format %12s $key] = $x($key)"
-	    }
-
-	}
-
-	#puts " *** about = [regexp -about -expanded -nocase -- {(http(s)?://)?([a-zA-Z0-9\.\:]+)?((/)([^\?\#])+)([?\#]?(.)*)?} $url]"
+            if {[info exists x($key)]} {
+                puts "[format %12s $key] = $x($key)"
+            }
+        }
+        #puts " *** about = [regexp -about -expanded -nocase -- {(http(s)?://)?([a-zA-Z0-9\.\:]+)?((/)([^\?\#])+)([?\#]?(.)*)?} $url]"
     } else {
-	puts "url = $url"
-	puts "No Match!"
+        puts "url = $url"
+        puts "No Match!"
     }
-    
 }

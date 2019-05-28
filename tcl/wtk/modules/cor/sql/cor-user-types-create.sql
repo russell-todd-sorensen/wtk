@@ -16,7 +16,7 @@ CREATE TABLE cordb.cor_user_types
 
 
 
-insert into cordb.cor_user_types values 
+insert into cordb.cor_user_types values
 (1,'admin','Administrative user'),
 (2,'user','Normal User'),
 (3,'guest','Guest User'),
@@ -27,4 +27,3 @@ insert into cordb.cor_user_types values
 (10,'power','Power User'),
 (11,'audit','Audit User'),
 (12,'readonly','ReadOnly User');
-

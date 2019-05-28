@@ -39,7 +39,7 @@ source /www/tcl/wtk/init.tcl
     -ObjNameFormat COR_VOL%03i \
     -ObjCounter 0 \
     -VARIABLES {
-	{z {0} - {}}
+        {z {0} - {}}
     }\
     +METHODS getVolume\
     +METHODS getArea\
@@ -75,4 +75,3 @@ set myVolume [<< ::wtk::cor::Volume -x 5 -y 3 -z 4 >>]
 ::wtk::log::log Notice "$myVolume.printVolume = [<< $myVolume.printVolume >>]"
 
 ::wtk::log::log Notice "$myVolume.getArea = [<< $myVolume.getArea >>]"
-

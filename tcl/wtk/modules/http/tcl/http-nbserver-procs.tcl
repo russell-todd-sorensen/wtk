@@ -17,10 +17,8 @@ proc ::wtk::http::server::nbReadHeader { connId } {
         if {[addRequestHeader $conn]} {
             #finished Headers
         }
-        
     } else {
         # partial line
-        
     }
 }
 
@@ -31,12 +29,12 @@ proc ::wtk::http::server::nbReadRequestBody { connId } {
     set chan $conn(chan)
 
     chan configure $chan -translation binary ;#-blocking false -encoding binary
-    
+
     # Note that this will be changed to makeSecureFd!
     set filename [makeSecureName XXXXXXX.data]
     set fd [open /tmp/$filename w+]
     log Notice "writing data to file $filename"
-    
+
     fconfigure $fd -translation binary -encoding binary ;#-blocking false -buffering full
     #set data [read $chan]
     #puts -nonewline $fd $data
@@ -55,7 +53,6 @@ proc ::wtk::http::server::nbCloseFd { fd {bytesRead 0} {errorMsg ""} } {
     }
 
     close $fd
-
 }
 
 
@@ -75,17 +72,18 @@ proc ::wtk::http::server::getRequestContentLength { connId } {
 
 # proc: addRequestHeader
 # args:
-#      connId -- Input connId, to access data structure
+#    connId -- Input connId, to access data structure
 # return value:
 #
-#      boolean value indicating end of headers 
-#      1 = end of headers 
+#    boolean value indicating end of headers
+#    1 = end of headers
+
 proc ::wtk::http::server::addRequestHeader { connId } {
 
     namespace upvar [getConnNamespace $connId] conn conn
 
     set returnValue 0
-		#following line needs tcl 8.6
+    #following line needs tcl 8.6
     #switch -regexp -matchvar headerList -- $conn(line)
     switch -regexp -- $conn(line) {
 
@@ -99,7 +97,7 @@ proc ::wtk::http::server::addRequestHeader { connId } {
             nvPut conn(HeaderSet) [string tolower $headerName] [string trim $headerValue]
         }
         " (.*)" {
-            regexp { (.*)} $conn(line) match 
+            regexp { (.*)} $conn(line) match
             #log Notice "Continuation line: headerList = '[lindex $headerList 0]'"
             log Notice "Continuation line: headerList = '$match'"
             # somehow append this to the last header.
@@ -130,8 +128,3 @@ proc ::wtk::http::server::nbReadHeaderContinue { connId } {
 
 
 }
-
-
-
-
-

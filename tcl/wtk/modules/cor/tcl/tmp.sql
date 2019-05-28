@@ -1,7 +1,7 @@
--- This is the CORDB Identities table                                                                                                                    
+-- This is the CORDB Identities table
 
 CREATE TABLE cordb.cor_identities (
-    identity_id integer            
+    identity_id integer
         CONSTRAINT cor_idt_identity_id_pk PRIMARY KEY
         CONSTRAINT cor_idt_identity_id_fk REFERENCES cordb.cor_objects(object_id)
         CONSTRAINT cor_idt_identity_id_nn NOT NULL,

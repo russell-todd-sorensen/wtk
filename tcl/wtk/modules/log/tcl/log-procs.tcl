@@ -12,7 +12,7 @@ proc ::wtk::log::log {level message} {
 
     variable logChannel
     variable debug
-		variable SUPPORTS_MICROSECONDS
+    variable SUPPORTS_MICROSECONDS
 
     if {!$debug && $level eq "Debug"} {
         return
@@ -22,9 +22,9 @@ proc ::wtk::log::log {level message} {
     # including the microseconds into the clock format causes ::tcl::clock::format
     # to create a new proc for every invocation. Fix is to use a placeholder \$microseconds
     # and then to substitute the microseconds value into the string after [clock format] is
-    # finished. 
+    # finished.
     if {$SUPPORTS_MICROSECONDS} {
-		# log Notice "REALLY SUPPORTS MICROSECONDS!!!"
+        # log Notice "REALLY SUPPORTS MICROSECONDS!!!"
         set time [clock microseconds]
         set seconds [string range $time 0 end-6]
         # this is really microseconds
@@ -39,9 +39,7 @@ proc ::wtk::log::log {level message} {
 }
 
 namespace eval ::wtk::log {
-    
     namespace export log
-
 }
 
 ::wtk::log::log Notice "Finished Loading log-procs.tcl"

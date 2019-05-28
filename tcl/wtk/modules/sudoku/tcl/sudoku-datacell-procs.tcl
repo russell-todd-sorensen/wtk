@@ -4,7 +4,7 @@
     -ObjNameFormat SUDOKU_DATACELL%0.3i \
     -ObjCounter 0 \
     -VARIABLES {
-	{value 0 - {string is integer -strict $value}}
+        {value 0 - {string is integer -strict $value}}
     } \
     +METHODS getValue\
 >>
@@ -17,4 +17,3 @@
     variable value
     return $value
 } PUBLIC >>
-

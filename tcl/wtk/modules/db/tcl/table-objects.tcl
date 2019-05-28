@@ -3,11 +3,11 @@
     -ObjNameFormat DB_TABLE%03i \
     -ObjCounter 0 \
     -VARIABLES {
-	{primaryKeys {{}} - {}}
-	{tableConstraints {{}} + {}}
-	{columns {{}} + {}}
-	{colCount 0 - {string is integer -strict $colCount}}
-	{module {{}} - {}}
+        {primaryKeys {{}} - {}}
+        {tableConstraints {{}} + {}}
+        {columns {{}} + {}}
+        {colCount 0 - {string is integer -strict $colCount}}
+        {module {{}} - {}}
     } \
     +METHODS getPrimaryKeys\
     +METHODS getTableConstraints\
@@ -39,7 +39,7 @@
 << ::wtk::db::Table.method addTableConstraints {constraints} {
     variable tableConstraints
     foreach constraint $constraints {
-	lappend constraints $constraint
+        lappend constraints $constraint
     }
 } PUBLIC >>
 
@@ -63,25 +63,25 @@
 
     foreach col $columnList {
 
-	lassign $col colName colType colConstraints colComments
-	set constraintList [list]
-	set commentList   [list]
+        lassign $col colName colType colConstraints colComments
+        set constraintList [list]
+        set commentList   [list]
 
-	foreach constraint $colConstraints {
-	    lappend constraintList +constraints $constraint
-	}
-	
-	foreach comment $colComments {
-	    lappend commentList +comments $comment
-	}
-	lappend columns\
-	    [<< ::wtk::db::Column \
-		 -name $colName\
-		 -table $name\
-		 -type $colType\
-		 {*}$constraintList\
-		 {*}$commentList\
-		 -pos [incr columnCount] >>]
+        foreach constraint $colConstraints {
+            lappend constraintList +constraints $constraint
+        }
+
+        foreach comment $colComments {
+            lappend commentList +comments $comment
+        }
+        lappend columns\
+            [<< ::wtk::db::Column \
+            -name $colName\
+            -table $name\
+            -type $colType\
+            {*}$constraintList\
+            {*}$commentList\
+            -pos [incr columnCount] >>]
     }
 
 } PUBLIC >>
@@ -107,7 +107,7 @@
     set indent [string repeat " " $colIndent]
 
     foreach comment [<< [this].getComments >>] {
-	append tableSql "-- [::wtk::db::quoteTableComments $comment]\n"
+        append tableSql "-- [::wtk::db::quoteTableComments $comment]\n"
     }
 
     set schema [expr {$schemaObject ne "" ? [<< $schemaObject.getName >>] : ""}]
@@ -116,7 +116,7 @@
     set moduleAbbrev [expr {$moduleObject ne "" ? [<< $moduleObject.getAbbrev >>] : ""}]
 
     if {$moduleAbbrev ne ""} {
-	append tableName "${moduleAbbrev}_"
+        append tableName "${moduleAbbrev}_"
     }
 
     append tableName $name
@@ -126,23 +126,23 @@
     set tableCols [list]
 
     foreach col $columns {
-	set colName [<< $col.getName >>]
-	set tableCol ""
-	foreach comment [<< $col.getComments >>] {
-	    append tableCol "$indent-- [::wtk::db::quoteColumnComments $comment $colIndent]\n"
-	}
-	append tableCol "$indent$colName [<< $col.getType >>]"
-	append tableCol [::wtk::db::formatConstraints [<< $col.getConstraints >>] $abbrev $colIndent $moduleObject $schemaObject $colName]
-	lappend tableCols $tableCol
+        set colName [<< $col.getName >>]
+        set tableCol ""
+        foreach comment [<< $col.getComments >>] {
+            append tableCol "$indent-- [::wtk::db::quoteColumnComments $comment $colIndent]\n"
+        }
+        append tableCol "$indent$colName [<< $col.getType >>]"
+        append tableCol [::wtk::db::formatConstraints [<< $col.getConstraints >>] $abbrev $colIndent $moduleObject $schemaObject $colName]
+        lappend tableCols $tableCol
     }
 
-    
+
     foreach constraint $tableConstraints {
-	lappend tableCols [::wtk::db::formatConstraints [list $constraint] $abbrev $colIndent $moduleObject $schemaObject {}]
+        lappend tableCols [::wtk::db::formatConstraints [list $constraint] $abbrev $colIndent $moduleObject $schemaObject {}]
     }
 
     append tableSql "[join $tableCols ",\n"]\n);\n"
-    
+
     append tableSql "\n--plpgsql \n[<< [this].printPlSql $colIndent >>]\n"
 } PUBLIC >>
 
@@ -154,10 +154,10 @@
     -ObjNameFormat DB_COLUMN%03i\
     -ObjCounter 0\
     -VARIABLES {
-	{table       {{}} - {::wtk::db::checkStringLength table 64 1} }
-	{type        {{}} - {} }
-	{constraints {{}} + {::wtk::db::checkListLength constraints 2 2} }
-	{pos           0  - {string is integer -strict $pos} }
+        {table       {{}} - {::wtk::db::checkStringLength table 64 1} }
+        {type        {{}} - {} }
+        {constraints {{}} + {::wtk::db::checkListLength constraints 2 2} }
+        {pos           0  - {string is integer -strict $pos} }
     } \
     +METHODS getTable\
     +METHODS getType\
@@ -188,7 +188,7 @@
 << ::wtk::db::Column.method addConstraints {constraints} {
     variable constraints
     foreach constraint $constraints {
-	lappend constraints $constraint
+        lappend constraints $constraint
     }
 } PUBLIC >>
 
@@ -196,4 +196,3 @@
     variable pos
     return $pos
 } PUBLIC >>
-

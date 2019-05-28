@@ -16,12 +16,12 @@ BEGIN
     into v_class_id;
   end if;
 
-  if p_object_id is null 
+  if p_object_id is null
    then
     select nextval(''cordb.cor_object_id_seq'') into p_object_id;
   end if;
 
-  insert into cordb.cor_objects 
+  insert into cordb.cor_objects
    (
     object_id,
     class_id,
@@ -57,7 +57,7 @@ DECLARE
  t_change timestamptz;
 BEGIN
 
-  if p_object_id is null 
+  if p_object_id is null
    then
     select nextval(''cordb.cor_object_id_seq'') into p_object_id;
   end if;
@@ -76,7 +76,7 @@ BEGIN
     t_change := p_change_date;
   end if;
 
-  insert into cordb.cor_objects 
+  insert into cordb.cor_objects
    (
     object_id,
     class_id,
@@ -105,7 +105,7 @@ DECLARE
  v_rows_affected integer := 0;
 BEGIN
 
- delete 
+ delete
   from
  cor_objects
   where
@@ -135,7 +135,7 @@ DECLARE
   t_encryption_method_id integer;
 BEGIN
 
-  if p_identity_id is null 
+  if p_identity_id is null
    then
     select cordb.cor_object__create(
       null,
@@ -213,5 +213,3 @@ END;
 -- in     ident_login_name varchar,
 -- in     ident_password_hash varchar,
 -- in     ident_password_sale
-
-

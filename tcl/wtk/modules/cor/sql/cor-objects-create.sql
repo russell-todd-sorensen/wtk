@@ -3,7 +3,7 @@
 -- =========================================
 
 CREATE TABLE cordb.cor_objects (
- object_id int 
+ object_id int
   CONSTRAINT cor_obj_object_id_pk PRIMARY KEY
   CONSTRAINT cor_obj_object_id_nn NOT NULL,
  class_id int
@@ -12,9 +12,9 @@ CREATE TABLE cordb.cor_objects (
  obj_owner int
   CONSTRAINT cor_obj_owner_df default '100'
   CONSTRAINT cor_obj_owner_nn NOT NULL,
- create_date timestamptz  
+ create_date timestamptz
   CONSTRAINT cor_obj_create_date_df default now()
-  CONSTRAINT cor_obj_create_date_nn NOT NULL, 
+  CONSTRAINT cor_obj_create_date_nn NOT NULL,
  change_date timestamptz
   CONSTRAINT cor_obj_change_date_df default now()
   CONSTRAINT cor_obj_change_date_nn NOT NULL,

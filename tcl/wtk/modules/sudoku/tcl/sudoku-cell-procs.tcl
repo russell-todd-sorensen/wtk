@@ -3,13 +3,13 @@
     -ObjNameFormat SUDOKU_CELL%0.3i \
     -ObjCounter 0 \
     -VARIABLES {
-	{puzzle {{}} - {}}
-	{id {{}} - {string is integer -strict $id}}
-	{type Cell - {expr {$type in {Cell Active ExitCell Fixed Print}}}}
+        {puzzle {{}} - {}}
+        {id {{}} - {string is integer -strict $id}}
+        {type Cell - {expr {$type in {Cell Active ExitCell Fixed Print}}}}
     } \
     -NamespaceInitCode {
-	::wtk::log::log Notice "NamespaceInitCode for Cell"
-	variable type Cell
+    ::wtk::log::log Notice "NamespaceInitCode for Cell"
+    variable type Cell
     }\
     +METHODS forward\
     +METHODS back\

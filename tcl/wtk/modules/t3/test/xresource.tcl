@@ -1,20 +1,17 @@
 namespace eval ::ext::resource {
 
     variable resources [list]
-    
 }
 
 proc ::ext::resource::init { } {
 
     variable resources [list]
-
 }
 
 proc ::ext::resource::add { name command args } {
 
     variable resources
     lappend resources [list $name [list $command {*}$args]]
-
 }
 
 proc ::ext::resource::exists { name } {
@@ -33,7 +30,6 @@ proc ::ext::resource::eval { name args } {
 proc echo { args } {
     #puts "args = '$args'"
     uplevel 1 [list append __string $args]
-
 }
 
 ::ext::resource::init

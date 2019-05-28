@@ -25,11 +25,11 @@ if {$table eq "information_schema.tables" ||
     $table eq "information_schema.view_table_usage"
 } {
     set template pg-test
-    set sqlCmd "select * 
-from 
+    set sqlCmd "select *
+from
  $table
-order by 
- table_catalog, 
+order by
+ table_catalog,
  table_schema,
  table_name"
 }
@@ -48,23 +48,23 @@ if {$dbHandle eq ""} {
 
 
 
-set rs         [pg_exec $dbHandle $sqlCmd]
-set status     [pg::result $rs -status]
+set rs             [pg_exec $dbHandle $sqlCmd]
+set status         [pg::result $rs -status]
 set conndefaults   [pg::conndefaults]
-set attributes [list]
-set rows       [list]
+set attributes     [list]
+set rows           [list]
 
 switch -exact -- $status {
     "PGRES_TUPLES_OK" {
-	set attributes [pg::result $rs -attributes]
-	set rows [pg::result $rs -llist]
+        set attributes [pg::result $rs -attributes]
+        set rows [pg::result $rs -llist]
     }
     "PGRES_FATAL_ERROR" {
-	::wtk::pg::releaseHandle $dbHandle 
-	return -code error "pg-test.tcl: Postgres Fatal Error"
+        ::wtk::pg::releaseHandle $dbHandle
+        return -code error "pg-test.tcl: Postgres Fatal Error"
     }
     default {
-	::wtk::log::log Notice "pg-test.tcl result status is '$status'"
+        ::wtk::log::log Notice "pg-test.tcl result status is '$status'"
     }
 }
 
@@ -73,5 +73,3 @@ pg::result $rs -clear
 ::wtk::pg::releaseHandle $dbHandle
 
 ::t3::respond $connId $template text/html 200
-
-

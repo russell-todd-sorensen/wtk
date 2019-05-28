@@ -3,7 +3,6 @@
 namespace eval ::wtk::modules {
 
     namespace import -force ::wtk::log::*
-
 }
 
 namespace eval ::wtk::modules {
@@ -36,7 +35,6 @@ proc ::wtk::modules::loadModule {module loadPhase} {
     variable moduleLoaded
     variable moduleConfigDir
 
-    
     switch -exact -- $loadPhase {
         config {
             set directory [file join $moduleConfigDir $module]
@@ -74,9 +72,8 @@ proc ::wtk::modules::sourceFile { file {module " submodule"} {loadPhase "procs"}
 proc ::wtk::modules::addModuleOutline { module phaseList } {
 
     foreach phase $phaseList {
-	addModuleFile $module $phase
+        addModuleFile $module $phase
     }
-
 }
 
 proc ::wtk::modules::addModuleFile { module loadPhase } {
@@ -86,7 +83,7 @@ proc ::wtk::modules::addModuleFile { module loadPhase } {
     variable moduleConfigDir
 
     namespace import ::wtk::log
-    
+
     switch -exact -- $loadPhase {
         config {
             set directory [file join $moduleConfigDir $module]
@@ -101,7 +98,7 @@ proc ::wtk::modules::addModuleFile { module loadPhase } {
     }
 
     set file [file join $directory ${module}-${loadPhase}.tcl]
-    
+
     if {![file exists $file]} {
         exec mkdir -p [file dirname $file]
         exec echo "\n" > $file
@@ -119,36 +116,37 @@ proc ::wtk::modules::addModule { module phaseList } {
 
     while {1} {
 
-	set i 0
+        set i 0
 
-	# trim the phaseList
-	foreach phase $phaseList {
-	    if { [lsearch $loadPhases $phase] == -1 } {
-		set phaseList [lreplace $phaseList $i $i]
-	    } else {
-		incr i
-	    }
-	}
+        # trim the phaseList
+        foreach phase $phaseList {
+            if { [lsearch $loadPhases $phase] == -1 } {
+                set phaseList [lreplace $phaseList $i $i]
+            } else {
+                incr i
+            }
+        }
 
-	foreach phase $phaseList {
-	    if { [lsearch $modulesToLoad [list $module [list *$phase*]]] > -1 } {
-		log Error "addModule: attempt to add module $module phase $phase, which already exists!"
-		set phaseList [list]
-		break
-	    }
-	}
+        foreach phase $phaseList {
+            if { [lsearch $modulesToLoad [list $module [list *$phase*]]] > -1 } {
+                log Error "addModule: attempt to add module $module phase $phase, which already exists!"
+                set phaseList [list]
+                break
+            }
+        }
 
-	if {![llength $phaseList]} {
-	    log Warning "Module '$module' added without phaseList, module will not be loaded."
-	    break
-	}
+        if {![llength $phaseList]} {
+            log Warning "Module '$module' added without phaseList, module will not be loaded."
+            break
+        }
 
-	lappend modulesToLoad [list $module $phaseList]
-	incr moduleCount
+        lappend modulesToLoad [list $module $phaseList]
+        incr moduleCount
 
-	log Notice "addModule: module: $module phaseList: $phaseList"
-	break
+        log Notice "addModule: module: $module phaseList: $phaseList"
+        break
     }
+
     return [list $module $phaseList]
 }
 
@@ -170,15 +168,15 @@ proc ::wtk::modules::loadModules { } {
 
     while {$moduleIndex < $moduleCount} {
 
-	lassign [lindex $modulesToLoad $moduleIndex] module phaseList
+        lassign [lindex $modulesToLoad $moduleIndex] module phaseList
 
-	if {[lsearch -exact $phaseList procs] > -1} {
-	    loadModule $module procs
-	} else {
-	    log Notice "loadModules: phase procs not found in module '$module'"
-	}
+        if {[lsearch -exact $phaseList procs] > -1} {
+            loadModule $module procs
+        } else {
+            log Notice "loadModules: phase procs not found in module '$module'"
+        }
 
-	incr moduleIndex
+        incr moduleIndex
     }
 
     # reset moduleIndex for config:
@@ -186,13 +184,13 @@ proc ::wtk::modules::loadModules { } {
 
     while {$moduleIndex < $moduleCount} {
 
-	lassign [lindex $modulesToLoad $moduleIndex] module phaseList
+        lassign [lindex $modulesToLoad $moduleIndex] module phaseList
 
-	if {[lsearch -exact $phaseList config] > -1} {
-	    loadModule $module config
-	}
+        if {[lsearch -exact $phaseList config] > -1} {
+            loadModule $module config
+        }
 
-	incr moduleIndex
+        incr moduleIndex
     }
 
     # reset moduleIndex for init
@@ -200,13 +198,12 @@ proc ::wtk::modules::loadModules { } {
 
     while {$moduleIndex < $moduleCount} {
 
-	lassign [lindex $modulesToLoad $moduleIndex] module phaseList
+        lassign [lindex $modulesToLoad $moduleIndex] module phaseList
 
-	if {[lsearch -exact $phaseList init] > -1} {
-	    loadModule $module init
-	}
+        if {[lsearch -exact $phaseList init] > -1} {
+            loadModule $module init
+        }
 
-	incr moduleIndex
+        incr moduleIndex
     }
-
 }

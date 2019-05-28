@@ -28,4 +28,3 @@ proc ::wtk::http::sha::checkPassword { salt password sha1} {
 
     expr {[sha1sum $salt $password] eq $sha1}
 }
-

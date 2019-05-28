@@ -3,12 +3,12 @@
 
 
 set emp [<< ::wtk::cor::Table\
-	     -name employees\
-	     -abbrev emp\
-	     -primaryKeys [list emp_id]\
-	     +comments "This is the employees table\n now what? \n--oh yeah, right!"\
-	     +comments "Check out the multi-column constraint"\
-	     +tableConstraints {un "emp_name emp_birthdate"} >>]
+    -name employees\
+    -abbrev emp\
+    -primaryKeys [list emp_id]\
+    +comments "This is the employees table\n now what? \n--oh yeah, right!"\
+    +comments "Check out the multi-column constraint"\
+    +tableConstraints {un "emp_name emp_birthdate"} >>]
 
 
 << $emp.addColumns {
@@ -23,5 +23,3 @@ set emp [<< ::wtk::cor::Table\
 ::wtk::log::log Notice "<< \$emp.getName >> = [<< $emp.getName >>]"
 
 ::wtk::log::log Notice "\n[<< $emp.printSql xyz 4 >>]"
-
-

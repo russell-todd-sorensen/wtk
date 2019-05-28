@@ -5,10 +5,10 @@
     -ObjNameFormat DB_SQLCMP%03i \
     -ObjCounter 0 \
     -VARIABLES {
-	{name {{}} - {::wtk::db::checkStringLength name 64 1}}
-	{singular {{}} - {::wtk::db::checkStringLength singular 64 0}}
-	{abbrev {{}} - {::wtk::db::checkStringLength abbrev 8 1}}
-	{comments {{}} + {} }
+        {name {{}} - {::wtk::db::checkStringLength name 64 1}}
+        {singular {{}} - {::wtk::db::checkStringLength singular 64 0}}
+        {abbrev {{}} - {::wtk::db::checkStringLength abbrev 8 1}}
+        {comments {{}} + {} }
     }\
     +METHODS getName\
     +METHODS getSingular\
@@ -46,10 +46,10 @@
     -ObjNameFormat DB_DB%03i \
     -ObjCounter 0 \
     -VARIABLES {
-	{owner {russell} - {}}
-	{template {template1} - {}}
-	{encoding {UTF-8} {}}
-	{schemas {{}} + {}}
+        {owner {russell} - {}}
+        {template {template1} - {}}
+        {encoding {UTF-8} {}}
+        {schemas {{}} + {}}
     }\
     +METHODS addSchema\
     +METHODS getSchemas\
@@ -85,7 +85,7 @@ CREATE DATABASE $name
 "
 
     foreach schema $schemas {
-	append sql [<< $schema.printSql $colIndent >>]
+        append sql [<< $schema.printSql $colIndent >>]
     }
 
     return $sql
@@ -100,8 +100,8 @@ CREATE DATABASE $name
     -ObjNameFormat DB_SCHEMA%03i \
     -ObjCounter 0 \
     -VARIABLES {
-	{database {{}} - {}}
-	{modules {{}} + {}}
+        {database {{}} - {}}
+        {modules {{}} + {}}
     }\
     +METHODS addModule\
     +METHODS getModules\
@@ -130,7 +130,7 @@ CREATE DATABASE $name
     set sql "\ncreate schema $name;\n"
 
     foreach module $modules {
-	append sql [<< $module.printSql $colIndent >>]
+        append sql [<< $module.printSql $colIndent >>]
     }
 
     return $sql
@@ -145,8 +145,8 @@ CREATE DATABASE $name
     -ObjNameFormat DB_MODULE%03i \
     -ObjCounter 0 \
     -VARIABLES {
-	{schema {{}} - {}}
-	{tables {{}} + {}}
+        {schema {{}} - {}}
+        {tables {{}} + {}}
     }\
     +METHODS addTable\
     +METHODS getTables\
@@ -176,20 +176,16 @@ CREATE DATABASE $name
     set sql "\n"
 
     foreach table $tables {
-	append sql [<< $table.printSql $colIndent >>]
+        append sql [<< $table.printSql $colIndent >>]
     }
 
     return $sql
 } >>
 
 set db1     [<< ::wtk::db::Database -name testdb -abbrev tdb -owner russell >>]
-set schema1 [<< ::wtk::db::Schema -name mySchema -abbrev mys-database $db1
-		+comments "This is my first schema" >>]
+set schema1 [<< ::wtk::db::Schema -name mySchema -abbrev mys-database $db1\
+        +comments "This is my first schema" >>]
 set module1 [<< ::wtk::db::Module -name testmodule -abbrev tmo -module $module1  >>]
 
 ::wtk::log::log Notice "Schema name is '[<< $schema1.getName >>]'"
 ::wtk::log::log Notice "Module1 name = '[<< $module1.getName >>]' schema = '[<< $module1.getSchema >>]'"
-
-
-
-

@@ -6,7 +6,7 @@ namespace eval ::wtk::url {
 proc ::wtk::url::init {} {
     variable map
     variable alphanumeric
-    for {set i 0} {$i <= 256} {incr i} { 
+    for {set i 0} {$i <= 256} {incr i} {
         set c [format %c $i]
         if {![string match \[$alphanumeric\] $c]} {
             set map($c) %[format %.2x $i]

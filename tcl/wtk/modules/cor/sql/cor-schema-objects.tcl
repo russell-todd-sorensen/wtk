@@ -5,12 +5,12 @@
     -ObjNameFormat COR_SQLCMP%03i \
     -ObjCounter 0 \
     -VARIABLES {
-	{name {{}} - {::wtk::cor::checkStringLength name 64 1}}
-	{abbrev "" - {}}
-	{comments {{}} + {}}
+        {name {{}} - {::wtk::cor::checkStringLength name 64 1}}
+        {abbrev "" - {}}
+        {comments {{}} + {}}
     }\
     +METHODS getName\
-    +METHODS getAbbrev\    
+    +METHODS getAbbrev\
     +METHODS getComments\
 >>
 
@@ -34,7 +34,6 @@
     -ObjNameFormat COR_SCHEMA%03i \
     -ObjCounter 0 \
     -VARIABLES {
-
     }\
 >>
 
@@ -47,6 +46,6 @@
 >>
 
 set schema [<< ::wtk::cor::Schema -name mySchema -abbrev mys \
-		+comments "This is my first schema" >>]
+    +comments "This is my first schema" >>]
 
 ::wtk::log::log Notice "Schema name is '[<< $schema.getName >>]'"

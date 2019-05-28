@@ -6,7 +6,7 @@
     {cc this is cc}
     {ccc this is ccc}
     {c this is another c}
-
+}
 
 ::wtk::log::log Debug "namespace = [namespace current]"
 ::wtk::log::log Debug "nvGet myNameValueList a = '[::wtk::nv::nvGet myNameValueList a]'"
@@ -22,12 +22,9 @@ for {set i 0} {$i < [llength $myNameValueList]} {incr i} {
     ::wtk::log::log Debug "$i key = [::wtk::nv::nvKey myNameValueList $i] value = '[::wtk::nv::nvValue myNameValueList $i]'"
 }
 
-
 ::wtk::log::log Debug "nvSearch myNameValueList  C* -all 0 -nocase 1 -start 4 = [::wtk::nv::nvSearch myNameValueList  C* -all 0 -nocase 1 -start 4]"
 
 unset myNameValueList
-
-}
 
 ::wtk::log::log Notice "Loading namespace is '[namespace current]'"
 ::wtk::nv::nvEnumeration Directions Back -1 Exit Forward

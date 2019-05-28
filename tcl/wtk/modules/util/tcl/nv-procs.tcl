@@ -3,9 +3,7 @@
 namespace eval ::wtk::nv {
 
     variable version 1.0
-
     namespace import -force ::wtk::log::*
-
 }
 
 
@@ -13,7 +11,7 @@ proc ::wtk::nv::exists { nvName } {
 
     upvar 1 $nvName NV
     log Notice "nvList exists? = '[info exists NV]'"
-    return [info exists NV]
+    info exists NV
 }
 
 proc ::wtk::nv::size { nvName } {
@@ -34,47 +32,38 @@ proc ::wtk::nv::create { nvName {nvList {} } } {
 
     log Debug "nvList = '$nvList'"
     set NV $nvList
-    
 }
 
 proc ::wtk::nv::nvPut { nvName key value } {
 
     upvar 1 $nvName NV
-
     lappend NV [list $key $value]
-
 }
 
 proc ::wtk::nv::nvGet { nvName key } {
 
     upvar 1 $nvName NV
-
-    return [lindex [lsearch -inline $NV [list $key *]] 1]
-
+    lindex [lsearch -inline $NV [list $key *]] 1
 }
 
 proc ::wtk::nv::nviGet { nvName key } {
 
     upvar 1 $nvName NV
-
-    return [lindex [lsearch -inline -nocase $NV [list $key *]] 1]
-
+    lindex [lsearch -inline -nocase $NV [list $key *]] 1
 }
 
 # nvKey is the first element of the list
 proc ::wtk::nv::nvKey { nvName index } {
 
     upvar 1 $nvName NV
-
-    return [lindex $NV [list $index 0]]
+    lindex $NV [list $index 0]
 }
 
 # nvValue is the rest of the list
 proc ::wtk::nv::nvValue { nvName index } {
 
     upvar 1 $nvName NV
-
-    return [lrange [lindex $NV $index] 1 end]
+    lrange [lindex $NV $index] 1 end
 }
 
 proc ::wtk::nv::nvUpdateValue { nvName index value } {
@@ -88,7 +77,7 @@ proc ::wtk::nv::nvGetAll { nvName key } {
 
     upvar 1 $nvName NV
 
-    return [lsearch -inline -all -glob $NV [list $key *]]
+    lsearch -inline -all -glob $NV [list $key *]
 }
 
 proc ::wtk::nv::nvSearch { nvName pattern args } {
@@ -108,9 +97,9 @@ proc ::wtk::nv::nvSearch { nvName pattern args } {
         {real 0 - {string is boolean -strict $real}}
         {dictionary 0 - {string is boolean -strict $dictionary}}
     }
-    
+
     set searchString [list]
-    
+
     foreach option {exact glob regexp} {
         if {[set $option]} {
             lappend searchString "-$option"
@@ -134,9 +123,8 @@ proc ::wtk::nv::nvSearch { nvName pattern args } {
     lappend searchString $NV $pattern
 
     log Debug "searchString = '$searchString'"
-    return [lsearch -inline {*}$searchString]
-
-} 
+    lsearch -inline {*}$searchString
+}
 
 proc ::wtk::nv::nvEnumeration {nvName args} {
 
@@ -149,7 +137,6 @@ proc ::wtk::nv::nvEnumeration {nvName args} {
         1 {
             # Assume user packaged up all args into one:
             set args [lindex $args 0]
-
         }
         default {
             # use args as-is
@@ -166,13 +153,13 @@ proc ::wtk::nv::nvEnumeration {nvName args} {
             set value $val
             incr i
         }
-        
+
         lappend nvArgs [list $arg $value]
         incr value
     }
+
     create NV $nvArgs
     ::wtk::log::log Notice "nvEnumeration: Created Enum '$nvArgs'"
-
 }
 
 proc ::wtk::nv::nvBitMap {nvName args} {
@@ -198,26 +185,24 @@ proc ::wtk::nv::nvBitMap {nvName args} {
     for {set i 0} {$i < $len} {incr i} {
         set arg [lindex $args $i]
         set val [lindex $args [expr {$i + 1}]]
-        if {[string is integer -strict $val] && 
-        (($val eq "1") || (($val % 2) == 0)) } {
+        if {[string is integer -strict $val] &&
+            (($val eq "1") || (($val % 2) == 0))
+        } {
             set value $val
             incr i
         }
-        
+
         lappend nvArgs [list $arg $value]
         set value [expr {$value * 2}]
     }
 
     create NV $nvArgs
     ::wtk::log::log Notice "nvBitMap: Created BitMap '$nvArgs'"
-
 }
 
 namespace eval ::wtk::nv {
 
     variable version 1.0
-
     namespace export *
     log Notice "wtk::nv exports [namespace export]"
-
 }

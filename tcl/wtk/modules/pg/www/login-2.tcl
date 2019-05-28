@@ -8,9 +8,9 @@ set user_name [::wtk::db::quoteSqlData $original_user_name]
 
 set password $QS(password)
 
-set sql "select * 
-from 
- cordb.cor_identities 
+set sql "select *
+from
+ cordb.cor_identities
 where
  ident_login_name = '$user_name'
 and
@@ -33,25 +33,25 @@ set good 0
 
 switch -exact -- $status {
     "PGRES_TUPLES_OK" {
-	set attributes [pg::result $rs -attributes]
-	set rows [pg::result $rs -llist]
-	set good 1
-	if {[llength $rows] == 0} {
-	    set template login-not-found
-	    set good 0
-	}
-	if {[llength $rows] > 1} {
-	    ::wtk::pg::releaseHandle $dbHandle
-	    return -code error "Multiple Users with same name? '$rows'"
-	}
-	set rows [lindex $rows 0]
+        set attributes [pg::result $rs -attributes]
+        set rows [pg::result $rs -llist]
+        set good 1
+        if {[llength $rows] == 0} {
+            set template login-not-found
+            set good 0
+        }
+        if {[llength $rows] > 1} {
+            ::wtk::pg::releaseHandle $dbHandle
+            return -code error "Multiple Users with same name? '$rows'"
+        }
+        set rows [lindex $rows 0]
     }
     "PGRES_FATAL_ERROR" {
-	::wtk::pg::releaseHandle $dbHandle 
-	return -code error "pg-test.tcl: Postgres Fatal Error"
+        ::wtk::pg::releaseHandle $dbHandle
+        return -code error "pg-test.tcl: Postgres Fatal Error"
     }
     default {
-	::wtk::log::log Notice "pg-test.tcl result status is '$status'"
+        ::wtk::log::log Notice "pg-test.tcl result status is '$status'"
     }
 }
 

@@ -10,4 +10,3 @@ CREATE TABLE cordb.cor_domains
  domain_descr varchar(1024)
   CONSTRAINT cor_grp_domain_descr_nn NOT NULL
 );
-

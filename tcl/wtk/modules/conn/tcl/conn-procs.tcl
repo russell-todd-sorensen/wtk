@@ -1,5 +1,5 @@
 # conn procs
-# Setup http connection information 
+# Setup http connection information
 # and handle the request
 
 namespace eval ::wtk::conn {
@@ -32,9 +32,9 @@ proc ::wtk::conn::init { {iolist {stdin stdout}} } {
     variable initialized
 
     if {$initialized} {
-	return $initialized
+        return $initialized
     }
-    
+
     global env
 
     variable ifd [lindex $iolist 0]
@@ -55,31 +55,31 @@ proc ::wtk::conn::init { {iolist {stdin stdout}} } {
 
     # Extract request method
     if {[info exists env(REQUEST_METHOD)]} {
-	set method $env(REQUEST_METHOD)
+        set method $env(REQUEST_METHOD)
     } else {
-	set method "GET"
+        set method "GET"
     }
-    
+
     # get any query info:
     if {$method eq "POST"} {
-	chan configure $ifd -translation binary -encoding binary
-	set requestContentLength $env(CONTENT_LENGTH)
-	set requestContentType $env(CONTENT_TYPE)
-	set queryString [read $ifd $requestContentLength]
-	log Notice "queryString '$queryString'"
-	set formdata [makeSecureFd XXXXXXXX.XXX "/tmp"]
-	puts $formdata "env: [join [array get ::env] \n]"
-	puts -nonewline $formdata $queryString
-	set filename /tmp/[makeSecureName XXXXXXXXXX]
-	set fd [open $filename  wb+]
-	fconfigure $fd -translation binary
-	puts -nonewline $fd $queryString
-	::wtk::log::log Notice "Created file $filename"
-	close $fd
+        chan configure $ifd -translation binary -encoding binary
+        set requestContentLength $env(CONTENT_LENGTH)
+        set requestContentType $env(CONTENT_TYPE)
+        set queryString [read $ifd $requestContentLength]
+        log Notice "queryString '$queryString'"
+        set formdata [makeSecureFd XXXXXXXX.XXX "/tmp"]
+        puts $formdata "env: [join [array get ::env] \n]"
+        puts -nonewline $formdata $queryString
+        set filename /tmp/[makeSecureName XXXXXXXXXX]
+        set fd [open $filename  wb+]
+        fconfigure $fd -translation binary
+        puts -nonewline $fd $queryString
+        ::wtk::log::log Notice "Created file $filename"
+        close $fd
     } elseif {$method eq "GET" && [info exists env(QUERY_STRING)]} {
-	set queryString $env(QUERY_STRING)
+        set queryString $env(QUERY_STRING)
     } else {
-	set queryString ""
+        set queryString ""
     }
 
     # parse query
@@ -103,9 +103,9 @@ proc ::wtk::conn::getCookies { } {
     variable inputCookieCount 0
 
     if {[info exists env(HTTP_COOKIE)]} {
-	set cookieString [string trim $env(HTTP_COOKIE)]
+        set cookieString [string trim $env(HTTP_COOKIE)]
     } else {
-	set cookieString ""
+        set cookieString ""
     }
 
     # This is a simplified cookie monster
@@ -115,9 +115,9 @@ proc ::wtk::conn::getCookies { } {
 
     foreach cookie $cookieList {
 
-	lassign [split $cookie =] key value
-	::wtk::nv::nvPut inputCookies [string trim $key] [string trim $value]
-	incr inputCookieCount
+        lassign [split $cookie =] key value
+        ::wtk::nv::nvPut inputCookies [string trim $key] [string trim $value]
+        incr inputCookieCount
     }
 
     return $inputCookieCount
@@ -129,16 +129,16 @@ proc ::wtk::conn::getCookie {cookieName} {
     variable initialized
 
     if {!$initialized} {
-	init
+        init
     }
 
     variable inputCookies
     variable inputCookieCount
 
     if {!$inputCookieCount} {
-	return NULL
+        return NULL
     }
-    
+
     return [::wtk::nv::nviGet form $cookieName]
 }
 
@@ -152,7 +152,7 @@ proc ::wtk::conn::returnConn {
     variable initialized
 
     if {!$initialized} {
-	init
+        init
     }
 
     variable outputHeaders
@@ -161,22 +161,22 @@ proc ::wtk::conn::returnConn {
     variable content
 
     if {[set size [::wtk::nv::size outputHeaders]] > -1} {
-	for {set i 0} {$i < $size} {incr i} {
-	    puts $ofd "[::wtk::nv::nvKey outputHeaders $i]: [::wtk::nv::nvValue outputHeaders $i]\r"
-	}
+        for {set i 0} {$i < $size} {incr i} {
+            puts $ofd "[::wtk::nv::nvKey outputHeaders $i]: [::wtk::nv::nvValue outputHeaders $i]\r"
+        }
     }
-    
+
     # contentType variable overrides proc argument
     if {$contentType ne "NULL"} {
-	set content_type $content_type
+        set content_type $content_type
     } else {
-	set contentType $content_type
+        set contentType $content_type
     }
-    
+
     if {$content ne ""} {
-	set resultContent $content
+        set resultContent $content
     }
-    
+
     # This will evolve quickly
 
     set date [clock format [clock seconds] -format "%a, %d %b %G %T GMT" -gmt 1]
@@ -192,7 +192,7 @@ proc ::wtk::conn::returnConn {
 
 proc ::wtk::conn::parseQueryToNVSet {
 
- {nvSet QUERY}
+    {nvSet QUERY}
 
 } {
 
@@ -204,27 +204,22 @@ proc ::wtk::conn::parseQueryToNVSet {
     variable method
 
     if {$method eq "GET" ||
-	$requestContentType eq "application/x-www-form-urlencoded"
+        $requestContentType eq "application/x-www-form-urlencoded"
     } {
-	::wtk::nv::create $nvSet
 
-	set length [string length $queryString]
+        ::wtk::nv::create $nvSet
 
-	set queryTerms [split $queryString ";&"]
-	    
-	foreach term $queryTerms {
-	    ::wtk::nv::nvPut QUERY {*}[split $term "="]
-	    #log Notice "QUERYTERM=([split $term =])"
-	}
+        set length [string length $queryString]
+        set queryTerms [split $queryString ";&"]
+
+        foreach term $queryTerms {
+            ::wtk::nv::nvPut QUERY {*}[split $term "="]
+            #log Notice "QUERYTERM=([split $term =])"
+        }
     } else {
-	::wtk::log::log Notice "............Content-Type: $requestContentType
+        ::wtk::log::log Notice "............Content-Type: $requestContentType
 method: $method"
     }
 
     return $nvSet
 }
-
-
-
-
-

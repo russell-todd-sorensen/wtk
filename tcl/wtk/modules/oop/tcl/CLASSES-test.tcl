@@ -10,18 +10,18 @@ log Notice ":::::::::::::::::::::: TEST OOP PACKAGE ::::::::::::::::::::::"
 namespace eval ::Shape::Rect {
 
     variable PUBLIC_getX [list {} {
-	variable x
-	return $x
+    variable x
+    return $x
     }]
 
     variable PUBLIC_getY [list {} {
-	variable y
-	return $y
+    variable y
+    return $y
     }]
     variable PUBLIC_getArea [list {} {
-	variable x
-	variable y
-	expr {$x * $y}
+    variable x
+    variable y
+    expr {$x * $y}
     }]
 
 }
@@ -30,7 +30,7 @@ namespace eval ::Shape::Rect {
     -ObjNameFormat SHAPE_BOX%0.3i\
     -ObjCounter 0\
     -VARIABLES {
-	{z 0 - {}}
+    {z 0 - {}}
     } \
     +METHODS getZ +METHODS getArea +METHODS getVolume \
     +Public ::Shape::Rect \
@@ -40,20 +40,20 @@ if {0} {
 namespace eval ::Shape::Box {
 
     variable PUBLIC_getZ [list {} {
-	variable z
-	return $z
+    variable z
+    return $z
     }]
     variable PUBLIC_getArea [list {} {
-	variable x
-	variable y
-	variable z
-	expr { 2 * ( ($x * $y) + ($x * $z) + ($y * $z) ) }
+    variable x
+    variable y
+    variable z
+    expr { 2 * ( ($x * $y) + ($x * $z) + ($y * $z) ) }
     }]
     variable PUBLIC_getVolume  [list {} {
-	variable x
-	variable y
-	variable z
-	expr {$x * $y * [<< [this].getZ >>]}
+    variable x
+    variable y
+    variable z
+    expr {$x * $y * [<< [this].getZ >>]}
     }]
 
 }
@@ -92,16 +92,16 @@ if {0} {
 namespace eval ::Shape::Circle {
 
     variable PUBLIC_getR [list {} {
-	variable r
-	return $r
+    variable r
+    return $r
     }]
     variable PUBLIC_getArea [list {} {
-	variable r
-	expr {3.14159 * $r * $r}
+    variable r
+    expr {3.14159 * $r * $r}
     }]
     variable PUBLIC_getCircumference [list {} {
-	variable r
-	expr {2 * 3.14159 * $r}
+    variable r
+    expr {2 * 3.14159 * $r}
     }]
 
 }
@@ -134,18 +134,18 @@ namespace eval ::Shape::Circle {
 if {0} {
 namespace eval ::Shape::Cylinder {
     variable PUBLIC_getH [list {} {
-	variable h
-	return $h
+    variable h
+    return $h
     }]
     variable PUBLIC_getArea [list {} {
-	variable r
-	variable h
-	expr { (2.0 * 3.14159 * $r * $r) + (2.0 * $r * $h * 3.14159) }
+    variable r
+    variable h
+    expr { (2.0 * 3.14159 * $r * $r) + (2.0 * $r * $h * 3.14159) }
     }]
     variable PUBLIC_getVolume [list {} {
-	variable h
-	variable r
-	expr {3.14159 * $r * $r * $h}
+    variable h
+    variable r
+    expr {3.14159 * $r * $r * $h}
     }]
 }
 }

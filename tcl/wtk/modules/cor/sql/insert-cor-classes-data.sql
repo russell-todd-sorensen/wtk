@@ -19,7 +19,3 @@ insert into cordb.cor_classes values (5, 'User', 'COR Users Class', 'cor_users')
 
 insert into cordb.cor_objects values (50, 4, 100, now(), now(), 'Admin Group');
 --insert into cordb.cor_objects values (100, 4, 100, now(), now(), 'User: Russell Sorensen');
-
-
-
-

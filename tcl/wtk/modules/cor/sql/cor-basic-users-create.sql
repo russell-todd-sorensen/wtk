@@ -1,4 +1,4 @@
-insert into cordb.cor_objects 
+insert into cordb.cor_objects
 (object_id,
  class_id,
  obj_owner,
@@ -15,11 +15,11 @@ insert into cordb.cor_domains
 (domain_id,
  domain_name,
  domain_descr
-) 
-values 
+)
+values
 (1000, 'Local', 'Local Domain');
 
-insert into cordb.cor_identities 
+insert into cordb.cor_identities
 (identity_id,
  ident_type_id,
  ident_domain_id,
@@ -29,9 +29,9 @@ insert into cordb.cor_identities
  ident_password_salt,
  encryption_method_id,
  ident_descr
-) 
+)
 values
-(100, 
+(100,
  2,
  1000,
  'Russell Sorensen',
@@ -45,11 +45,9 @@ values
  3,
  1000,
  'Admin',
- 'admin', 
+ 'admin',
  '9f2d630c26b06d1ea90088ee3bad396e1e7b6f10', --adminPassword
  '0.6881970999241793',
  2,
  'Admin Group: Admin, login admin'
 );
-
-

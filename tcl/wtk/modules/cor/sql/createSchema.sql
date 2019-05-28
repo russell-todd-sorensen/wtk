@@ -2,4 +2,3 @@
 --
 
 create schema cordb;
-

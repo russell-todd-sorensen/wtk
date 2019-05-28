@@ -25,7 +25,7 @@ CREATE TABLE cordb.cor_classes (
   CONSTRAINT cor_cla_class_id_pk PRIMARY KEY (class_id)
 );
 
---plpgsql 
+--plpgsql
 CREATE OR REPLACE FUNCTION cordb.cor_class__create (
   in out p_class_id integer,
   in     p_class_name varchar,
@@ -76,7 +76,7 @@ CREATE TABLE cordb.cor_objects (
     CONSTRAINT cor_obj_object_descr_nn NOT NULL
 );
 
---plpgsql 
+--plpgsql
 CREATE OR REPLACE FUNCTION cordb.cor_object__create (
   in out p_object_id integer,
   in     p_class_id integer,
@@ -142,7 +142,7 @@ CREATE TABLE cordb.cor_attribute_types (
     CONSTRAINT cor_cat_attr_type_descr_nn NOT NULL
 );
 
---plpgsql 
+--plpgsql
 CREATE OR REPLACE FUNCTION cordb.cor_attribute_type__create (
   in out p_attr_type_id integer,
   in     p_attr_type_name varchar,
@@ -194,7 +194,7 @@ CREATE TABLE cordb.cor_attributes (
   CONSTRAINT cor_att_class_id_attr_name_un UNIQUE (class_id, attr_name)
 );
 
---plpgsql 
+--plpgsql
 CREATE OR REPLACE FUNCTION cordb.cor_attribute__create (
   in out p_attribute_id integer,
   in     p_class_id integer,
@@ -268,7 +268,7 @@ CREATE TABLE cordb.cor_relations (
   CONSTRAINT cor_rel_object_id_predicate_id_subject_id_un UNIQUE (object_id, predicate_id, subject_id)
 );
 
---plpgsql 
+--plpgsql
 CREATE OR REPLACE FUNCTION cordb.cor_relation__create (
   in out p_subject_id integer,
   in out p_object_id integer,
@@ -314,7 +314,7 @@ CREATE TABLE cordb.cor_identity_types (
     CONSTRAINT cor_itp_type_descr_nn NOT NULL
 );
 
---plpgsql 
+--plpgsql
 CREATE OR REPLACE FUNCTION cordb.cor_identity_type__create (
   in out p_type_id integer,
   in     p_identity_type_name varchar,
@@ -352,7 +352,7 @@ CREATE TABLE cordb.cor_domains (
     CONSTRAINT cor_dom_domain_descr_nn NOT NULL
 );
 
---plpgsql 
+--plpgsql
 CREATE OR REPLACE FUNCTION cordb.cor_domain__create (
   in out p_domain_id integer,
   in     p_domain_name varchar,
@@ -402,7 +402,7 @@ CREATE TABLE cordb.cor_encryption_methods (
     CONSTRAINT cor_enc_method_descr_nn NOT NULL
 );
 
---plpgsql 
+--plpgsql
 CREATE OR REPLACE FUNCTION cordb.cor_encryption_method__create (
   in out p_method_id integer,
   in     p_method_name varchar,
@@ -463,7 +463,7 @@ CREATE TABLE cordb.cor_identities (
   CONSTRAINT cor_idt_ident_domain_id_ident_login_name_un UNIQUE (ident_domain_id, ident_login_name)
 );
 
---plpgsql 
+--plpgsql
 CREATE OR REPLACE FUNCTION cordb.cor_identity__create (
   in out p_identity_id integer,
   in     p_ident_type_id integer,
@@ -554,7 +554,7 @@ CREATE TABLE cordb.cor_user_types (
     CONSTRAINT cor_ust_type_descr_nn NOT NULL
 );
 
---plpgsql 
+--plpgsql
 CREATE OR REPLACE FUNCTION cordb.cor_user_type__create (
   in out p_type_id integer,
   in     p_type_name varchar,
@@ -592,7 +592,7 @@ CREATE TABLE cordb.cor_users (
     CONSTRAINT cor_usr_user_type_id_fk REFERENCES cordb.cor_user_types(type_id)
 );
 
---plpgsql 
+--plpgsql
 CREATE OR REPLACE FUNCTION cordb.cor_user__create (
   in out p_user_id integer,
   in     p_user_type_id integer

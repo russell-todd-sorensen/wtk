@@ -32,7 +32,7 @@ log Notice ":::::::::::::::::::::: TEST OOP PACKAGE ::::::::::::::::::::::"
     -ObjNameFormat SHAPE_BOX%0.3i\
     -ObjCounter 0\
     -VARIABLES {
-	{z 0 - {}}
+    {z 0 - {}}
     } \
     +METHODS getZ +METHODS getArea +METHODS getVolume \
     +Public ::Shape::Rect \

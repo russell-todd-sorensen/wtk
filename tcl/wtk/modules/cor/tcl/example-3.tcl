@@ -16,11 +16,11 @@ set corTables [list]
 # Classes table:
 
 lappend corTables [<< ::wtk::cor::Table\
-		       -name classes\
-		       -abbrev cla\
-		       -primaryKeys {class_id}\
-		       +tableConstraints {pk {class_id}}\
-		       +comments "COR Classes table" >>]
+    -name classes\
+    -abbrev cla\
+    -primaryKeys {class_id}\
+    +tableConstraints {pk {class_id}}\
+    +comments "COR Classes table" >>]
 
 << [lindex $corTables end].addColumns {
     {class_id integer {{nn ""}}}
@@ -30,10 +30,10 @@ lappend corTables [<< ::wtk::cor::Table\
 } >>
 
 lappend corTables [<< ::wtk::cor::Table\
-		       -name objects\
-		       -abbrev obj\
-		       -primaryKeys {object_id}\
-		       +comments "COR Objects table" >>]
+    -name objects\
+    -abbrev obj\
+    -primaryKeys {object_id}\
+    +comments "COR Objects table" >>]
 
 << [lindex $corTables end].addColumns {
     {object_id integer {{pk ""} {nn ""}}}
@@ -45,10 +45,10 @@ lappend corTables [<< ::wtk::cor::Table\
 } >>
 
 lappend corTables [<< ::wtk::cor::Table\
-		       -name attribute_types\
-		       -abbrev cat\
-		       -primaryKeys {attr_type_id}\
-		       +comments "COR Attributes Table" >>]
+    -name attribute_types\
+    -abbrev cat\
+    -primaryKeys {attr_type_id}\
+    +comments "COR Attributes Table" >>]
 
 << [lindex $corTables end].addColumns {
     {attr_type_id integer {{pk ""} {nn ""}}}
@@ -58,10 +58,10 @@ lappend corTables [<< ::wtk::cor::Table\
 } >>
 
 lappend corTables [<< ::wtk::cor::Table\
-		       -name attributes\
-		       -abbrev att\
-		       -primaryKeys {attribute_id}\
-		       +tableConstraints {un {class_id attr_name}} >>]
+    -name attributes\
+    -abbrev att\
+    -primaryKeys {attribute_id}\
+    +tableConstraints {un {class_id attr_name}} >>]
 
 << [lindex $corTables end].addColumns {
     {attribute_id integer {{pk ""} {nn ""} {fk {cor_objects object_id}}}}
@@ -73,12 +73,12 @@ lappend corTables [<< ::wtk::cor::Table\
 } >>
 
 lappend corTables [<< ::wtk::cor::Table\
-		       -name relations\
-		       -abbrev rel\
-		       -primaryKeys {subject_id predicate_id object_id}\
-		       +tableConstraints {pk {subject_id predicate_id object_id}}\
-		       +tableConstraints {un {subject_id object_id predicate_id}}\
-		       +tableConstraints {un {object_id predicate_id subject_id}} >>]
+    -name relations\
+    -abbrev rel\
+    -primaryKeys {subject_id predicate_id object_id}\
+    +tableConstraints {pk {subject_id predicate_id object_id}}\
+    +tableConstraints {un {subject_id object_id predicate_id}}\
+    +tableConstraints {un {object_id predicate_id subject_id}} >>]
 
 << [lindex $corTables end].addColumns {
     {subject_id integer {{nn ""} {fk {objects object_id}}}}
@@ -87,14 +87,13 @@ lappend corTables [<< ::wtk::cor::Table\
     {sort_order integer {{nn ""} {df 1}}}
 } >>
 
-
 # Identities table:
 lappend corTables [<< ::wtk::cor::Table\
-		       -name identities2\
-		       -abbrev idt2\
-		       -primaryKeys [list identity_id]\
-		       +comments "This is the Identities table"\
-		       +tableConstraints {un "ident_domain_id ident_login_name"} >>]
+    -name identities2\
+    -abbrev idt2\
+    -primaryKeys [list identity_id]\
+    +comments "This is the Identities table"\
+    +tableConstraints {un "ident_domain_id ident_login_name"} >>]
 
 << [lindex $corTables end].addColumns {
     {identity_id integer {{pk ""} {fk "objects object_id"} {nn ""}} }
@@ -108,15 +107,8 @@ lappend corTables [<< ::wtk::cor::Table\
     {ident_descr text {{nn ""}} }
 } >>
 
-
-
-    
-		       
-		       
-
 foreach tableId $corTables {
     << $myModule.addTable $tableId >>
 }
-
 
 ::wtk::log::log Notice "\n[<< $db2.printSql >>]"

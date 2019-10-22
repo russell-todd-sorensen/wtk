@@ -1,4 +1,3 @@
-
 proc lassign {list args} {
     set i 0
     set argLength [llength $args]

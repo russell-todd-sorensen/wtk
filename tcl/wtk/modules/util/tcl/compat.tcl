@@ -54,7 +54,7 @@ proc ::testNamespaceUpvar {} {
     puts stderr "testNamespaceUpvar ::test2::y = $::test2::y"
 }
 
-#rename ::chan ::chan_original
+rename ::chan ::chan_original
 
 proc ::chan {method args} {
 

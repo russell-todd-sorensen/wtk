@@ -1,16 +1,33 @@
 namespace eval ::tbench {
     variable server [ns_info server]
     variable pool test
-    variable logStatsFrequency 5
+    variable logStatsFrequency 50
     variable requestId 0
     variable prevReqId 0
-    variable count
-    variable threadId
-    variable name ; # this is the synthesized thread name see preAuthFilter
-    variable threadRequests
+    variable count 0
     variable configSetId [ns_set copy [ns_configsection "ns/server/${server}/pool/${pool}"]]
     variable connsPerThread [ns_set iget $configSetId connsPerThread]
     variable poolMapList [list]
+    variable threadId
+    variable name ; # this is the synthesized thread name see preAuthFilter
+    variable threadRequests
+    variable processGap 0
+    variable requestGap 0
+
+    namespace import -force ::wtk::log::log
+
+}
+
+proc ::tbench::init {} {
+    variable server
+    variable pool
+    variable logStatsFrequency
+    variable connsPerThread
+    variable requestId
+    variable count
+    variable poolMapList
+    variable configSetId
+    variable connsPerThread
 
     for {set i 0} {$i < [ns_set size $configSetId]} {incr i} {
         if {[string tolower [ns_set key $configSetId $i]] == "map"} {
@@ -18,29 +35,33 @@ namespace eval ::tbench {
         }
     }
 
-    namespace import -force ::wtk::log::log
-
-    ns_log Notice "Booting ::tbench poolMapList = $poolMapList"
-}
-
-proc ::tbench::init {} {
-
-    variable initialized
-
-    if {$initialized} {
-        return $initialized
+    if {[llength $poolMapList] == 0} {
+        log Warning "::tbench loaded with no thread pool mappings"
+        return
     }
 
-    variable threadRequests 0
+    log Notice "::tbench Booting poolMapList = $poolMapList"
 
-    nsv_set tbench ${name}:${threadId} 0
+    foreach mp $poolMapList {
+        lassign $mp method pattern
+        ns_register_filter preauth $method $pattern ::tbench::preAuthFilter
+        ns_register_filter trace $method $pattern ::tbench::traceFilter
+        log Notice "::tbench mapped method $method and pattern $pattern"
+    }
 
-    ns_log Notice "::tbench::init new thread ${name}:${threadId}"
-    return [set intialized true]
+    # setup once per start all nsv variables
+    nsv_set tbench count $count
+    nsv_set tbench requestId $requestId ;# an ever increasing id for each request
+    nsv_set tbench connsPerThread $connsPerThread
+    nsv_set tbench mutex [ns_mutex create]
+    nsv_set tbench deletedCount 0
+
+    log Notice "::tbench::init active: connsPerThread=$connsPerThread stats every $logStatsFrequency"
 }
 
 proc ::tbench::preAuthFilter { why } {
 
+    variable server
     variable count [nsv_incr tbench count]
     variable name [join [lrange [split [ns_thread name] ":"] 0 end-1] "-"]
     variable threadId [ns_thread id]
@@ -51,11 +72,13 @@ proc ::tbench::preAuthFilter { why } {
         ? [nsv_get tbench  prevReqId:${name}:${threadId}]
         : $requestId
     }]
-    variable server
     variable connsPerThread
+    variable processGap
+    variable requestGap
 
-    ns_log Notice "Starting tbench threadId: $threadId, requestId: $requestId, \
-            totalCount: $count, threadRequests: $threadRequests"
+    log Notice ",tbench Start, tId:, $threadId, reqId:, $requestId,\
+        count:, $count, tReq:, $threadRequests, procGap:, $processGap,\
+        reqGap:, $requestGap"
 
     return filter_ok
 }
@@ -78,13 +101,14 @@ proc ::tbench::traceFilter { why } {
     if {($count % $logStatsFrequency) == 0 
         &&  ([ns_mutex trylock [nsv_get tbench mutex]]) == 0
     } {
-        ns_log Notice "::tbench::traceFilter about to logStats count=$count freq=$logStatsFrequency"
+        log Notice "::tbench::traceFilter about to logStats count=$count freq=$logStatsFrequency"
         catch {logStats}
         ns_mutex unlock [nsv_get tbench mutex]
     }
 
-    ns_log Notice "Tracing  tBench threadId: $threadId, requestId: $requestId, \
-            processGap: $processGap, threadRequests: $threadRequests, requestGap: $requestGap"
+    log Notice ",tbench Trace, tId:, $threadId, reqId:, $requestId,\
+        count:, $count, tReq:, $threadRequests, procGap:,\
+        $processGap, reqGap:, $requestGap"
 
     nsv_set tbench prevReqId:${name}:${threadId} $requestId
     return filter_ok
@@ -124,7 +148,8 @@ proc ::tbench::logStats {{returnResult false}} {
     }
     append result "[format %40.40s "Previously Deleted:"][format %10i $deleted]\n"
     append result "[format %40.40s "total:"][format %10i $total]"
-    ns_log Notice "thread: $threadId RESULTS UP TO $total\n$result\n"
+
+    log Notice "::tbench::logStats: $threadId RESULTS UP TO $total\n$result\n"
 
     if {$returnResult} {
         return $result

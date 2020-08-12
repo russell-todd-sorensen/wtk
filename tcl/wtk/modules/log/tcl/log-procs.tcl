@@ -1,11 +1,11 @@
 # ::wtk::log module
 
-
 namespace eval ::wtk::log {
 
     variable logChannel stderr
     variable debug 0
-    variable SUPPORTS_MICROSECONDS [expr {[catch {clock microseconds}]} ? 0 : 1]
+    variable SUPPORTS_MICROSECONDS [expr {[catch {clock microseconds}]} ? 1 : 0]
+    variable method ns_log
 }
 
 proc ::wtk::log::log {level message} {
@@ -13,9 +13,14 @@ proc ::wtk::log::log {level message} {
     variable logChannel
     variable debug
     variable SUPPORTS_MICROSECONDS
+    variable method 
+
+    if {$method == "ns_log"} {
+        return [ns_log $level $message]
+    }
 
     if {!$debug && $level eq "Debug"} {
-        return
+        return ""
     }
 
     # NOTE ON CLOCK FORMAT:
@@ -42,4 +47,8 @@ namespace eval ::wtk::log {
     namespace export log
 }
 
-::wtk::log::log Notice "Finished Loading log-procs.tcl"
+namespace eval :: {
+    namespace import ::wtk::log::log
+}
+
+log Notice "Finished Loading log-procs.tcl"

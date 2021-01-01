@@ -67,11 +67,13 @@ proc ::tbench::preAuthFilter { why } {
     variable threadId [ns_thread id]
     variable threadRequests [nsv_incr tbench ${name}:${threadId}]
     variable requestId [nsv_incr tbench requestId]
-    variable prevReqId [expr {
-        [nsv_exists tbench prevReqId:${name}:${threadId}]
-        ? [nsv_get tbench  prevReqId:${name}:${threadId}]
-        : $requestId
-    }]
+    variable prevReqId
+    if {[nsv_exists tbench prevReqId:${name}:${threadId}]} {
+        set prevReqId [nsv_get tbench prevReqId:${name}:${threadId}]
+        nsv_unset tbench prevReqId:${name}:${threadId}
+    } else {
+        set prevReqId $requestId
+    }
     variable connsPerThread
     variable processGap
     variable requestGap
@@ -129,19 +131,19 @@ proc ::tbench::logStats {{returnResult false}} {
     array set statsCopy [nsv_array get tbench "-conn-*:*"]
     set deleted [nsv_get tbench deletedCount]
     set total $deleted
-
+    set threads [ns_info threads]
     foreach key [lsort [array names statsCopy]] {
+        set hilite ""
         if {($connsPerThread - $statsCopy($key)) <= 0 } {
-            catch { 
-                # it is possible that another thread has already done this,
-                # if we wanted to be sure we would obtain a mutex lock before
-                # copying the tbench array, I might have to do this anyway...
-                nsv_unset tbench $key
-                nsv_incr tbench deletedCount $statsCopy($key)
+            catch {
+                set tId -[join [lrange [split [lindex [split $key :] 0] -] 1 end] :]:
+                if {[lsearch -glob $threads $tId*] == -1} {
+                    nsv_unset tbench $key
+                    nsv_incr tbench deletedCount $statsCopy($key)
+                    set hilite "(del)=>"
+                }
+                ns_log Notice "DELETE? $hilite$key"
             } 
-            set hilite "(del)=>"
-        } else {
-            set hilite ""
         }
         append result "[format %40.40s $hilite$key][format %10i $statsCopy($key)]\n"
         incr total $statsCopy($key)

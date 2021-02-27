@@ -48,7 +48,7 @@ source [file join $::wtk::WTKLibrary modules modules tcl modules-procs.tcl]
 #::wtk::modules::addModule t3   [list procs]
 #::wtk::modules::addModule workbox [list procs init]
 ::wtk::modules::addModule thread [list procs]
-#::wtk::modules::addModuleOutline nsStart [list procs init config]
+::wtk::modules::addModule nsStart [list procs init config]
 ::wtk::modules::addModule tbench [list procs config init]
 # Finally load all the modules:
 ::wtk::modules::loadModules

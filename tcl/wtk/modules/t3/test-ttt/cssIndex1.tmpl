@@ -1,0 +1,72 @@
+[comment {
+    Testing file for glob-to and file-to commands
+
+    Note: file-to and glob-to are dangerous commands
+    which should probably be removed from safe templates.
+
+}/]
+
+[set directory $dir /]
+[set title "Contents of $directory"/]
+<!DOCTYPE html>
+<html lang="en_US">
+<head>
+ <meta charset="utf-8">
+ <title>$title</title>
+ <link rel="stylesheet" type="text/css" href="main.css" media="all">
+</head>
+<body>
+<div class="nav">
+      <li><a href="/">home page</a> &gt;</li> 
+      <li><a href="/tutorials/TUTORIAL.html">tutorial index</a> &gt;</li>
+      <li>$title</li>
+</div>
+
+<div id="content">
+ <h1>$title</h1>
+
+[glob-to file_list -tails -directory $directory/ -type f *]
+[lsort-to file_list $file_list]
+[glob-to dir_list  -tails -directory $directory/ -type d * .*]
+[lsort-to dir_list $dir_list]
+<h3>Directories:</h3>
+<table cellspacing='0' cellpadding='2' border='1'>
+[foreach dirname $dir_list ]
+  <tr><th><a href='${dirname}/' class='dir'>[file tail $dirname]</a></th><td>[file mtime $dirname]</td></tr>[ws/]
+[/foreach]
+</table>
+<h3>Files:</h3>
+[foreach obj $file_list /]
+  [file-to file_extension extension $obj /]
+  [string-to file_extension trimleft $file_extension "." /]
+  [switch -glob -- "$file_extension"]
+   [case *~ - *.o ][comment {do nothing}/]
+
+   [/case]
+   [default]
+ <li><a href='$obj' class='$file_extension'>[file tail $obj]</a></li>[ws/]
+   [/default/]
+  [/switch/]
+[/foreach]
+</div>
+
+<div class="bottom">
+ <hr>
+ <address><a href="mailto:russell@ic00408.cst.edu">Russell Sorensen</a></address>
+[info-to script script /]
+[file-to mtime mtime $script /]
+[clock-to clockTime format $mtime -format "%+" /]
+<!-- Created $clockTime -->
+
+<span class="lastMod">Last modified $clockTime</span>
+
+ <div id="footer">
+  <div class="nav">
+   <li>[<a href="..">..</a>] |</li>
+   <li>[<a href=".">.</a>]</li>
+  </div>
+ </div>
+</div>
+
+</body>
+</html>

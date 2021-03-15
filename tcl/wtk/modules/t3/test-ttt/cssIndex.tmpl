@@ -1,0 +1,147 @@
+[comment {
+    Testing file for glob-to and file-to commands
+
+    Note: file-to and glob-to are dangerous commands
+    which should probably be removed from safe templates.
+
+}/]
+
+[set directory $dir /]
+[set title "Contents of $normalizedDirectory"/]
+[set shortTitle "Contents of $finalElement" /]
+[file-to mainCssExists exists $dir/main.css /]
+[if {$mainCssExists} /]
+ [set mainCss "main.css" /]
+[else/]
+ [set mainCss "/main.css" /]
+[/if/]
+<!DOCTYPE html>
+<html lang='en_US'>
+<head>
+ <meta charset='utf-8'>
+ <title>$title</title>
+ <link rel='stylesheet' type='text/css' href='$mainCss' media='all'>
+ <style type='text/css'>
+
+table.dir, table.files {
+   width: 80%;
+  
+}
+
+.dir th, .files th {
+  text-align: left;
+  background-color: silver;
+  text-transform: capitalize;
+  font-weight: bold;
+}
+
+.num {
+  text-align: right;
+}
+ </style>
+
+ <script language='javascript' src='/js/jquery-v141.js'></script>
+ <script language='javascript'>
+ 
+ var log;
+\$(document).ready(function() {
+
+  log = \$('#log');	 
+  var titleNode = \$('h1#title');
+  titleNode.wrap("<div class='content2' id='content4'">);
+
+});
+</script>
+</head>
+<body>
+<div class='nav'>
+  <li><a href='/'>home page</a> &gt;</li>
+[set path "/"]
+[foreach element $pathElements /]
+[append-to path path $element "/"]
+  <li><a href='$path'>$element</a> &gt;</li>[ws/]
+[/foreach]
+  <li>$shortTitle</li>
+</div>
+
+<div id='content'>
+ <h1 id='title'>$shortTitle</h1>[ws/]
+
+[glob-to file_list -directory $directory/ -type f * /]
+[lsort-to file_list $file_list /]
+[glob-to dir_list -directory $directory/ -type d * .* /]
+[lsort-to dir_list $dir_list]
+
+<table class='dir' cellspacing='0' cellpadding='2' border='0'>
+ <tr>
+  <th>directories</th>
+  <th>last modified</th>
+  <th>size</th>
+ </tr>[ws/]
+[foreach dirname $dir_list /]
+ [file-to tail tail $dirname /]
+ [file stat $dirname dirArray ]
+  <tr>
+   <td><a href='${tail}/' class='dir'>$tail</a></td>
+   <td>[clock format $dirArray(mtime) -format "%Y-%m-%d %H:%M:%S" ]</td>
+   <td class='num'>$dirArray(size) Bytes</td>
+ </tr>[ws/]
+[/foreach]
+ <tr>
+  <th>files</th>
+  <th>last modified</th>
+  <th>size</th>
+ </tr>[ws/]
+[foreach obj $file_list /]
+  [file-to tail tail $obj /]
+  [file stat $obj fileArray /]
+  [file-to file_extension extension $tail /]
+
+  [string-to file_extension trimleft $file_extension "." /]
+  [switch -glob -- "$file_extension"]
+   [case *~ - *.o ][comment {do nothing}/]
+
+   [/case]
+   [default]
+  <tr>
+   <td><a href='${tail}' class='$file_extension'>[string range $tail 0 30]</a></td>
+   <td>[clock format $fileArray(mtime) -format "%Y-%m-%d %H:%M:%S" ]</td>
+   <td class='num'>[ws/]
+   [set size $fileArray(size) /]
+   [if {$size  <= 1024 } /]
+     $size Bytes[ws/]
+   [elseif {($size / 1024.0) <= 1024} /]
+     [expr-to size {$size/1024}/]
+     [format-to size %3d $size/]
+     [string map {" " "&nbsp;"} $size] KBytes[ws/]
+   [elseif {($size / (1024*1024)) <= 1024} /]
+     [expr {$size/(1024*1024)} ] MBytes[ws/]
+   [/if/]
+   </td>
+  </tr>[ws/]
+   [/default/]
+  [/switch/]
+[/foreach]
+</table>
+</div>
+
+<div class='bottom'>
+ <hr>
+ <address><a href='mailto:russell@ic00408.cst.edu'>Russell Sorensen</a></address>
+[info-to script script /]
+[file-to mtime mtime $script /]
+[clock-to clockTime format $mtime -format "%+" /]
+<!-- Created $clockTime -->
+
+<span class='lastMod'>Last modified $clockTime</span>
+<pre id='log'>Log</pre>
+ <div id='footer'>
+  <div class='nav'>
+   <li>[<a href='..'>..</a>] |</li>
+   <li>[<a href='.'>.</a>]</li>
+  </div>
+ </div>
+</div>
+
+</body>
+</html>

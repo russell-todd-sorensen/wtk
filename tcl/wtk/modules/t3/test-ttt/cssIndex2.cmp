@@ -1,0 +1,110 @@
+set directory $dir
+set title "Contents of $directory"
+append __string "<!DOCTYPE html>
+<html lang=\"en_US\">
+<head>
+ <meta charset=\"utf-8\">
+ <title>"
+
+append __string $title
+append __string "</title>
+ <link rel=\"stylesheet\" type=\"text/css\" href=\"main.css\" media=\"all\">
+</head>
+<body>
+<div class=\"nav\">
+      <li><a href=\"/\">home page</a> &gt;</li> 
+      <li><a href=\"/tutorials/TUTORIAL.html\">tutorial index</a> &gt;</li>
+      <li>"
+
+append __string $title
+append __string "</li>
+</div>
+
+<div id=\"content\">
+ <h1>"
+
+append __string $title
+append __string "</h1>
+
+"
+set file_list [glob -nocomplain -tails -directory $directory/ -type f *]
+append __string "
+"
+set file_list [lsort $file_list]
+append __string "
+"
+set dir_list [glob -nocomplain -tails -directory $directory/ -type d * .*]
+append __string "
+"
+set dir_list [lsort $dir_list]
+append __string "
+<h3>Directories:</h3>
+<table cellspacing='0' cellpadding='2' border='1'>
+"
+foreach dirname $dir_list {
+append __string "
+  <tr><th><a href='"
+
+append __string ${dirname}
+append __string "/' class='dir'>"
+append __string [file tail $dirname]
+append __string "</a></th><td>"
+append __string [file mtime $dirname]
+append __string "</td></tr>"
+}
+append __string "
+</table>
+<h3>Files:</h3>
+"
+foreach obj $file_list {
+set file_extension [file extension $obj]
+set file_extension [string trimleft $file_extension "."]
+switch -glob -- "$file_extension" {
+   *~ - *.o {
+      }
+   default {
+   append __string "
+ <li><a href='"
+
+append __string $obj
+append __string "' class='"
+
+append __string $file_extension
+append __string "'>"
+append __string [file tail $obj]
+append __string "</a></li>"
+   }
+}
+}
+append __string "
+</div>
+
+<div class=\"bottom\">
+ <hr>
+ <address><a href=\"mailto:russell@ic00408.cst.edu\">Russell Sorensen</a></address>
+"
+set script [info script]
+set mtime [file mtime $script]
+set clockTime [clock format $mtime -format "%+"]
+append __string "<!-- Created "
+
+append __string $clockTime
+append __string " -->
+
+<span class=\"lastMod\">Last modified "
+
+append __string $clockTime
+append __string "</span>
+
+ <div id=\"footer\">
+  <div class=\"nav\">
+   <li>"
+append __string "\[<a href=\"..\">..</a>] |</li>
+   <li>"
+append __string "\[<a href=\".\">.</a>]</li>
+  </div>
+ </div>
+</div>
+
+</body>
+</html>"

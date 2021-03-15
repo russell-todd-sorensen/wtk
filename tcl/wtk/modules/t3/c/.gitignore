@@ -1,0 +1,8 @@
+t3-bison.c
+t3-lex.c 
+y.tab.h 
+t3-lex.h 
+*.o
+y.output
+t3
+

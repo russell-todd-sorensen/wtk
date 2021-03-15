@@ -1,0 +1,17 @@
+[set array_list {1 DEBUG 2 INFO 4 WARNING 8 ERROR 16 NOTICE} ]
+
+[array set my_array $array_list]
+
+[array-to array_list2 get my_array]
+
+array_list = $array_list
+
+[array-to keys names my_array]
+[lsort-to keys -integer -increasing $keys]
+
+[foreach key $keys /]
+
+  my_array($key) = $my_array($key)
+[/foreach]
+
+

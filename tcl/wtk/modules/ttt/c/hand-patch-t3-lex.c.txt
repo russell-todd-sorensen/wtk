@@ -1,0 +1,15 @@
+Flex/bison makes a mistake and does not include the "find_rule" label
+under this condition: usage of trailing context.
+
+Another reason to get rid of this in __FLT_EVAL_METHOD_TS_18661_3__
+
+Correct code goes like this:
+
+
+
+
+		yy_current_state = *--(yy_state_ptr);
+		(yy_lp) = yy_accept[yy_current_state];
+find_rule: /* we branch to this label when backing up */
+		for ( ; ; ) /* until we find what rule we matched */
+			{

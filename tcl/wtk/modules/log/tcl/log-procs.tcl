@@ -5,7 +5,7 @@ namespace eval ::wtk::log {
     variable logChannel stderr
     variable debug 0
     variable SUPPORTS_MICROSECONDS [expr {[catch {clock microseconds}]} ? 1 : 0]
-    variable method ns_log
+    variable method [expr {[llength [info commands ns_log]] > 0 ? "ns_log" : "stderr"}]
 }
 
 proc ::wtk::log::log {level message} {

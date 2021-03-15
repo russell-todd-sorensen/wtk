@@ -880,7 +880,7 @@ proc ::wtk::http::server::respondNotFound { connId {errorMsg ""} } {
     set description [::wtk::http::getResponseCodeDescription $code]
 
     set conn(content) "<!DOCTYPE html>
-<html lang='en_US'>
+<html lang='en-US'>
 <head>
  <title>$description</title>
 </head>

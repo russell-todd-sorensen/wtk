@@ -1,0 +1,10 @@
+--- t3-lex.c	2021-03-03 20:37:38.004425503 +0000
++++ t3-lex.c.patched	2021-03-03 20:34:15.802717621 +0000
+@@ -1361,6 +1361,7 @@
+ /* %% [10.0] code to find the action number goes here */
+ 		yy_current_state = *--(yy_state_ptr);
+ 		(yy_lp) = yy_accept[yy_current_state];
++find_rule: /* we branch to this label when backing up */
+ 		for ( ; ; ) /* until we find what rule we matched */
+ 			{
+ 			if ( (yy_lp) && (yy_lp) < yy_accept[yy_current_state + 1] )

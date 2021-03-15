@@ -23,6 +23,7 @@ source [file join $::wtk::WTKLibrary modules modules tcl modules-procs.tcl]
 #::wtk::modules::loadModule modules procs
 #::wtk::modules::loadModule modules init
 
+
 #::wtk::modules::addModule log {procs config init}
 #::wtk::modules::addModule modules {procs config init}
 #::wtk::modules::addModuleOutline xyz {init config procs}
@@ -35,6 +36,7 @@ source [file join $::wtk::WTKLibrary modules modules tcl modules-procs.tcl]
 #::wtk::modules::addModule sudoku [list procs init]
 #::wtk::modules::addModuleOutline db   [list config procs init]
 #::wtk::modules::addModuleOutline cor  [list procs config]
+#::wtk::modules::addModuleOutline ns  [list procs config init]
 #::wtk::modules::addModule oop  [list init procs config]
 #::wtk::modules::addModule db   [list procs init]
 #::wtk::modules::addModule pg   [list procs config init]
@@ -45,10 +47,12 @@ source [file join $::wtk::WTKLibrary modules modules tcl modules-procs.tcl]
 #::wtk::modules::addModule conn [list procs]
 #::wtk::modules::addModule http [list procs init]
 
-#::wtk::modules::addModule t3   [list procs]
-#::wtk::modules::addModule workbox [list procs init]
+::wtk::modules::addModule rmadilo [list procs init config]
+::wtk::modules::addModule ttt   [list procs]
 ::wtk::modules::addModule thread [list procs]
-#::wtk::modules::addModuleOutline nsStart [list procs init config]
+::wtk::modules::addModule nsStart [list procs init config]
 ::wtk::modules::addModule tbench [list procs config init]
+
+#::wtk::modules::addModule workbox [list procs init]
 # Finally load all the modules:
 ::wtk::modules::loadModules

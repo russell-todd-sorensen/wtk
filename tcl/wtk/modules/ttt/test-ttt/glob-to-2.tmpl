@@ -1,0 +1,29 @@
+[comment {
+    Testing file for glob-to and file-to commands
+    
+    Note: file-to and glob-to are dangerous commands
+    which should probably be removed from safe templates.
+
+}/]
+
+[set directory $dir /]
+
+[glob-to file_list -tails -directory $directory -type f *]
+[glob-to dir_list  -tails -directory $directory -type d * .*]
+<h3>Directories:</h3>
+[foreach dirname $dir_list ]
+  <li><a href='${dirname}' class='dir'>[file tail $dirname]</a></li>[ws/]
+[/foreach]
+<h3>Files:</h3>
+[foreach obj $file_list/]
+  [file-to file_extension extension $obj/]
+  [string-to file_extension trimleft $file_extension "."]
+  [switch -glob -- $file_extension]
+   [case *~ - *.o /]
+	[comment {do nothing}/]
+   [/case]
+   [default]
+ <li><a href='$obj' class='$file_extension'>[file tail $obj]</a></li>[ws/]
+   [/default]
+  [/switch]
+[/foreach]

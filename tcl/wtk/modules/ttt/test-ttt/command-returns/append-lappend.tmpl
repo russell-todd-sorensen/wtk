@@ -1,0 +1,27 @@
+[comment {
+    append command takes a variable name to append to, 
+    but also returns the new value.
+}]
+
+% set x \[append g "123"]
+returns:
+$g + "123"
+sets x to $g + "123"
+
+append is setup so that large text values do not have to be substituted
+prior to evaluation.
+
+However, since the append command actually returns the new value, large
+values still have to be produced at the end of the command.
+
+The Tcl command should best be thought of as a specialized version of the [set]
+command, it behaves exactly like:
+
+set x $x$b
+
+If x does not exists, this returns an error. 
+
+If x exists the value of b 
+is appened and the full result is returned.
+
+[set x] and and [append x] both return the current value of x.

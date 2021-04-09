@@ -46,25 +46,25 @@ OPENCB   [\{]
   /* do nothing */
 }
 
-<INITIAL>\[comment[ \t]+ {
+<INITIAL>\[comment/[ \t]+ {
   yylval.str = "";
   BEGIN(ARGSTART);
   return(COMMENT);
 }
 
-<INITIAL>\[ws[ \t]+ {
+<INITIAL>\[ws/[ \t]+ {
   yylval.str = "";
   BEGIN(ARGSTART);
   return(WS);
 }
 
-<INITIAL>\[elseif[ \t]+ {
+<INITIAL>\[elseif/[ \t]+ {
   yylval.str = "";
   BEGIN(ARGSTART);
   return(ELSEIF);
 }
 
-<INITIAL>\[if[ \t]+ {
+<INITIAL>\[if/[ \t]+ {
   BEGIN(ARGSTART);
   return(IFBEGIN);
 }
@@ -83,70 +83,70 @@ OPENCB   [\{]
   return(IFEND);
 }
 
-<INITIAL>\[incr[ \t]+ {
+<INITIAL>\[incr/[ \t]+ {
   BEGIN(ARGSTART);
   return(INCR);
 }
 
-<INITIAL>\[incrn[ \t]+ {
+<INITIAL>\[incrn/[ \t]+ {
   BEGIN(ARGSTART);
   return(INCRN);
 }
 
-<INITIAL>\[expr[ \t]+ {
+<INITIAL>\[expr/[ \t]+ {
    BEGIN(ARGSTART);
    return(EXPR);
 }
 
-<INITIAL>\[expr-to[ \t]+ {
+<INITIAL>\[expr-to/[ \t]+ {
    BEGIN(ARGSTART);
    return(EXPRTO);
 }
 
-<INITIAL>\[foreach[ \t]+ {
+<INITIAL>\[foreach/[ \t]+ {
   BEGIN(ARGSTART);
   return(FOREACHBEGIN);
 }
 
-<INITIAL>\[format[ \t]+ {
+<INITIAL>\[format/[ \t]+ {
    BEGIN(ARGSTART);
    return(FORMAT);
 }
 
-<INITIAL>\[format-to[ \t]+ {
+<INITIAL>\[format-to/[ \t]+ {
    BEGIN(ARGSTART);
    return(FORMATTO);
 }
 
-<INITIAL>\[regexp[ \t]+ {
+<INITIAL>\[regexp/[ \t]+ {
    BEGIN(ARGSTART);
    return(REGEXP);
 }
-<INITIAL>\[regexp-to[ \t]+ {
+<INITIAL>\[regexp-to/[ \t]+ {
    BEGIN(ARGSTART);
    return(REGEXPTO);
 }
 
-<INITIAL>\[ifreg[ \t]+ {
+<INITIAL>\[ifreg/[ \t]+ {
    BEGIN(ARGSTART);
    return(IFREG);
 }
-<INITIAL>\[else-ifreg[ \t]+ {
+<INITIAL>\[else-ifreg/[ \t]+ {
    BEGIN(ARGSTART);
    return(ELSEIFREG);
 }
 
-<INITIAL>\[regsub[ \t]+ {
+<INITIAL>\[regsub/[ \t]+ {
    BEGIN(ARGSTART);
    return(REGSUB);
 }
 
-<INITIAL>\[regsub-to[ \t]+ {
+<INITIAL>\[regsub-to/[ \t]+ {
    BEGIN(ARGSTART);
    return(REGSUBTO);
 }
 
-<INITIAL>\[xr[ \t]+ {
+<INITIAL>\[xr/[ \t]+ {
    BEGIN(ARGSTART);
    return(XRESOURCE);
 }
@@ -155,142 +155,142 @@ OPENCB   [\{]
   return(FOREACHENDCMD);
 }
 
-<INITIAL>\[lappend[ \t]+ {
+<INITIAL>\[lappend/[ \t]+ {
   BEGIN(ARGSTART);
   return(LAPPEND);
 }
 
-<INITIAL>\[lsort-to[ \t]+ {
+<INITIAL>\[lsort-to/[ \t]+ {
   BEGIN(ARGSTART);
   return(LSORTTO);
 }
 
-<INITIAL>\[lassign[ \t]+ {
+<INITIAL>\[lassign/[ \t]+ {
   BEGIN(ARGSTART);
   return(LASSIGN);
 }
 
-<INITIAL>\[lassign-to[ \t]+ {
+<INITIAL>\[lassign-to/[ \t]+ {
   BEGIN(ARGSTART);
   return(LASSIGNTO);
 }
 
-<INITIAL>\[lindex[ \t]+ {
+<INITIAL>\[lindex/[ \t]+ {
   BEGIN(ARGSTART);
   return(LINDEX);
 }
 
-<INITIAL>\[lindex-to[ \t]+ {
+<INITIAL>\[lindex-to/[ \t]+ {
   BEGIN(ARGSTART);
   return(LINDEXTO);
 }
 
-<INITIAL>\[linsert-to[ \t]+ {
+<INITIAL>\[linsert-to/[ \t]+ {
   BEGIN(ARGSTART);
   return(LINSERTTO);
 }
 
-<INITIAL>\[list[ \t]+ {
+<INITIAL>\[list/[ \t]+ {
   BEGIN(ARGSTART);
   return(LIST);
 }
 
-<INITIAL>\[list-to[ \t]+ {
+<INITIAL>\[list-to/[ \t]+ {
   BEGIN(ARGSTART);
   return(LISTTO);
 }
 
-<INITIAL>\[llength[ \t]+ {
+<INITIAL>\[llength/[ \t]+ {
   BEGIN(ARGSTART);
   return(LLENGTH);
 }
 
-<INITIAL>\[llength-to[ \t]+ {
+<INITIAL>\[llength-to/[ \t]+ {
   BEGIN(ARGSTART);
   return(LLENGTHTO);
 }
 
-<INITIAL>\[lrange[ \t]+ {
+<INITIAL>\[lrange/[ \t]+ {
   BEGIN(ARGSTART);
   return(LRANGE);
 }
 
-<INITIAL>\[lrange-to[ \t]+ {
+<INITIAL>\[lrange-to/[ \t]+ {
   BEGIN(ARGSTART);
   return(LRANGETO);
 }
 
-<INITIAL>\[lrepeat[ \t]+ {
+<INITIAL>\[lrepeat/[ \t]+ {
   BEGIN(ARGSTART);
   return(LREPEAT);
 }
 
-<INITIAL>\[lrepeat-to[ \t]+ {
+<INITIAL>\[lrepeat-to/[ \t]+ {
   BEGIN(ARGSTART);
   return(LREPEATTO);
 }
 
-<INITIAL>\[lreplace[ \t]+ {
+<INITIAL>\[lreplace/[ \t]+ {
   BEGIN(ARGSTART);
   return(LREPLACE);
 }
 
-<INITIAL>\[lreplace-to[ \t]+ {
+<INITIAL>\[lreplace-to/[ \t]+ {
   BEGIN(ARGSTART);
   return(LREPLACETO);
 }
 
-<INITIAL>\[lreverse-to[ \t]+ {
+<INITIAL>\[lreverse-to/[ \t]+ {
   BEGIN(ARGSTART);
   return(LREVERSETO);
 }
 
-<INITIAL>\[lreverse[ \t]+ {
+<INITIAL>\[lreverse/[ \t]+ {
   BEGIN(ARGSTART);
   return(LREVERSE);
 }
 
-<INITIAL>\[lsearch-to[ \t]+ {
+<INITIAL>\[lsearch-to/[ \t]+ {
   BEGIN(ARGSTART);
   return(LSEARCHTO);
 }
 
-<INITIAL>\[lsearch[ \t]+ {
+<INITIAL>\[lsearch/[ \t]+ {
   BEGIN(ARGSTART);
   return(LSEARCH);
 }
 
-<INITIAL>\[lset[ \t]+ {
+<INITIAL>\[lset/[ \t]+ {
   BEGIN(ARGSTART);
   return(LSET);
 }
 
-<INITIAL>\[dict-to[ \t]+ {
+<INITIAL>\[dict-to/[ \t]+ {
   BEGIN(ARGSTART);
   return(DICTTO);
 }
 
-<INITIAL>\[dict[ \t]+ {
+<INITIAL>\[dict/[ \t]+ {
   BEGIN(ARGSTART);
   return(DICT);
 }
 
-<INITIAL>\[dict-filter|\[dict[ \t]+filter[ \t]+ {
+<INITIAL>\[dict-filter|\[dict[ \t]+filter/[ \t]+ {
   BEGIN(ARGSTART);
   return(DICTFILTER);
 }
 
-<INITIAL>\[dict-filter-to|\[dict-to[ \t]+filter|\[dict[ \t]+filter-to[ \t]+ {
+<INITIAL>\[dict-filter-to|\[dict-to[ \t]+filter|\[dict[ \t]+filter-to/[ \t]+ {
   BEGIN(ARGSTART);
   return(DICTFILTERTO);
 }
 
-<INITIAL>\[dict-print[ \t]+ {
+<INITIAL>\[dict-print/[ \t]+ {
   BEGIN(ARGSTART);
   return(DICTPRINT);
 }
 
-<INITIAL>\[dict-for|\[dict[ \t]+for[ \t]+ {
+<INITIAL>\[dict-for|\[dict[ \t]+for/[ \t]+ {
   BEGIN(ARGSTART);
   return(DICTFORBEGIN);
 }
@@ -299,7 +299,7 @@ OPENCB   [\{]
   return(DICTFOREND);
 }
 
-<INITIAL>\[dict-with|\[dict[ \t]+with[ \t]+ {
+<INITIAL>\[dict-with|\[dict[ \t]+with/[ \t]+ {
   BEGIN(ARGSTART);
   return(DICTWITHBEGIN);
 }
@@ -309,17 +309,17 @@ OPENCB   [\{]
 }
 
 
-<INITIAL>\[scan[ \t]+ {
+<INITIAL>\[scan/[ \t]+ {
   BEGIN(ARGSTART);
   return(SCAN);
 }
 
-<INITIAL>\[scan-to[ \t]+ {
+<INITIAL>\[scan-to/[ \t]+ {
   BEGIN(ARGSTART);
   return(SCANTO);
 }
 
-<INITIAL>\[namespace-eval[ \t]+ {
+<INITIAL>\[namespace-eval/[ \t]+ {
   BEGIN(ARGSTART);
   return(NSEVALBEGIN);
 }
@@ -328,7 +328,7 @@ OPENCB   [\{]
   return(NSEVALEND);
 }
 
-<INITIAL>\[namespace[ \t]+ {
+<INITIAL>\[namespace/[ \t]+ {
   BEGIN(ARGSTART);
   return(NSBEGIN);
 }
@@ -337,7 +337,7 @@ OPENCB   [\{]
   return(NSEND);
 }
 
-<INITIAL>\[proc[ \t]+ {
+<INITIAL>\[proc/[ \t]+ {
   BEGIN(ARGSTART);
   return(PROCBEGIN);
 }
@@ -346,7 +346,7 @@ OPENCB   [\{]
   return(PROCEND);
 }
 
-<INITIAL>\[variable[ \t]+ {
+<INITIAL>\[variable/[ \t]+ {
   BEGIN(ARGSTART);
   return(VARIABLE);
 }
@@ -356,142 +356,142 @@ OPENCB   [\{]
   return(SET);
 }
 
-<INITIAL>\[get[ \t]+ {
+<INITIAL>\[get/[ \t]+ {
   BEGIN(ARGSTART);
   return(GET);
 }
 
-<INITIAL>\[string[ \t]+ {
+<INITIAL>\[string/[ \t]+ {
   BEGIN(ARGSTART);
   return(STRING);
 }
 
-<INITIAL>\[string-to[ \t]+ {
+<INITIAL>\[string-to/[ \t]+ {
   BEGIN(ARGSTART);
   return(STRINGTO);
 }
 
-<INITIAL>\[split[ \t]+ {
+<INITIAL>\[split/[ \t]+ {
   BEGIN(ARGSTART);
   return(SPLIT);
 }
 
-<INITIAL>\[split-to[ \t]+ {
+<INITIAL>\[split-to/[ \t]+ {
   BEGIN(ARGSTART);
   return(SPLITTO);
 }
 
-<INITIAL>\[encoding[ \t]+ {
+<INITIAL>\[encoding/[ \t]+ {
   BEGIN(ARGSTART);
   return(ENCODING);
 }
 
-<INITIAL>\[encoding-to[ \t]+ {
+<INITIAL>\[encoding-to/[ \t]+ {
   BEGIN(ARGSTART);
   return(ENCODINGTO);
 }
 
-<INITIAL>\[clock[ \t]+ {
+<INITIAL>\[clock/[ \t]+ {
   BEGIN(ARGSTART);
   return(CLOCK);
 }
 
-<INITIAL>\[clock-to[ \t]+ {
+<INITIAL>\[clock-to/[ \t]+ {
   BEGIN(ARGSTART);
   return(CLOCKTO);
 }
 
-<INITIAL>\[info[ \t]+ {
+<INITIAL>\[info/[ \t]+ {
   BEGIN(ARGSTART);
   return(INFO);
 }
 
-<INITIAL>\[info-to[ \t]+ {
+<INITIAL>\[info-to/[ \t]+ {
   BEGIN(ARGSTART);
   return(INFOTO);
 }
 
-<INITIAL>\[array[ \t]+ {
+<INITIAL>\[array/[ \t]+ {
   BEGIN(ARGSTART);
   return(ARRAY);
 }
 
-<INITIAL>\[array-to[ \t]+ {
+<INITIAL>\[array-to/[ \t]+ {
   BEGIN(ARGSTART);
   return(ARRAYTO);
 }
 
-<INITIAL>\[concat[ \t]+ {
+<INITIAL>\[concat/[ \t]+ {
   BEGIN(ARGSTART);
   return(CONCAT);
 }
 
-<INITIAL>\[concat-to[ \t]+ {
+<INITIAL>\[concat-to/[ \t]+ {
   BEGIN(ARGSTART);
   return(CONCATTO);
 }
 
-<INITIAL>\[join[ \t]+ {
+<INITIAL>\[join/[ \t]+ {
   BEGIN(ARGSTART);
   return(JOIN);
 }
 
-<INITIAL>\[join-to[ \t]+ {
+<INITIAL>\[join-to/[ \t]+ {
   BEGIN(ARGSTART);
   return(JOINTO);
 }
 
-<INITIAL>\[append[ \t]+ {
+<INITIAL>\[append/[ \t]+ {
   BEGIN(ARGSTART);
   return(APPEND);
 }
 
-<INITIAL>\[append-to[ \t]+ {
+<INITIAL>\[append-to/[ \t]+ {
   BEGIN(ARGSTART);
   return(APPENDTO);
 }
 
-<INITIAL>\[binary[ \t]+ {
+<INITIAL>\[binary/[ \t]+ {
   BEGIN(ARGSTART);
   return(BINARY);
 }
 
-<INITIAL>\[binary-to[ \t]+ {
+<INITIAL>\[binary-to/[ \t]+ {
   BEGIN(ARGSTART);
   return(BINARYTO);
 }
 
-<INITIAL>\[glob[ \t]+ {
+<INITIAL>\[glob/[ \t]+ {
   BEGIN(ARGSTART);
   return(GLOB);
 }
 
-<INITIAL>\[glob-to[ \t]+ {
+<INITIAL>\[glob-to/[ \t]+ {
   BEGIN(ARGSTART);
   return(GLOBTO);
 }
 
-<INITIAL>\[file[ \t]+ {
+<INITIAL>\[file/[ \t]+ {
   BEGIN(ARGSTART);
   return(FILEX);
 }
 
-<INITIAL>\[file-to[ \t]+ {
+<INITIAL>\[file-to/[ \t]+ {
   BEGIN(ARGSTART);
   return(FILEXTO);
 }
 
-<INITIAL>\[unset[ \t]+ {
+<INITIAL>\[unset/[ \t]+ {
   BEGIN(ARGSTART);
   return(UNSET);
 }
 
-<INITIAL>\[switch[ \t]+ {
+<INITIAL>\[switch/[ \t]+ {
   BEGIN(SWITCHARGSTART);
   return(SWITCHBEGIN);
 }
 
-<CASESTART>\[case[ \t]+ {
+<CASESTART>\[case/[ \t]+ {
   BEGIN(ARGSTART);
   return(CASEBEGIN);
 }
@@ -531,7 +531,7 @@ OPENCB   [\{]
 }
 
 
-<INITIAL>\[while[ \t]+ {
+<INITIAL>\[while/[ \t]+ {
   BEGIN(ARGSTART);
   return(WHILEBEGIN);
 }

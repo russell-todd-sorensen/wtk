@@ -24,7 +24,7 @@ static int parse_curly_brased_arg();
 
 %}
 
-VARIABLE  [\$][a-zA-Z0-9_]+
+VARIABLE1  [\$][a-zA-Z0-9_]+
 VARIABLE2 [\$][\{][^\}\[]*[\}]
 
 OPENCB   [\{]
@@ -541,12 +541,12 @@ OPENCB   [\{]
   return(WHILEEND);
 }
 
-<INITIAL>{VARIABLE}\({VARIABLE}|{VARIABLE2}|[!-Z\]-~]+\) {
+<INITIAL>{VARIABLE1}\({VARIABLE1}|{VARIABLE2}|[!-Z\]-~]+\) {
     yylval.str = yytext;
     return(VAR);
 }
 
-<INITIAL,ARGSTART>{VARIABLE} {
+<INITIAL>{VARIABLE1} {
     yylval.str = yytext;
     return(VAR);
 }
@@ -554,6 +554,21 @@ OPENCB   [\{]
 <INITIAL>{VARIABLE2} {
     yylval.str = yytext;
     return(VAR);
+}
+
+<ARGSTART>{VARIABLE1} {
+    yylval.str = yytext;
+    return(ARG);
+}
+
+<ARGSTART>{VARIABLE2} {
+    yylval.str = yytext;
+    return(ARG);
+}
+
+<ARGSTART>{VARIABLE1}\({VARIABLE1}|{VARIABLE2}|[!-Z\]-~]+\) {
+    yylval.str = yytext;
+    return(ARG);
 }
 
 <ARGSTART,SWITCHARGSTART>[ \t]+ { 
@@ -572,7 +587,7 @@ OPENCB   [\{]
   return(BADWSINARG);
 }
 
-<ARGSTART,SWITCHARGSTART>[^"\{\}\\ \t\n\r\f\v\b\a\[\]\/]+ {
+<ARGSTART,SWITCHARGSTART>[^"\$\{\}\\ \t\n\r\f\v\b\a\[\]\/]+ {
   yylval.str = yytext;
   /* printf ( "   ARG: Naked arg '%s'\n", yytext); */
   return(ARG);

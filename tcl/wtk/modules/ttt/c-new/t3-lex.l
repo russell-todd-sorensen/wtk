@@ -567,7 +567,7 @@ OPENCB   [\{]
   return(BADWSINARG);
 }
 
-<ARGSTART,SWITCHARGSTART>[\f\n\r\v\b\a] {
+<ARGSTART,SWITCHARGSTART>[\n\r\f\v\b\a] {
   yylval.str = "ERROR: BAD WHITESPACE";
   return(BADWSINARG);
 }

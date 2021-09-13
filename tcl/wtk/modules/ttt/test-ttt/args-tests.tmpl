@@ -1,0 +1,45 @@
+[comment {
+    Test parsing of args of different types:
+    Naked args (no quotes or curly braces)
+    Double quoted args
+    Curly Braced args
+    arg is single variable
+    arg is multiple variables
+}]
+
+
+[set x 5]
+
+[set "y" 6]
+
+[set {z} 7]
+
+[set a "5"]
+
+[set b "6"]
+
+[set c {7}]
+
+[if {$x == $a} /]
+ x == a ($x == $a)
+[else/]
+ x != a ('$x' != '$a')
+[/if]
+
+[if {"$y" == "$b"}/]
+ y == b ('$y' == '$b')
+[else/]
+ y != b ('$y' != '$b')
+[/if]
+
+[if {$z == $c}/]
+  z == c ('$z' == '$c')
+[else/]
+  z != c ('$z' != '$c')
+[/if]
+
+now some multi-byte chars
+
+ↈↀↁↇ
+
+back to ascii

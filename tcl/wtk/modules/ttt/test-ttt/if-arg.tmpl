@@ -1,0 +1,28 @@
+Before if which works:
+
+[if { $fileArray(type) eq "link" } /]
+    [file-to fileArray(pointsTo) readlink $obj /]
+[else/]
+    [set fileArray(pointsTo) "" /]
+[/if]
+
+it [ws/]
+[if {false} /]
+worked![ws/]
+[else/]
+didn't work :(
+[/if/]
+[ws]
+before if which is broken:
+
+[if {"link" eq $fileArray(type)} /]
+    [file-to fileArray(pointsTo) readlink $obj /]
+[else/]
+    [set fileArray(pointsTo) "" /]
+[/if]
+
+[if {$fileArray(type) eq "link"} /]
+    [file-to fileArray(pointsTo) readlink $obj /]
+[else/]
+    [set fileArray(pointsTo) "" /]
+[/if]

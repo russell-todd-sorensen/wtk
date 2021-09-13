@@ -1,0 +1,29 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+x == a (5 == 5)
+
+
+y == b ('6' == '6')
+
+
+z == c ('7' == '7')
+
+
+now some multi-byte chars
+
+ↈↀↁↇ
+
+back to ascii

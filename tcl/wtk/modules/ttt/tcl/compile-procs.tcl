@@ -23,7 +23,7 @@ proc ::wtk::ttt::applyTemplate {{template ""}} {
     
     if {![file exists $tmplFile]} {
         log Error "::wtk::ttt::applyTemplate $tmplFile does not exist"
-        return [list 500 "::wtk::ttt::applyTemplate $tmplFile does not exist"]
+        return [list 500 "Internal Server Error" "::wtk::ttt::applyTemplate $tmplFile does not exist"]
     }
 
     set cmpExists [file exists $cmpFile]
@@ -40,14 +40,14 @@ proc ::wtk::ttt::applyTemplate {{template ""}} {
             global errorInfo
             set msg "ttt::respond: '$err', errorInfo:'$errorInfo'"
             log Error $msg
-            return [list 500 $msg]
+            return [list 500 "Internal Server Error" $msg]
         }
     }
 
     uplevel 1 [list source $cmpFile]
     upvar __string __string
 
-    return [list 200 $__string]
+    return [list 200 ok $__string]
 }
 
 proc ::wtk::ttt::applyTemplateNS {{template ""}} {
@@ -66,7 +66,7 @@ proc ::wtk::ttt::applyTemplateNS {{template ""}} {
     
     if {![file exists $tmplFile]} {
         log Error "::wtk::ttt::applyTemplate $tmplFile does not exist"
-        return [list 500 "::wtk::ttt::applyTemplate $tmplFile does not exist"]
+        return [list 500 "Internal Server Error" "::wtk::ttt::applyTemplate $tmplFile does not exist"]
     }
 
     set cmpExists [file exists $cmpFile]
@@ -83,12 +83,12 @@ proc ::wtk::ttt::applyTemplateNS {{template ""}} {
             global errorInfo
             set msg "ttt::respond: '$err', errorInfo:'$errorInfo'"
             log Error $msg
-            return [list 500 $msg]
+            return [list 500 "Internal Server Error" $msg]
         }
     }
 
     uplevel 1 [list source $cmpFile]
     upvar __string __string
 
-    return [list 200 $__string]
+    return [list 200 ok $__string]
 }

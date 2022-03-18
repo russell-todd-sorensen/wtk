@@ -10,7 +10,7 @@ namespace eval ::Sudoku {
         {boxCols 3 - {string is integer -strict $boxCols}}
         {boxRows 3 - {string is integer -strict $boxRows}}
         {puzzleData 0 - {}}
-        {puzzleDimension 81 - {set puzzleDimension [expr {$boxCols*$boxRows}]}}
+        {puzzleDimension 9 - {set puzzleDimension [expr {$boxCols*$boxRows}]}}
         {symbols {} - {
                 # symbols come in as string 123456789 => [list 1 2 3 4 5 6 7 8 9]
                 if {![info exists symbols]} {

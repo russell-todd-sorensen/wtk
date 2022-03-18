@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<!-- saved from url=(0066)http://jsfiddle.net/russau/ch8PK/embedded/result,js,html,resources -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    
+    <meta http-equiv="edit-Type" edit="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TOTP One-time password - JSFiddle</title>
+
+      <meta name="robots" content="index, follow">
+      <meta name="googlebot" content="index, follow">
+
+      <script type="text/javascript">
+        var height
+        var force_height = null
+        var slug = "ch8PK"
+        var show_src = "//fiddle.jshell.net/russau/ch8PK/show/light/"
+        var resize_element_counter = 0
+        var shell_edit_url = "/russau/ch8PK/light/"
+
+      </script>
+
+      <script src="./highlight.pack.js"></script>
+      <script src="./embed.js"></script>
+      <link rel="stylesheet" media="screen" href="./embed-light.css">
+
+    <style type="text/css" media="screen">
+    /* */</style>
+
+  </head>
+  <body>
+    <div id="full-embed">
+        <header>
+          <h1>
+            <a href="http://jsfiddle.net/russau/ch8PK/" target="_blank">
+              <svg width="34" height="40">
+      <use xlink:href="//jsfiddle.net/sprite.svg#logo"></use>
+    </svg>Edit in JSFiddle
+            </a>
+          </h1>
+          <div id="actions">
+            <ul class="normalRes">
+                <li class="active">
+                  <a data-trigger-type="result" href="http://jsfiddle.net/russau/ch8PK/embedded/result,js,html,resources#Result">Result</a>
+                </li>
+                <li class="">
+                  <a data-trigger-type="js" href="http://jsfiddle.net/russau/ch8PK/embedded/result,js,html,resources#JavaScript">JavaScript</a>
+                </li>
+                <li class="">
+                  <a data-trigger-type="html" href="http://jsfiddle.net/russau/ch8PK/embedded/result,js,html,resources#HTML">HTML</a>
+                </li>
+                <li class="">
+                  <a data-trigger-type="resources" href="http://jsfiddle.net/russau/ch8PK/embedded/result,js,html,resources#Resources">Resources</a>
+                </li>
+            </ul>
+            <div class="hl" style="left: 0px; width: 60.3625px;"></div>
+          </div>
+        </header>
+
+        <div id="tabs">
+              <div class="tCont result active" id="result">
+              <iframe src="./saved_resource.html" frameborder="0" sandbox="allow-forms allow-scripts allow-same-origin allow-top-navigation-by-user-activation allow-downloads allow-modals allow-popups" allow="midi; geolocation; microphone; camera; display-capture; encrypted-media;"></iframe></div>
+                <script type="text/javascript">
+                  window.addEventListener("load", function(){
+                    if (typeof(EmbedManager) === undefined){
+                      EmbedManager.loadResult()
+                    }
+                  }, false);
+                </script>
+              <pre class="tCont JavaScript hljs">    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">dec2hex</span>(<span class="hljs-params">s</span>) </span>{ <span class="hljs-keyword">return</span> (s &lt; <span class="hljs-number">15.5</span> ? <span class="hljs-string">'0'</span> : <span class="hljs-string">''</span>) + <span class="hljs-built_in">Math</span>.round(s).toString(<span class="hljs-number">16</span>); }
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">hex2dec</span>(<span class="hljs-params">s</span>) </span>{ <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseInt</span>(s, <span class="hljs-number">16</span>); }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">base32tohex</span>(<span class="hljs-params">base32</span>) </span>{
+        <span class="hljs-keyword">var</span> base32chars = <span class="hljs-string">"ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"</span>;
+        <span class="hljs-keyword">var</span> bits = <span class="hljs-string">""</span>;
+        <span class="hljs-keyword">var</span> hex = <span class="hljs-string">""</span>;
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; base32.length; i++) {
+            <span class="hljs-keyword">var</span> val = base32chars.indexOf(base32.charAt(i).toUpperCase());
+            bits += leftpad(val.toString(<span class="hljs-number">2</span>), <span class="hljs-number">5</span>, <span class="hljs-string">'0'</span>);
+        }
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i+<span class="hljs-number">4</span> &lt;= bits.length; i+=<span class="hljs-number">4</span>) {
+            <span class="hljs-keyword">var</span> chunk = bits.substr(i, <span class="hljs-number">4</span>);
+            hex = hex + <span class="hljs-built_in">parseInt</span>(chunk, <span class="hljs-number">2</span>).toString(<span class="hljs-number">16</span>) ;
+        }
+        <span class="hljs-keyword">return</span> hex;
+
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">leftpad</span>(<span class="hljs-params">str, len, pad</span>) </span>{
+        <span class="hljs-keyword">if</span> (len + <span class="hljs-number">1</span> &gt;= str.length) {
+            str = <span class="hljs-built_in">Array</span>(len + <span class="hljs-number">1</span> - str.length).join(pad) + str;
+        }
+        <span class="hljs-keyword">return</span> str;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">updateOtp</span>(<span class="hljs-params"></span>) </span>{
+            
+        <span class="hljs-keyword">var</span> key = base32tohex($(<span class="hljs-string">'#secret'</span>).val());
+        <span class="hljs-keyword">var</span> epoch = <span class="hljs-built_in">Math</span>.round(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>().getTime() / <span class="hljs-number">1000.0</span>);
+        <span class="hljs-keyword">var</span> time = leftpad(dec2hex(<span class="hljs-built_in">Math</span>.floor(epoch / <span class="hljs-number">30</span>)), <span class="hljs-number">16</span>, <span class="hljs-string">'0'</span>);
+
+        <span class="hljs-comment">// updated for jsSHA v2.0.0 - http://caligatio.github.io/jsSHA/</span>
+        <span class="hljs-keyword">var</span> shaObj = <span class="hljs-keyword">new</span> jsSHA(<span class="hljs-string">"SHA-1"</span>, <span class="hljs-string">"HEX"</span>);
+        shaObj.setHMACKey(key, <span class="hljs-string">"HEX"</span>);
+        shaObj.update(time);
+        <span class="hljs-keyword">var</span> hmac = shaObj.getHMAC(<span class="hljs-string">"HEX"</span>);
+
+        $(<span class="hljs-string">'#qrImg'</span>).attr(<span class="hljs-string">'src'</span>, <span class="hljs-string">'https://chart.googleapis.com/chart?chs=200x200&amp;cht=qr&amp;chl=200x200&amp;chld=M|0&amp;cht=qr&amp;chl=otpauth://totp/user@host.com%3Fsecret%3D'</span> + $(<span class="hljs-string">'#secret'</span>).val());
+        $(<span class="hljs-string">'#secretHex'</span>).text(key);
+        $(<span class="hljs-string">'#secretHexLength'</span>).text((key.length * <span class="hljs-number">4</span>) + <span class="hljs-string">' bits'</span>); 
+        $(<span class="hljs-string">'#epoch'</span>).text(time);
+        $(<span class="hljs-string">'#hmac'</span>).empty();
+
+        <span class="hljs-keyword">if</span> (hmac == <span class="hljs-string">'KEY MUST BE IN BYTE INCREMENTS'</span>) {
+            $(<span class="hljs-string">'#hmac'</span>).append($(<span class="hljs-string">'&lt;span/&gt;'</span>).addClass(<span class="hljs-string">'label important'</span>).append(hmac));
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">var</span> offset = hex2dec(hmac.substring(hmac.length - <span class="hljs-number">1</span>));
+            <span class="hljs-keyword">var</span> part1 = hmac.substr(<span class="hljs-number">0</span>, offset * <span class="hljs-number">2</span>);
+            <span class="hljs-keyword">var</span> part2 = hmac.substr(offset * <span class="hljs-number">2</span>, <span class="hljs-number">8</span>);
+            <span class="hljs-keyword">var</span> part3 = hmac.substr(offset * <span class="hljs-number">2</span> + <span class="hljs-number">8</span>, hmac.length - offset);
+            <span class="hljs-keyword">if</span> (part1.length &gt; <span class="hljs-number">0</span> ) $(<span class="hljs-string">'#hmac'</span>).append($(<span class="hljs-string">'&lt;span/&gt;'</span>).addClass(<span class="hljs-string">'label label-default'</span>).append(part1));
+            $(<span class="hljs-string">'#hmac'</span>).append($(<span class="hljs-string">'&lt;span/&gt;'</span>).addClass(<span class="hljs-string">'label label-primary'</span>).append(part2));
+            <span class="hljs-keyword">if</span> (part3.length &gt; <span class="hljs-number">0</span>) $(<span class="hljs-string">'#hmac'</span>).append($(<span class="hljs-string">'&lt;span/&gt;'</span>).addClass(<span class="hljs-string">'label label-default'</span>).append(part3));
+        }
+
+        <span class="hljs-keyword">var</span> otp = (hex2dec(hmac.substr(offset * <span class="hljs-number">2</span>, <span class="hljs-number">8</span>)) &amp; hex2dec(<span class="hljs-string">'7fffffff'</span>)) + <span class="hljs-string">''</span>;
+        otp = (otp).substr(otp.length - <span class="hljs-number">6</span>, <span class="hljs-number">6</span>);
+
+        $(<span class="hljs-string">'#otp'</span>).text(otp);
+    }
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">timer</span>(<span class="hljs-params"></span>)
+</span>{
+    <span class="hljs-keyword">var</span> epoch = <span class="hljs-built_in">Math</span>.round(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>().getTime() / <span class="hljs-number">1000.0</span>);
+    <span class="hljs-keyword">var</span> countDown = <span class="hljs-number">30</span> - (epoch % <span class="hljs-number">30</span>);
+    <span class="hljs-keyword">if</span> (epoch % <span class="hljs-number">30</span> == <span class="hljs-number">0</span>) updateOtp();
+    $(<span class="hljs-string">'#updatingIn'</span>).text(countDown);
+    
+}
+
+    $(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        updateOtp();
+
+        $(<span class="hljs-string">'#update'</span>).click(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">event</span>) </span>{
+            updateOtp();
+            event.preventDefault();
+        });
+
+        $(<span class="hljs-string">'#secret'</span>).keyup(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+            updateOtp();
+        });
+        
+        setInterval(timer, <span class="hljs-number">1000</span>);
+    });</pre>
+              <pre class="tCont HTML hljs">   <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"container-fluid"</span>&gt;</span>
+       <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+           <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"row"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"span8"</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Time-based One-time Password Algorithm<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>This page contains a javascript implementation of the <span class="hljs-tag">&lt;<span class="hljs-name">em</span>&gt;</span>Time-based One-time Password Algorithm<span class="hljs-tag">&lt;/<span class="hljs-name">em</span>&gt;</span> used by Google Authenticator and described in the <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"http://tools.ietf.org/id/draft-mraihi-totp-timebased-06.html"</span>&gt;</span>TOTP RFC Draft<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+            
+            <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Install Google Authenticator on your smartphone: <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"http://itunes.apple.com/au/app/google-authenticator/id388497605?mt=8"</span>&gt;</span>iOS<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>, <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"https://market.android.com/details?id=com.google.android.apps.authenticator&amp;hl=en"</span>&gt;</span>Android<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>, <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"http://m.google.com/authenticator"</span>&gt;</span>Blackberry<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>.  As the TOTP is an open standard you can use this app to create one-time passwords for your own application.  You add an account plus secret by scanning a QR code (more info on the <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"http://code.google.com/p/google-authenticator/wiki/KeyUriFormat"</span>&gt;</span>google code wiki<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>).  The javascript below implements the algorithm the smartphone app uses to generate the OTP - you would use this same algorithm <span class="hljs-tag">&lt;<span class="hljs-name">em</span>&gt;</span>server-side<span class="hljs-tag">&lt;/<span class="hljs-name">em</span>&gt;</span> to verify an OTP.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+            
+            <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Put it to the test by setting the base32 secret, scanning the QR code in Google Authenticate.  You should see the same OTP on your smartphone and displayed at the bottom on the page.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>           
+           <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"row"</span>&gt;</span>
+
+                <span class="hljs-tag">&lt;<span class="hljs-name">form</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">fieldset</span>&gt;</span>
+                   
+                    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"clearfix"</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"secret"</span>&gt;</span>Secret (base32)<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"input"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">size</span>=<span class="hljs-string">"30"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"secret"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"secret"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"xlarge"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"JBSWY3DPEHPK3PXP"</span> /&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                    <span class="hljs-comment">&lt;!-- /clearfix --&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"clearfix"</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>Secret (hex)<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"input"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label label-default"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"secretHex"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+                            <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">id</span>=<span class="hljs-string">'secretHexLength'</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                    <span class="hljs-comment">&lt;!-- /clearfix --&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"clearfix"</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>QR Code<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"input"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"qrImg"</span> <span class="hljs-attr">src</span>=<span class="hljs-string">""</span> /&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                    <span class="hljs-comment">&lt;!-- /clearfix --&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"clearfix"</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>Unix epoch div 30 (padded hex)<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"input"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label label-default"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">'epoch'</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                    <span class="hljs-comment">&lt;!-- /clearfix --&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"clearfix"</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>HMAC(secret, time)<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"input"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">'hmac'</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                  <span class="hljs-comment">&lt;!-- /clearfix --&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"clearfix"</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>One-time Password<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"input"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label label-primary"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">'otp'</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                    <span class="hljs-comment">&lt;!-- /clearfix --&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"clearfix"</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>Updating in<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"input"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">id</span>=<span class="hljs-string">'updatingIn'</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                    <span class="hljs-comment">&lt;!-- /clearfix --&gt;</span>
+                    
+            
+                <span class="hljs-tag">&lt;/<span class="hljs-name">fieldset</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</pre>
+              <div class="tCont resources " id="resources">
+                <h3>External resources loaded into this fiddle:</h3>
+                <ul>
+                    <li><a href="http://caligatio.github.io/jsSHA/sha.js" target="_blank">sha.js</a></li>
+                    <li><a href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" target="_blank">bootstrap.min.css</a></li>
+                </ul>
+              </div>
+        </div>
+    </div>
+    
+  
+
+</body></html>

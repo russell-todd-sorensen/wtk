@@ -26,8 +26,8 @@ proc ::wtk::workbox::init {} {
     variable interval
 
     if {[file readable $config] 
-        && [file type $pageroot] == "directory"
-        && [file writable $pageroot]
+        && [file type $swDirectory] == "directory"
+        && [file writable $swDirectory]
         && (
             ![file exists $swFile] 
             ||
@@ -41,7 +41,7 @@ proc ::wtk::workbox::init {} {
         log Notice "file type $swDirectory = [file type $swDirectory]"
         log Notice "file writable $swDirectory = [file writable $swDirectory]"
         log Notice "file exists $swFile = [file exists $swFile]"
-        log NOtice "file writable $swFile = [file writable $swFile]"
+        log Notice "file writable $swFile = [file writable $swFile]"
         
         return $initialized
     }

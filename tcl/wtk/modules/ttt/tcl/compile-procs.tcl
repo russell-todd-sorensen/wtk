@@ -50,6 +50,9 @@ proc ::wtk::ttt::applyTemplate {{template ""}} {
     return [list 200 ok $__string]
 }
 
+proc ::wtk::ttt::prepareTemplateNS {tmplFile} {
+    
+}
 proc ::wtk::ttt::applyTemplateNS {{template ""}} {
 
     variable binDir

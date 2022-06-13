@@ -3,16 +3,12 @@ namespace eval ::ext {
 }
 
 namespace eval ::ext::resource {
-    variable rar
-    array unset rar
-    set rar(initialized) 0
+    variable resourceList [list]
     namespace import -force ::wtk::log::log
 }
 
 proc ::ext::resource::init { } {
-    variable rar
-    array unset rar
-    set rar(initialized) 1
+    variable resourceList [list]
 }
 
 if {0} {
@@ -43,31 +39,32 @@ if {0} {
     }
 }
 
-proc ::ext::resource::add { name args } {
+proc ::ext::resource::add { name command args } {
 
-    variable rar
-    if {![exists $name]} {
-        set rar($name) $args
-    }
+    variable resources
+    lappend resources [list $name [list $command {*}$args]]
 }
 
 proc ::ext::resource::exists { name } {
 
-    variable rar
-    info exists rar($name)
+    variable resources
+    lsearch -index 1 -exact $resources $name
 }
 
 proc ::ext::resource::eval { name args } {
 
-    variable rar
-    uplevel 1 [list {*}$rar($name) {*}$args]
+    variable resources
+    set command [lindex [lsearch -inline -index 0 -exact $resources $name] 1]
+    uplevel 1 [list {*}$command {*}$args]
 }
 
-proc ::ext::resource::echo { args } {
-    uplevel 1 [list append __string $args]
+proc echo { args } {
+    #puts "args = '$args'"
+    uplevel 1 [list puts [list append __string $args]]
 }
 
 proc ::ext::resource::args { name args } {
+
     return "name: $name args: $args"
 }
 
@@ -196,54 +193,8 @@ proc ::ext::resource::include { name args } {
     uplevel 2 [list append string $string]
 }
 
-proc ::ext::resource::includeNS { name args } {
-
-    if {![string match "/*" "$name"]} {
-        # relative path
-        # warning: single threaded apps only!
-        set fileroot [file normalize $name]
-    } else {
-        set fileroot $name
-    }
-    
-    # what type of file to source?
-    # if .tcl file exists, do that
-    # elseif .cmp file exists, do that
-    # else if exact fileroot exists, that
-
-    if {
-        [file readable ${fileroot}.tcl]
-    } {
-        # do tcl
-        set filename ${fileroot}.tcl
-    } elseif {
-        [file readable ${fileroot}.cmp]
-    } {
-        # do cmp
-        set filename ${fileroot}.cmp
-    } elseif {
-        [file readable ${fileroot}]
-    } {
-        # do exact
-        set filename $fileroot
-    } else {
-        puts "Include Error $name not found or not readable"
-        return ""
-    }
-
-    # read args
-    foreach {var value} $args {
-        set var [string trimleft $var "-"]
-        set $var $value
-    }
-
-    # source file, result is returned:
-    ::source $filename
-    uplevel 2 [list append __string $string]
-}
-
 proc ::ext::resource::command { args } {
-
+    
     #note: must be called by resource::eval
     ::uplevel 2 $args
 }

@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.7.  */
+/* A Bison parser, made by GNU Bison 3.7.6.  */
 
 /* Bison implementation for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2020 Free Software Foundation,
+   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2021 Free Software Foundation,
    Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* As a special exception, you may create a larger work that contains
    part or all of the Bison parser skeleton and distribute that work
@@ -45,11 +45,11 @@
    define necessary library symbols; they are noted "INFRINGES ON
    USER NAME SPACE" below.  */
 
-/* Identify Bison output.  */
-#define YYBISON 1
+/* Identify Bison output, and Bison version.  */
+#define YYBISON 30706
 
-/* Bison version.  */
-#define YYBISON_VERSION "3.7"
+/* Bison version string.  */
+#define YYBISON_VERSION "3.7.6"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -238,6 +238,7 @@ extern int yydebug;
   typedef enum yytokentype yytoken_kind_t;
 #endif
 /* Token kinds.  */
+#define YYEMPTY -2
 #define YYEOF 0
 #define YYerror 256
 #define YYUNDEF 257
@@ -358,7 +359,7 @@ union YYSTYPE
   char  *str;
   int   var;
 
-#line 362 "y.tab.c"
+#line 363 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -743,6 +744,18 @@ typedef int_least16_t yytype_int16;
 typedef short yytype_int16;
 #endif
 
+/* Work around bug in HP-UX 11.23, which defines these macros
+   incorrectly for preprocessor constants.  This workaround can likely
+   be removed in 2023, as HPE has promised support for HP-UX 11.23
+   (aka HP-UX 11i v2) only through the end of 2022; see Table 2 of
+   <https://h20195.www2.hpe.com/V2/getpdf.aspx/4AA4-7673ENW.pdf>.  */
+#ifdef __hpux
+# undef UINT_LEAST8_MAX
+# undef UINT_LEAST16_MAX
+# define UINT_LEAST8_MAX 255
+# define UINT_LEAST16_MAX 65535
+#endif
+
 #if defined __UINT_LEAST8_MAX__ && __UINT_LEAST8_MAX__ <= __INT_MAX__
 typedef __UINT_LEAST8_TYPE__ yytype_uint8;
 #elif (!defined __UINT_LEAST8_MAX__ && defined YY_STDINT_H \
@@ -840,9 +853,9 @@ typedef int yy_state_fast_t;
 
 /* Suppress unused-variable warnings by "using" E.  */
 #if ! defined lint || defined __GNUC__
-# define YYUSE(E) ((void) (E))
+# define YY_USE(E) ((void) (E))
 #else
-# define YYUSE(E) /* empty */
+# define YY_USE(E) /* empty */
 #endif
 
 #if defined __GNUC__ && ! defined __ICC && 407 <= __GNUC__ * 100 + __GNUC_MINOR__
@@ -1376,7 +1389,7 @@ static const yytype_int16 yypgoto[] =
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int16 yydefgoto[] =
 {
-      -1,    86,    87,    88,    89,    90,    91,   270,    92,    93,
+       0,    86,    87,    88,    89,    90,    91,   270,    92,    93,
      272,   474,   366,   367,   470,   552,   368,   369,    94,    95,
      476,    96,    97,   349,   536,   374,    98,    99,   348,   376,
      100,   101,   279,   378,   102,   103,   104,   309,   105,   310,
@@ -1717,7 +1730,7 @@ yy_symbol_value_print (FILE *yyo,
                        yysymbol_kind_t yykind, YYSTYPE const * const yyvaluep)
 {
   FILE *yyoutput = yyo;
-  YYUSE (yyoutput);
+  YY_USE (yyoutput);
   if (!yyvaluep)
     return;
 # ifdef YYPRINT
@@ -1725,7 +1738,7 @@ yy_symbol_value_print (FILE *yyo,
     YYPRINT (yyo, yytoknum[yykind], *yyvaluep);
 # endif
   YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
-  YYUSE (yykind);
+  YY_USE (yykind);
   YY_IGNORE_MAYBE_UNINITIALIZED_END
 }
 
@@ -1839,13 +1852,13 @@ static void
 yydestruct (const char *yymsg,
             yysymbol_kind_t yykind, YYSTYPE *yyvaluep)
 {
-  YYUSE (yyvaluep);
+  YY_USE (yyvaluep);
   if (!yymsg)
     yymsg = "Deleting";
   YY_SYMBOL_PRINT (yymsg, yykind, yyvaluep, yylocationp);
 
   YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
-  YYUSE (yykind);
+  YY_USE (yykind);
   YY_IGNORE_MAYBE_UNINITIALIZED_END
 }
 
@@ -2108,13 +2121,13 @@ yyreduce:
   case 89: /* stringdata: STRINGDATA  */
 #line 230 "t3-bison.y"
              {printf("append __string \"%s\"\n", (yyvsp[0].str));}
-#line 2112 "y.tab.c"
+#line 2125 "y.tab.c"
     break;
 
   case 90: /* quotedstring: QUOTEDSTRING  */
 #line 234 "t3-bison.y"
                {printf("append __string \{%s}\n", (yyvsp[0].str));}
-#line 2118 "y.tab.c"
+#line 2131 "y.tab.c"
     break;
 
   case 92: /* unset_begin: UNSET ARG  */
@@ -2122,61 +2135,61 @@ yyreduce:
             {
     printf("unset '%s'\n", (yyvsp[0].str));
   }
-#line 2126 "y.tab.c"
+#line 2139 "y.tab.c"
     break;
 
   case 95: /* switch_begin: SWITCHBEGIN ARG  */
 #line 260 "t3-bison.y"
                   {printf("switch %s", (yyvsp[0].str));}
-#line 2132 "y.tab.c"
+#line 2145 "y.tab.c"
     break;
 
   case 96: /* switch_args: args CLOSETAG  */
 #line 264 "t3-bison.y"
                 {printf(" \{\n");}
-#line 2138 "y.tab.c"
+#line 2151 "y.tab.c"
     break;
 
   case 97: /* switch_end: SWITCHEND  */
 #line 267 "t3-bison.y"
              {printf("}\n");}
-#line 2144 "y.tab.c"
+#line 2157 "y.tab.c"
     break;
 
   case 100: /* case_begin: CASEBEGIN ARG  */
 #line 277 "t3-bison.y"
                 {printf("   %s", (yyvsp[0].str));}
-#line 2150 "y.tab.c"
+#line 2163 "y.tab.c"
     break;
 
   case 101: /* case_args: args  */
 #line 281 "t3-bison.y"
        {printf(" \{\n   ");}
-#line 2156 "y.tab.c"
+#line 2169 "y.tab.c"
     break;
 
   case 102: /* case_end: CASEEND  */
 #line 285 "t3-bison.y"
           {printf("   }\n");}
-#line 2162 "y.tab.c"
+#line 2175 "y.tab.c"
     break;
 
   case 103: /* default_begin: DEFAULTCASEBEGIN  */
 #line 289 "t3-bison.y"
                    {printf("   default \{\n   ");}
-#line 2168 "y.tab.c"
+#line 2181 "y.tab.c"
     break;
 
   case 107: /* while_begin: WHILEBEGIN ARG  */
 #line 304 "t3-bison.y"
                  {printf("\nwhile %s \{\n", (yyvsp[0].str));}
-#line 2174 "y.tab.c"
+#line 2187 "y.tab.c"
     break;
 
   case 108: /* while_end: WHILEEND  */
 #line 308 "t3-bison.y"
            {printf("\n}\n");}
-#line 2180 "y.tab.c"
+#line 2193 "y.tab.c"
     break;
 
   case 110: /* $@1: %empty  */
@@ -2186,7 +2199,7 @@ yyreduce:
     /* printf("namespace eval ::t3 \{}\n\t"); */
     printf("proc ::t3::%s", (yyvsp[0].str));
   }
-#line 2190 "y.tab.c"
+#line 2203 "y.tab.c"
     break;
 
   case 111: /* $@2: %empty  */
@@ -2194,7 +2207,7 @@ yyreduce:
       {
     printf(" %s", (yyvsp[0].str));
   }
-#line 2198 "y.tab.c"
+#line 2211 "y.tab.c"
     break;
 
   case 112: /* proc_begin: PROCBEGIN ARG $@1 ARG $@2 CLOSETAG  */
@@ -2202,7 +2215,7 @@ yyreduce:
            {
     printf(" \{\n");
   }
-#line 2206 "y.tab.c"
+#line 2219 "y.tab.c"
     break;
 
   case 113: /* proc_end: PROCEND  */
@@ -2210,7 +2223,7 @@ yyreduce:
           {
     printf("\n\t\treturn $__string\n\t}\n}\n");
   }
-#line 2214 "y.tab.c"
+#line 2227 "y.tab.c"
     break;
 
   case 115: /* $@3: %empty  */
@@ -2218,7 +2231,7 @@ yyreduce:
                   {
     printf("namespace eval ::t3::%s", (yyvsp[0].str));
   }
-#line 2222 "y.tab.c"
+#line 2235 "y.tab.c"
     break;
 
   case 116: /* nseval_begin: NSEVALBEGIN ARG $@3 CLOSETAG  */
@@ -2226,7 +2239,7 @@ yyreduce:
            {
     printf(" \{\n");
   }
-#line 2230 "y.tab.c"
+#line 2243 "y.tab.c"
     break;
 
   case 117: /* nseval_end: NSEVALEND  */
@@ -2234,7 +2247,7 @@ yyreduce:
             {
     printf("\n}\n");
   }
-#line 2238 "y.tab.c"
+#line 2251 "y.tab.c"
     break;
 
   case 119: /* ns_begin: NSBEGIN ARG  */
@@ -2242,7 +2255,7 @@ yyreduce:
               {
     printf("append __string [namespace %s", (yyvsp[0].str));
   }
-#line 2246 "y.tab.c"
+#line 2259 "y.tab.c"
     break;
 
   case 120: /* ns_arg: ARG  */
@@ -2250,7 +2263,7 @@ yyreduce:
       {
     printf(" %s", (yyvsp[0].str));
   }
-#line 2254 "y.tab.c"
+#line 2267 "y.tab.c"
     break;
 
   case 121: /* ns_end: CLOSETAG  */
@@ -2258,91 +2271,91 @@ yyreduce:
            {
     printf("]\n");
  }
-#line 2262 "y.tab.c"
+#line 2275 "y.tab.c"
     break;
 
   case 122: /* break_cmd: BREAK  */
 #line 386 "t3-bison.y"
         {printf("break\n");}
-#line 2268 "y.tab.c"
+#line 2281 "y.tab.c"
     break;
 
   case 123: /* continue_cmd: CONTINUE  */
 #line 390 "t3-bison.y"
            {printf("continue\n");}
-#line 2274 "y.tab.c"
+#line 2287 "y.tab.c"
     break;
 
   case 124: /* $@4: %empty  */
 #line 396 "t3-bison.y"
            {printf("append __string [expr %s", (yyvsp[0].str));}
-#line 2280 "y.tab.c"
+#line 2293 "y.tab.c"
     break;
 
   case 125: /* expr_cmd: EXPR ARG $@4 args CLOSETAG  */
 #line 396 "t3-bison.y"
                                                                    {printf("]\n");}
-#line 2286 "y.tab.c"
+#line 2299 "y.tab.c"
     break;
 
   case 126: /* $@5: %empty  */
 #line 400 "t3-bison.y"
              {printf("set %s [expr", (yyvsp[0].str));}
-#line 2292 "y.tab.c"
+#line 2305 "y.tab.c"
     break;
 
   case 127: /* exprto_cmd: EXPRTO ARG $@5 args CLOSETAG  */
 #line 400 "t3-bison.y"
                                                          {printf("]\n");}
-#line 2298 "y.tab.c"
+#line 2311 "y.tab.c"
     break;
 
   case 129: /* $@6: %empty  */
 #line 410 "t3-bison.y"
                    {printf("foreach %s", (yyvsp[0].str));}
-#line 2304 "y.tab.c"
+#line 2317 "y.tab.c"
     break;
 
   case 130: /* foreach_begin: FOREACHBEGIN ARG $@6 ARG  */
 #line 410 "t3-bison.y"
                                                    {printf(" %s", (yyvsp[0].str));}
-#line 2310 "y.tab.c"
+#line 2323 "y.tab.c"
     break;
 
   case 131: /* foreach_end: args  */
 #line 414 "t3-bison.y"
        {printf(" \{\n");}
-#line 2316 "y.tab.c"
+#line 2329 "y.tab.c"
     break;
 
   case 132: /* foreach_endcmd: FOREACHENDCMD  */
 #line 418 "t3-bison.y"
                 {printf("}\n");}
-#line 2322 "y.tab.c"
+#line 2335 "y.tab.c"
     break;
 
   case 133: /* $@7: %empty  */
 #line 424 "t3-bison.y"
              {printf("append __string [format %s", (yyvsp[0].str));}
-#line 2328 "y.tab.c"
+#line 2341 "y.tab.c"
     break;
 
   case 134: /* format_cmd: FORMAT ARG $@7 args CLOSETAG  */
 #line 424 "t3-bison.y"
                                                                        {printf("]\n");}
-#line 2334 "y.tab.c"
+#line 2347 "y.tab.c"
     break;
 
   case 135: /* $@8: %empty  */
 #line 428 "t3-bison.y"
                {printf("set %s [format", (yyvsp[0].str));}
-#line 2340 "y.tab.c"
+#line 2353 "y.tab.c"
     break;
 
   case 136: /* formatto_cmd: FORMATTO ARG $@8 args CLOSETAG  */
 #line 428 "t3-bison.y"
                                                              {printf("]\n");}
-#line 2346 "y.tab.c"
+#line 2359 "y.tab.c"
     break;
 
   case 137: /* $@9: %empty  */
@@ -2350,7 +2363,7 @@ yyreduce:
                 {
      printf("if {[::ext::resource::exists %s]} {\next::resource::eval %s", (yyvsp[0].str), (yyvsp[0].str));
    }
-#line 2354 "y.tab.c"
+#line 2367 "y.tab.c"
     break;
 
   case 138: /* extension_resource_cmd: XRESOURCE ARG $@9 args CLOSETAG  */
@@ -2358,463 +2371,463 @@ yyreduce:
                  {
      printf("\n}\n");
    }
-#line 2362 "y.tab.c"
+#line 2375 "y.tab.c"
     break;
 
   case 139: /* $@10: %empty  */
 #line 445 "t3-bison.y"
              {printf("regexp %s", (yyvsp[0].str));}
-#line 2368 "y.tab.c"
+#line 2381 "y.tab.c"
     break;
 
   case 140: /* regexp_cmd: REGEXP ARG $@10 args CLOSETAG  */
 #line 445 "t3-bison.y"
                                                       {printf("\n");}
-#line 2374 "y.tab.c"
+#line 2387 "y.tab.c"
     break;
 
   case 141: /* $@11: %empty  */
 #line 449 "t3-bison.y"
                {printf("set %s [regexp ", (yyvsp[0].str));}
-#line 2380 "y.tab.c"
+#line 2393 "y.tab.c"
     break;
 
   case 142: /* regexpto_cmd: REGEXPTO ARG $@11 args CLOSETAG  */
 #line 449 "t3-bison.y"
                                                               {printf("]\n");}
-#line 2386 "y.tab.c"
+#line 2399 "y.tab.c"
     break;
 
   case 143: /* $@12: %empty  */
 #line 453 "t3-bison.y"
              {printf("append __string [regsub %s", (yyvsp[0].str));}
-#line 2392 "y.tab.c"
+#line 2405 "y.tab.c"
     break;
 
   case 144: /* regsub_cmd: REGSUB ARG $@12 args CLOSETAG  */
 #line 453 "t3-bison.y"
                                                                        {printf("]\n");}
-#line 2398 "y.tab.c"
+#line 2411 "y.tab.c"
     break;
 
   case 145: /* $@13: %empty  */
 #line 457 "t3-bison.y"
                {printf("set %s [regsub", (yyvsp[0].str));}
-#line 2404 "y.tab.c"
+#line 2417 "y.tab.c"
     break;
 
   case 146: /* regsubto_cmd: REGSUBTO ARG $@13 args CLOSETAG  */
 #line 457 "t3-bison.y"
                                                              {printf("]\n");}
-#line 2410 "y.tab.c"
+#line 2423 "y.tab.c"
     break;
 
   case 148: /* $@14: %empty  */
 #line 465 "t3-bison.y"
             {printf("if {[regexp %s ", (yyvsp[0].str));}
-#line 2416 "y.tab.c"
+#line 2429 "y.tab.c"
     break;
 
   case 149: /* ifreg_begin: IFREG ARG $@14 args CLOSETAG  */
 #line 465 "t3-bison.y"
                                                            {printf("]} {\n");}
-#line 2422 "y.tab.c"
+#line 2435 "y.tab.c"
     break;
 
   case 150: /* var: VAR  */
 #line 471 "t3-bison.y"
       {printf("\nappend __string %s\n", (yyvsp[0].str));}
-#line 2428 "y.tab.c"
+#line 2441 "y.tab.c"
     break;
 
   case 152: /* if_begin: IFBEGIN ARG  */
 #line 481 "t3-bison.y"
               {printf("if %s {\n", (yyvsp[0].str));}
-#line 2434 "y.tab.c"
+#line 2447 "y.tab.c"
     break;
 
   case 153: /* if_end: IFEND  */
 #line 485 "t3-bison.y"
         {printf("}\n");}
-#line 2440 "y.tab.c"
+#line 2453 "y.tab.c"
     break;
 
   case 157: /* else_begin: ELSE  */
 #line 495 "t3-bison.y"
        {printf(" } else {\n");}
-#line 2446 "y.tab.c"
+#line 2459 "y.tab.c"
     break;
 
   case 158: /* else_end: IFEND  */
 #line 499 "t3-bison.y"
         {printf("}\n");}
-#line 2452 "y.tab.c"
+#line 2465 "y.tab.c"
     break;
 
   case 160: /* $@15: %empty  */
 #line 507 "t3-bison.y"
              {printf("\n} elseif %s {\n", (yyvsp[0].str));}
-#line 2458 "y.tab.c"
+#line 2471 "y.tab.c"
     break;
 
   case 162: /* $@16: %empty  */
 #line 509 "t3-bison.y"
                 {printf("\n} elseif {[regexp %s ", (yyvsp[0].str));}
-#line 2464 "y.tab.c"
+#line 2477 "y.tab.c"
     break;
 
   case 163: /* elseif_begin: ELSEIFREG ARG $@16 args CLOSETAG  */
 #line 509 "t3-bison.y"
                                                                        {printf("]} {\n");}
-#line 2470 "y.tab.c"
+#line 2483 "y.tab.c"
     break;
 
   case 164: /* elseif_end: IFEND  */
 #line 513 "t3-bison.y"
         {printf("}\n");}
-#line 2476 "y.tab.c"
+#line 2489 "y.tab.c"
     break;
 
   case 167: /* $@17: %empty  */
 #line 521 "t3-bison.y"
           {printf("set %s", (yyvsp[0].str));}
-#line 2482 "y.tab.c"
+#line 2495 "y.tab.c"
     break;
 
   case 168: /* $@18: %empty  */
 #line 521 "t3-bison.y"
                                       {printf(" %s\n", (yyvsp[0].str));}
-#line 2488 "y.tab.c"
+#line 2501 "y.tab.c"
     break;
 
   case 170: /* $@19: %empty  */
 #line 525 "t3-bison.y"
           {printf("append __string [set %s]\n", (yyvsp[0].str));}
-#line 2494 "y.tab.c"
+#line 2507 "y.tab.c"
     break;
 
   case 172: /* $@20: %empty  */
 #line 531 "t3-bison.y"
            {printf("incr %s 1\n", (yyvsp[0].str));}
-#line 2500 "y.tab.c"
+#line 2513 "y.tab.c"
     break;
 
   case 174: /* $@21: %empty  */
 #line 535 "t3-bison.y"
             {printf("incr %s", (yyvsp[0].str));}
-#line 2506 "y.tab.c"
+#line 2519 "y.tab.c"
     break;
 
   case 175: /* $@22: %empty  */
 #line 535 "t3-bison.y"
                                          {printf(" %s\n", (yyvsp[0].str));}
-#line 2512 "y.tab.c"
+#line 2525 "y.tab.c"
     break;
 
   case 177: /* lappend_cmd: lappend_begin lappend_end CLOSETAG  */
 #line 541 "t3-bison.y"
                                      {printf("\n");}
-#line 2518 "y.tab.c"
+#line 2531 "y.tab.c"
     break;
 
   case 178: /* $@23: %empty  */
 #line 545 "t3-bison.y"
               {printf("lappend %s", (yyvsp[0].str));}
-#line 2524 "y.tab.c"
+#line 2537 "y.tab.c"
     break;
 
   case 179: /* lappend_begin: LAPPEND ARG $@23 ARG  */
 #line 545 "t3-bison.y"
                                               {printf(" %s", (yyvsp[0].str));}
-#line 2530 "y.tab.c"
+#line 2543 "y.tab.c"
     break;
 
   case 181: /* $@24: %empty  */
 #line 555 "t3-bison.y"
               {printf("lassign %s", (yyvsp[0].str));}
-#line 2536 "y.tab.c"
+#line 2549 "y.tab.c"
     break;
 
   case 182: /* lassign_cmd: LASSIGN ARG $@24 args CLOSETAG  */
 #line 555 "t3-bison.y"
                                                         {printf("\n");}
-#line 2542 "y.tab.c"
+#line 2555 "y.tab.c"
     break;
 
   case 183: /* $@25: %empty  */
 #line 559 "t3-bison.y"
                 {printf("set %s [lassign", (yyvsp[0].str));}
-#line 2548 "y.tab.c"
+#line 2561 "y.tab.c"
     break;
 
   case 184: /* lassignto_cmd: LASSIGNTO ARG $@25 args CLOSETAG  */
 #line 559 "t3-bison.y"
                                                                {printf("]\n");}
-#line 2554 "y.tab.c"
+#line 2567 "y.tab.c"
     break;
 
   case 185: /* $@26: %empty  */
 #line 563 "t3-bison.y"
               {printf("set %s [lsort", (yyvsp[0].str));}
-#line 2560 "y.tab.c"
+#line 2573 "y.tab.c"
     break;
 
   case 186: /* lsortto_cmd: LSORTTO ARG $@26 args CLOSETAG  */
 #line 563 "t3-bison.y"
                                                            {printf("]\n");}
-#line 2566 "y.tab.c"
+#line 2579 "y.tab.c"
     break;
 
   case 187: /* $@27: %empty  */
 #line 567 "t3-bison.y"
              {printf("append __string [lindex %s", (yyvsp[0].str));}
-#line 2572 "y.tab.c"
+#line 2585 "y.tab.c"
     break;
 
   case 188: /* lindex_cmd: LINDEX ARG $@27 args CLOSETAG  */
 #line 567 "t3-bison.y"
                                                                        {printf("]\n");}
-#line 2578 "y.tab.c"
+#line 2591 "y.tab.c"
     break;
 
   case 189: /* $@28: %empty  */
 #line 571 "t3-bison.y"
                {printf("set %s [lindex", (yyvsp[0].str));}
-#line 2584 "y.tab.c"
+#line 2597 "y.tab.c"
     break;
 
   case 190: /* lindexto_cmd: LINDEXTO ARG $@28 args CLOSETAG  */
 #line 571 "t3-bison.y"
                                                              {printf("]\n");}
-#line 2590 "y.tab.c"
+#line 2603 "y.tab.c"
     break;
 
   case 191: /* $@29: %empty  */
 #line 575 "t3-bison.y"
                 {printf("set %s [linsert", (yyvsp[0].str));}
-#line 2596 "y.tab.c"
+#line 2609 "y.tab.c"
     break;
 
   case 192: /* linsertto_cmd: LINSERTTO ARG $@29 args CLOSETAG  */
 #line 575 "t3-bison.y"
                                                                {printf("]\n");}
-#line 2602 "y.tab.c"
+#line 2615 "y.tab.c"
     break;
 
   case 193: /* $@30: %empty  */
 #line 579 "t3-bison.y"
            {printf("append __string [list %s", (yyvsp[0].str));}
-#line 2608 "y.tab.c"
+#line 2621 "y.tab.c"
     break;
 
   case 194: /* list_cmd: LIST ARG $@30 args CLOSETAG  */
 #line 579 "t3-bison.y"
                                                                    {printf("]\n");}
-#line 2614 "y.tab.c"
+#line 2627 "y.tab.c"
     break;
 
   case 195: /* $@31: %empty  */
 #line 583 "t3-bison.y"
              {printf("set %s [list", (yyvsp[0].str));}
-#line 2620 "y.tab.c"
+#line 2633 "y.tab.c"
     break;
 
   case 196: /* listto_cmd: LISTTO ARG $@31 args CLOSETAG  */
 #line 583 "t3-bison.y"
                                                          {printf("]\n");}
-#line 2626 "y.tab.c"
+#line 2639 "y.tab.c"
     break;
 
   case 197: /* $@32: %empty  */
 #line 587 "t3-bison.y"
               {printf("append __string [llength %s", (yyvsp[0].str));}
-#line 2632 "y.tab.c"
+#line 2645 "y.tab.c"
     break;
 
   case 198: /* llength_cmd: LLENGTH ARG $@32 args CLOSETAG  */
 #line 587 "t3-bison.y"
                                                                          {printf("]\n");}
-#line 2638 "y.tab.c"
+#line 2651 "y.tab.c"
     break;
 
   case 199: /* $@33: %empty  */
 #line 591 "t3-bison.y"
                 {printf("set %s [llength", (yyvsp[0].str));}
-#line 2644 "y.tab.c"
+#line 2657 "y.tab.c"
     break;
 
   case 200: /* llengthto_cmd: LLENGTHTO ARG $@33 args CLOSETAG  */
 #line 591 "t3-bison.y"
                                                                {printf("]\n");}
-#line 2650 "y.tab.c"
+#line 2663 "y.tab.c"
     break;
 
   case 201: /* $@34: %empty  */
 #line 595 "t3-bison.y"
              {printf("append __string [lrange %s", (yyvsp[0].str));}
-#line 2656 "y.tab.c"
+#line 2669 "y.tab.c"
     break;
 
   case 202: /* lrange_cmd: LRANGE ARG $@34 args CLOSETAG  */
 #line 595 "t3-bison.y"
                                                                        {printf("]\n");}
-#line 2662 "y.tab.c"
+#line 2675 "y.tab.c"
     break;
 
   case 203: /* $@35: %empty  */
 #line 599 "t3-bison.y"
                {printf("set %s [lrange", (yyvsp[0].str));}
-#line 2668 "y.tab.c"
+#line 2681 "y.tab.c"
     break;
 
   case 204: /* lrangeto_cmd: LRANGETO ARG $@35 args CLOSETAG  */
 #line 599 "t3-bison.y"
                                                              {printf("]\n");}
-#line 2674 "y.tab.c"
+#line 2687 "y.tab.c"
     break;
 
   case 205: /* $@36: %empty  */
 #line 603 "t3-bison.y"
               {printf("append __string [lrepeat %s", (yyvsp[0].str));}
-#line 2680 "y.tab.c"
+#line 2693 "y.tab.c"
     break;
 
   case 206: /* lrepeat_cmd: LREPEAT ARG $@36 args CLOSETAG  */
 #line 603 "t3-bison.y"
                                                                          {printf("]\n");}
-#line 2686 "y.tab.c"
+#line 2699 "y.tab.c"
     break;
 
   case 207: /* $@37: %empty  */
 #line 607 "t3-bison.y"
                 {printf("lappend %s {*}[lrepeat", (yyvsp[0].str));}
-#line 2692 "y.tab.c"
+#line 2705 "y.tab.c"
     break;
 
   case 208: /* lrepeatto_cmd: LREPEATTO ARG $@37 args CLOSETAG  */
 #line 607 "t3-bison.y"
                                                                       {printf("]\n");}
-#line 2698 "y.tab.c"
+#line 2711 "y.tab.c"
     break;
 
   case 209: /* $@38: %empty  */
 #line 611 "t3-bison.y"
                {printf("append __string [lreplace %s", (yyvsp[0].str));}
-#line 2704 "y.tab.c"
+#line 2717 "y.tab.c"
     break;
 
   case 210: /* lreplace_cmd: LREPLACE ARG $@38 args CLOSETAG  */
 #line 611 "t3-bison.y"
                                                                            {printf("]\n");}
-#line 2710 "y.tab.c"
+#line 2723 "y.tab.c"
     break;
 
   case 211: /* $@39: %empty  */
 #line 615 "t3-bison.y"
                  {printf("set %s [lreplace", (yyvsp[0].str));}
-#line 2716 "y.tab.c"
+#line 2729 "y.tab.c"
     break;
 
   case 212: /* lreplaceto_cmd: LREPLACETO ARG $@39 args CLOSETAG  */
 #line 615 "t3-bison.y"
                                                                  {printf("]\n");}
-#line 2722 "y.tab.c"
+#line 2735 "y.tab.c"
     break;
 
   case 213: /* $@40: %empty  */
 #line 619 "t3-bison.y"
                {printf("append __string [lreverse %s", (yyvsp[0].str));}
-#line 2728 "y.tab.c"
+#line 2741 "y.tab.c"
     break;
 
   case 214: /* lreverse_cmd: LREVERSE ARG $@40 args CLOSETAG  */
 #line 619 "t3-bison.y"
                                                                            {printf("]\n");}
-#line 2734 "y.tab.c"
+#line 2747 "y.tab.c"
     break;
 
   case 215: /* $@41: %empty  */
 #line 623 "t3-bison.y"
                  {printf("set %s [lreverse", (yyvsp[0].str));}
-#line 2740 "y.tab.c"
+#line 2753 "y.tab.c"
     break;
 
   case 216: /* lreverseto_cmd: LREVERSETO ARG $@41 args CLOSETAG  */
 #line 623 "t3-bison.y"
                                                                  {printf("]\n");}
-#line 2746 "y.tab.c"
+#line 2759 "y.tab.c"
     break;
 
   case 217: /* $@42: %empty  */
 #line 626 "t3-bison.y"
               {printf("append __string [lsearch %s", (yyvsp[0].str));}
-#line 2752 "y.tab.c"
+#line 2765 "y.tab.c"
     break;
 
   case 218: /* lsearch_cmd: LSEARCH ARG $@42 args CLOSETAG  */
 #line 626 "t3-bison.y"
                                                                          {printf("]\n");}
-#line 2758 "y.tab.c"
+#line 2771 "y.tab.c"
     break;
 
   case 219: /* $@43: %empty  */
 #line 630 "t3-bison.y"
                 {printf("set %s [lsearch", (yyvsp[0].str));}
-#line 2764 "y.tab.c"
+#line 2777 "y.tab.c"
     break;
 
   case 220: /* lsearchto_cmd: LSEARCHTO ARG $@43 args CLOSETAG  */
 #line 630 "t3-bison.y"
                                                                {printf("]\n");}
-#line 2770 "y.tab.c"
+#line 2783 "y.tab.c"
     break;
 
   case 221: /* $@44: %empty  */
 #line 634 "t3-bison.y"
            {printf("lset %s", (yyvsp[0].str));}
-#line 2776 "y.tab.c"
+#line 2789 "y.tab.c"
     break;
 
   case 222: /* lset_cmd: LSET ARG $@44 args CLOSETAG  */
 #line 634 "t3-bison.y"
                                                   {printf("\n");}
-#line 2782 "y.tab.c"
+#line 2795 "y.tab.c"
     break;
 
   case 223: /* $@45: %empty  */
 #line 642 "t3-bison.y"
            {printf("dict %s", (yyvsp[0].str));}
-#line 2788 "y.tab.c"
+#line 2801 "y.tab.c"
     break;
 
   case 224: /* dict_cmd: DICT ARG $@45 args CLOSETAG  */
 #line 642 "t3-bison.y"
                                                   {printf("\n");}
-#line 2794 "y.tab.c"
+#line 2807 "y.tab.c"
     break;
 
   case 225: /* $@46: %empty  */
 #line 646 "t3-bison.y"
                 {printf("append __string [dict %s", (yyvsp[0].str));}
-#line 2800 "y.tab.c"
+#line 2813 "y.tab.c"
     break;
 
   case 226: /* dictprint_cmd: DICTPRINT ARG $@46 args CLOSETAG  */
 #line 646 "t3-bison.y"
                                                                         {printf("]\n");}
-#line 2806 "y.tab.c"
+#line 2819 "y.tab.c"
     break;
 
   case 227: /* $@47: %empty  */
 #line 650 "t3-bison.y"
              {printf("set %s [dict", (yyvsp[0].str));}
-#line 2812 "y.tab.c"
+#line 2825 "y.tab.c"
     break;
 
   case 228: /* dictto_cmd: DICTTO ARG $@47 args CLOSETAG  */
 #line 650 "t3-bison.y"
                                                          {printf("]\n");}
-#line 2818 "y.tab.c"
+#line 2831 "y.tab.c"
     break;
 
   case 230: /* $@48: %empty  */
@@ -2823,7 +2836,7 @@ yyreduce:
     /* a list containing: {keyVar valueVar} */
     printf("dict for %s", (yyvsp[0].str));
   }
-#line 2827 "y.tab.c"
+#line 2840 "y.tab.c"
     break;
 
   case 231: /* $@49: %empty  */
@@ -2832,7 +2845,7 @@ yyreduce:
     /* dictionaryValue */
     printf(" %s", (yyvsp[0].str));
   }
-#line 2836 "y.tab.c"
+#line 2849 "y.tab.c"
     break;
 
   case 232: /* dictfor_begin: DICTFORBEGIN ARG $@48 ARG $@49 CLOSETAG  */
@@ -2841,7 +2854,7 @@ yyreduce:
     /* dictionary Script coming up */
     printf(" \{\n\t");
   }
-#line 2845 "y.tab.c"
+#line 2858 "y.tab.c"
     break;
 
   case 233: /* dictfor_end: DICTFOREND  */
@@ -2849,7 +2862,7 @@ yyreduce:
              {
     printf("\n}\n");
   }
-#line 2853 "y.tab.c"
+#line 2866 "y.tab.c"
     break;
 
   case 234: /* $@50: %empty  */
@@ -2858,7 +2871,7 @@ yyreduce:
     /* dictionary Value */
     printf("dict filter %s", (yyvsp[0].str));
   }
-#line 2862 "y.tab.c"
+#line 2875 "y.tab.c"
     break;
 
   case 235: /* $@51: %empty  */
@@ -2867,7 +2880,7 @@ yyreduce:
     /* type key or value */
     printf(" %s", (yyvsp[0].str));
   }
-#line 2871 "y.tab.c"
+#line 2884 "y.tab.c"
     break;
 
   case 236: /* $@52: %empty  */
@@ -2876,7 +2889,7 @@ yyreduce:
     /*  globPattern */
     printf(" %s", (yyvsp[0].str));
   }
-#line 2880 "y.tab.c"
+#line 2893 "y.tab.c"
     break;
 
   case 237: /* dictfilter_cmd: DICTFILTER ARG $@50 ARG $@51 ARG $@52 CLOSETAG  */
@@ -2885,7 +2898,7 @@ yyreduce:
     /* dictionary Script coming up */
     printf(" ]\n");
   }
-#line 2889 "y.tab.c"
+#line 2902 "y.tab.c"
     break;
 
   case 238: /* $@53: %empty  */
@@ -2894,7 +2907,7 @@ yyreduce:
     /* filtered dictionary value */
     printf("set %s [dict filter", (yyvsp[0].str));
   }
-#line 2898 "y.tab.c"
+#line 2911 "y.tab.c"
     break;
 
   case 239: /* $@54: %empty  */
@@ -2903,7 +2916,7 @@ yyreduce:
     /* dictionaryValue */
     printf(" %s", (yyvsp[0].str));
   }
-#line 2907 "y.tab.c"
+#line 2920 "y.tab.c"
     break;
 
   case 240: /* $@55: %empty  */
@@ -2912,7 +2925,7 @@ yyreduce:
     /* type key or value */
     printf(" %s", (yyvsp[0].str));
   }
-#line 2916 "y.tab.c"
+#line 2929 "y.tab.c"
     break;
 
   case 241: /* $@56: %empty  */
@@ -2921,7 +2934,7 @@ yyreduce:
     /*  globPattern */
     printf(" %s", (yyvsp[0].str));
   }
-#line 2925 "y.tab.c"
+#line 2938 "y.tab.c"
     break;
 
   case 242: /* dictfilterto_cmd: DICTFILTERTO ARG $@53 ARG $@54 ARG $@55 ARG $@56 CLOSETAG  */
@@ -2930,7 +2943,7 @@ yyreduce:
     /* dictionary Script coming up */
     printf("]\n");
   }
-#line 2934 "y.tab.c"
+#line 2947 "y.tab.c"
     break;
 
   case 244: /* $@57: %empty  */
@@ -2939,7 +2952,7 @@ yyreduce:
     /* a list containing: {keyVar valueVar} */
     printf("dict with %s", (yyvsp[0].str));
   }
-#line 2943 "y.tab.c"
+#line 2956 "y.tab.c"
     break;
 
   case 245: /* dictwith_begin: DICTWITHBEGIN ARG $@57 CLOSETAG  */
@@ -2948,7 +2961,7 @@ yyreduce:
     /* dictionary Script coming up */
     printf(" \{\n\t");
   }
-#line 2952 "y.tab.c"
+#line 2965 "y.tab.c"
     break;
 
   case 246: /* dictwith_end: DICTWITHEND  */
@@ -2956,359 +2969,359 @@ yyreduce:
               {
     printf("\n}\n");
   }
-#line 2960 "y.tab.c"
+#line 2973 "y.tab.c"
     break;
 
   case 247: /* $@58: %empty  */
 #line 754 "t3-bison.y"
            {printf("append __string [scan ", (yyvsp[0].str));}
-#line 2966 "y.tab.c"
+#line 2979 "y.tab.c"
     break;
 
   case 248: /* scan_cmd: SCAN ARG $@58 args CLOSETAG  */
 #line 754 "t3-bison.y"
                                                                  {printf("]\n");}
-#line 2972 "y.tab.c"
+#line 2985 "y.tab.c"
     break;
 
   case 249: /* $@59: %empty  */
 #line 758 "t3-bison.y"
              {printf("set %s [scan ", (yyvsp[0].str));}
-#line 2978 "y.tab.c"
+#line 2991 "y.tab.c"
     break;
 
   case 250: /* scanto_cmd: SCANTO ARG $@59 args CLOSETAG  */
 #line 758 "t3-bison.y"
                                                           {printf("]\n");}
-#line 2984 "y.tab.c"
+#line 2997 "y.tab.c"
     break;
 
   case 251: /* $@60: %empty  */
 #line 763 "t3-bison.y"
              {printf("append __string [string %s", (yyvsp[0].str));}
-#line 2990 "y.tab.c"
+#line 3003 "y.tab.c"
     break;
 
   case 252: /* string_cmd: STRING ARG $@60 args CLOSETAG  */
 #line 763 "t3-bison.y"
                                                                        {printf("]\n");}
-#line 2996 "y.tab.c"
+#line 3009 "y.tab.c"
     break;
 
   case 253: /* $@61: %empty  */
 #line 767 "t3-bison.y"
                {printf("set %s [string", (yyvsp[0].str));}
-#line 3002 "y.tab.c"
+#line 3015 "y.tab.c"
     break;
 
   case 254: /* stringto_cmd: STRINGTO ARG $@61 args CLOSETAG  */
 #line 767 "t3-bison.y"
                                                              {printf("]\n");}
-#line 3008 "y.tab.c"
+#line 3021 "y.tab.c"
     break;
 
   case 255: /* $@62: %empty  */
 #line 772 "t3-bison.y"
             {printf("append __string [split %s", (yyvsp[0].str));}
-#line 3014 "y.tab.c"
+#line 3027 "y.tab.c"
     break;
 
   case 256: /* split_cmd: SPLIT ARG $@62 args CLOSETAG  */
 #line 772 "t3-bison.y"
                                                                      {printf("]\n");}
-#line 3020 "y.tab.c"
+#line 3033 "y.tab.c"
     break;
 
   case 257: /* $@63: %empty  */
 #line 776 "t3-bison.y"
               {printf("set %s [split", (yyvsp[0].str));}
-#line 3026 "y.tab.c"
+#line 3039 "y.tab.c"
     break;
 
   case 258: /* splitto_cmd: SPLITTO ARG $@63 args CLOSETAG  */
 #line 776 "t3-bison.y"
                                                            {printf("]\n");}
-#line 3032 "y.tab.c"
+#line 3045 "y.tab.c"
     break;
 
   case 259: /* $@64: %empty  */
 #line 782 "t3-bison.y"
                {printf("append __string [encoding %s", (yyvsp[0].str));}
-#line 3038 "y.tab.c"
+#line 3051 "y.tab.c"
     break;
 
   case 260: /* encoding_cmd: ENCODING ARG $@64 args CLOSETAG  */
 #line 782 "t3-bison.y"
                                                                            {printf("]\n");}
-#line 3044 "y.tab.c"
+#line 3057 "y.tab.c"
     break;
 
   case 261: /* $@65: %empty  */
 #line 786 "t3-bison.y"
                  {printf("set %s [encoding", (yyvsp[0].str));}
-#line 3050 "y.tab.c"
+#line 3063 "y.tab.c"
     break;
 
   case 262: /* encodingto_cmd: ENCODINGTO ARG $@65 args CLOSETAG  */
 #line 786 "t3-bison.y"
                                                                  {printf("]\n");}
-#line 3056 "y.tab.c"
+#line 3069 "y.tab.c"
     break;
 
   case 263: /* $@66: %empty  */
 #line 792 "t3-bison.y"
             {printf("append __string [clock %s", (yyvsp[0].str));}
-#line 3062 "y.tab.c"
+#line 3075 "y.tab.c"
     break;
 
   case 264: /* clock_cmd: CLOCK ARG $@66 args CLOSETAG  */
 #line 792 "t3-bison.y"
                                                                      {printf("]\n");}
-#line 3068 "y.tab.c"
+#line 3081 "y.tab.c"
     break;
 
   case 265: /* $@67: %empty  */
 #line 796 "t3-bison.y"
               {printf("set %s [clock", (yyvsp[0].str));}
-#line 3074 "y.tab.c"
+#line 3087 "y.tab.c"
     break;
 
   case 266: /* clockto_cmd: CLOCKTO ARG $@67 args CLOSETAG  */
 #line 796 "t3-bison.y"
                                                            {printf("]\n");}
-#line 3080 "y.tab.c"
+#line 3093 "y.tab.c"
     break;
 
   case 267: /* $@68: %empty  */
 #line 802 "t3-bison.y"
            {printf("append __string [info %s", (yyvsp[0].str));}
-#line 3086 "y.tab.c"
+#line 3099 "y.tab.c"
     break;
 
   case 268: /* info_cmd: INFO ARG $@68 args CLOSETAG  */
 #line 802 "t3-bison.y"
                                                                    {printf("]\n");}
-#line 3092 "y.tab.c"
+#line 3105 "y.tab.c"
     break;
 
   case 269: /* $@69: %empty  */
 #line 806 "t3-bison.y"
              {printf("set %s [info", (yyvsp[0].str));}
-#line 3098 "y.tab.c"
+#line 3111 "y.tab.c"
     break;
 
   case 270: /* infoto_cmd: INFOTO ARG $@69 args CLOSETAG  */
 #line 806 "t3-bison.y"
                                                          {printf("]\n");}
-#line 3104 "y.tab.c"
+#line 3117 "y.tab.c"
     break;
 
   case 271: /* $@70: %empty  */
 #line 812 "t3-bison.y"
             {printf("append __string [array %s", (yyvsp[0].str));}
-#line 3110 "y.tab.c"
+#line 3123 "y.tab.c"
     break;
 
   case 272: /* array_cmd: ARRAY ARG $@70 args CLOSETAG  */
 #line 812 "t3-bison.y"
                                                                      {printf("]\n");}
-#line 3116 "y.tab.c"
+#line 3129 "y.tab.c"
     break;
 
   case 273: /* $@71: %empty  */
 #line 816 "t3-bison.y"
               {printf("set %s [array", (yyvsp[0].str));}
-#line 3122 "y.tab.c"
+#line 3135 "y.tab.c"
     break;
 
   case 274: /* arrayto_cmd: ARRAYTO ARG $@71 args CLOSETAG  */
 #line 816 "t3-bison.y"
                                                            {printf("]\n");}
-#line 3128 "y.tab.c"
+#line 3141 "y.tab.c"
     break;
 
   case 275: /* $@72: %empty  */
 #line 822 "t3-bison.y"
              {printf("append __string [concat %s", (yyvsp[0].str));}
-#line 3134 "y.tab.c"
+#line 3147 "y.tab.c"
     break;
 
   case 276: /* concat_cmd: CONCAT ARG $@72 args CLOSETAG  */
 #line 822 "t3-bison.y"
                                                                        {printf("]\n");}
-#line 3140 "y.tab.c"
+#line 3153 "y.tab.c"
     break;
 
   case 277: /* $@73: %empty  */
 #line 826 "t3-bison.y"
                {printf("set %s [concat", (yyvsp[0].str));}
-#line 3146 "y.tab.c"
+#line 3159 "y.tab.c"
     break;
 
   case 278: /* concatto_cmd: CONCATTO ARG $@73 args CLOSETAG  */
 #line 826 "t3-bison.y"
                                                              {printf("]\n");}
-#line 3152 "y.tab.c"
+#line 3165 "y.tab.c"
     break;
 
   case 279: /* $@74: %empty  */
 #line 832 "t3-bison.y"
            {printf("append __string [join %s", (yyvsp[0].str));}
-#line 3158 "y.tab.c"
+#line 3171 "y.tab.c"
     break;
 
   case 280: /* join_cmd: JOIN ARG $@74 args CLOSETAG  */
 #line 832 "t3-bison.y"
                                                                    {printf("]\n");}
-#line 3164 "y.tab.c"
+#line 3177 "y.tab.c"
     break;
 
   case 281: /* $@75: %empty  */
 #line 836 "t3-bison.y"
              {printf("set %s [join", (yyvsp[0].str));}
-#line 3170 "y.tab.c"
+#line 3183 "y.tab.c"
     break;
 
   case 282: /* jointo_cmd: JOINTO ARG $@75 args CLOSETAG  */
 #line 836 "t3-bison.y"
                                                          {printf("]\n");}
-#line 3176 "y.tab.c"
+#line 3189 "y.tab.c"
     break;
 
   case 283: /* $@76: %empty  */
 #line 842 "t3-bison.y"
              {printf("append __string [append %s", (yyvsp[0].str));}
-#line 3182 "y.tab.c"
+#line 3195 "y.tab.c"
     break;
 
   case 284: /* append_cmd: APPEND ARG $@76 args CLOSETAG  */
 #line 842 "t3-bison.y"
                                                                        {printf("]\n");}
-#line 3188 "y.tab.c"
+#line 3201 "y.tab.c"
     break;
 
   case 285: /* $@77: %empty  */
 #line 846 "t3-bison.y"
                {printf("set %s [append", (yyvsp[0].str));}
-#line 3194 "y.tab.c"
+#line 3207 "y.tab.c"
     break;
 
   case 286: /* appendto_cmd: APPENDTO ARG $@77 args CLOSETAG  */
 #line 846 "t3-bison.y"
                                                              {printf("]\n");}
-#line 3200 "y.tab.c"
+#line 3213 "y.tab.c"
     break;
 
   case 287: /* $@78: %empty  */
 #line 852 "t3-bison.y"
              {printf("append __string [binary %s", (yyvsp[0].str));}
-#line 3206 "y.tab.c"
+#line 3219 "y.tab.c"
     break;
 
   case 288: /* binary_cmd: BINARY ARG $@78 args CLOSETAG  */
 #line 852 "t3-bison.y"
                                                                        {printf("]\n");}
-#line 3212 "y.tab.c"
+#line 3225 "y.tab.c"
     break;
 
   case 289: /* $@79: %empty  */
 #line 856 "t3-bison.y"
                {printf("set %s [binary", (yyvsp[0].str));}
-#line 3218 "y.tab.c"
+#line 3231 "y.tab.c"
     break;
 
   case 290: /* binaryto_cmd: BINARYTO ARG $@79 args CLOSETAG  */
 #line 856 "t3-bison.y"
                                                              {printf("]\n");}
-#line 3224 "y.tab.c"
+#line 3237 "y.tab.c"
     break;
 
   case 291: /* $@80: %empty  */
 #line 862 "t3-bison.y"
            {printf("append __string [glob -nocomplain %s", (yyvsp[0].str));}
-#line 3230 "y.tab.c"
+#line 3243 "y.tab.c"
     break;
 
   case 292: /* glob_cmd: GLOB ARG $@80 args CLOSETAG  */
 #line 862 "t3-bison.y"
                                                                                {printf("]\n");}
-#line 3236 "y.tab.c"
+#line 3249 "y.tab.c"
     break;
 
   case 293: /* $@81: %empty  */
 #line 866 "t3-bison.y"
              {printf("set %s [glob -nocomplain", (yyvsp[0].str));}
-#line 3242 "y.tab.c"
+#line 3255 "y.tab.c"
     break;
 
   case 294: /* globto_cmd: GLOBTO ARG $@81 args CLOSETAG  */
 #line 866 "t3-bison.y"
                                                                      {printf("]\n");}
-#line 3248 "y.tab.c"
+#line 3261 "y.tab.c"
     break;
 
   case 295: /* $@82: %empty  */
 #line 872 "t3-bison.y"
             {printf("append __string [file %s", (yyvsp[0].str));}
-#line 3254 "y.tab.c"
+#line 3267 "y.tab.c"
     break;
 
   case 296: /* file_cmd: FILEX ARG $@82 args CLOSETAG  */
 #line 872 "t3-bison.y"
                                                                     {printf("]\n");}
-#line 3260 "y.tab.c"
+#line 3273 "y.tab.c"
     break;
 
   case 297: /* $@83: %empty  */
 #line 876 "t3-bison.y"
               {printf("set %s [file", (yyvsp[0].str));}
-#line 3266 "y.tab.c"
+#line 3279 "y.tab.c"
     break;
 
   case 298: /* fileto_cmd: FILEXTO ARG $@83 args CLOSETAG  */
 #line 876 "t3-bison.y"
                                                           {printf("]\n");}
-#line 3272 "y.tab.c"
+#line 3285 "y.tab.c"
     break;
 
   case 299: /* $@84: %empty  */
 #line 882 "t3-bison.y"
                        {printf("variable %s", (yyvsp[0].str));}
-#line 3278 "y.tab.c"
+#line 3291 "y.tab.c"
     break;
 
   case 300: /* variable_cmd: VARIABLE_COMMAND ARG $@84 args CLOSETAG  */
 #line 882 "t3-bison.y"
                                                                   {printf("\n");}
-#line 3284 "y.tab.c"
+#line 3297 "y.tab.c"
     break;
 
   case 301: /* comment_cmd: COMMENT npargs CLOSETAG  */
 #line 888 "t3-bison.y"
                           {/* do nothing */}
-#line 3290 "y.tab.c"
+#line 3303 "y.tab.c"
     break;
 
   case 302: /* whitespace_cmd: WS npargs CLOSETAG  */
 #line 894 "t3-bison.y"
                      {/* do nothing */}
-#line 3296 "y.tab.c"
+#line 3309 "y.tab.c"
     break;
 
   case 303: /* arg: ARG  */
 #line 900 "t3-bison.y"
       {printf(" %s", (yyvsp[0].str));}
-#line 3302 "y.tab.c"
+#line 3315 "y.tab.c"
     break;
 
   case 306: /* nparg: ARG  */
 #line 911 "t3-bison.y"
       {/* do nothing here */}
-#line 3308 "y.tab.c"
+#line 3321 "y.tab.c"
     break;
 
 
-#line 3312 "y.tab.c"
+#line 3325 "y.tab.c"
 
       default: break;
     }

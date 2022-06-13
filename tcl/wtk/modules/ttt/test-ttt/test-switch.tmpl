@@ -1,0 +1,20 @@
+[switch "-glob" "$x" ]
+ [case x*][/case]
+ [case bbac]
+  This is case 'bbac'
+  [set a b]
+ [/case]
+ [case abc]
+  This is case 'abc'
+  [set a abc]
+ [/case]
+ [default]
+  This is the default
+  [set a $x]
+ [/default]
+[/switch]
+
+The result a = $a
+
+Goodbye!
+

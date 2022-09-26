@@ -168,7 +168,7 @@ proc ::wtk::conn::returnConn {
 
     # contentType variable overrides proc argument
     if {$contentType ne "NULL"} {
-        set content_type $content_type
+        set content_type $contentType
     } else {
         set contentType $content_type
     }

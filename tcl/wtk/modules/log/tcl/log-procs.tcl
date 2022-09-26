@@ -4,16 +4,22 @@ namespace eval ::wtk::log {
 
     variable logChannel stderr
     variable debug 0
-    variable SUPPORTS_MICROSECONDS [expr {[catch {clock microseconds}]} ? 1 : 0]
+    variable SUPPORTS_MICROSECONDS [expr {[catch {clock microseconds}]} ? 0 : 1]
     variable method [expr {[llength [info commands ns_log]] > 0 ? "ns_log" : "stderr"}]
+    variable levelBitMap [list {Notice 1} {Warning 2} {Error 4} {Debug 8} {Special 16}]
+    variable defaultLevels [list Notice Error]
+    variable namespaceLevels 
 }
 
 proc ::wtk::log::log {level message} {
 
     variable logChannel
     variable debug
+    variable method
+    variable levelBitMap
+    variable defaultLevels
+    variable namespaceLevels
     variable SUPPORTS_MICROSECONDS
-    variable method 
 
     if {$method == "ns_log"} {
         return [ns_log $level $message]

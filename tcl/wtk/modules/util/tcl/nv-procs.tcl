@@ -3,14 +3,12 @@
 namespace eval ::wtk::nv {
 
     variable version 1.0
-    namespace import -force ::wtk::log::*
 }
-
 
 proc ::wtk::nv::exists { nvName } {
 
     upvar 1 $nvName NV
-    log Notice "nvList exists? = '[info exists NV]'"
+    #log Notice "nvList exists? = '[info exists NV]'"
     info exists NV
 }
 
@@ -25,12 +23,11 @@ proc ::wtk::nv::size { nvName } {
     }
 }
 
-
 proc ::wtk::nv::create { nvName {nvList {} } } {
 
     upvar 1 $nvName NV
 
-    log Debug "nvList = '$nvList'"
+    #log Debug "nvList = '$nvList'"
     set NV $nvList
 }
 
@@ -100,7 +97,7 @@ proc ::wtk::nv::nvSearch { nvName pattern args } {
 
     set searchString [list]
 
-    foreach option {exact glob regexp} {
+    foreach option {exact regexp glob} {
         if {[set $option]} {
             lappend searchString "-$option"
             break
@@ -122,7 +119,7 @@ proc ::wtk::nv::nvSearch { nvName pattern args } {
     }
     lappend searchString $NV $pattern
 
-    log Debug "searchString = '$searchString'"
+    #log Debug "searchString = '$searchString'"
     lsearch -inline {*}$searchString
 }
 
@@ -158,13 +155,18 @@ proc ::wtk::nv::nvEnumeration {nvName args} {
         incr value
     }
 
+    #log Notice "nvEnumeration: Created Enum '$nvArgs'"
+
     create NV $nvArgs
-    ::wtk::log::log Notice "nvEnumeration: Created Enum '$nvArgs'"
 }
 
-proc ::wtk::nv::nvBitMap {nvName args} {
+proc ::wtk::nv::nvBitMap {nvName {namespace ""} args} {
 
-    upvar 1 $nvName NV
+    if {$namespace eq ""} {
+        set namespace [uplevel 1 {namespace current}]
+    }
+
+    namespace upvar $namespace $nvName NV
 
     switch -exact [llength $args] {
         0 {
@@ -196,8 +198,8 @@ proc ::wtk::nv::nvBitMap {nvName args} {
         set value [expr {$value * 2}]
     }
 
+    #log Notice "nvBitMap: Created BitMap '${namespace}::$nvName' = '$nvArgs'"
     create NV $nvArgs
-    ::wtk::log::log Notice "nvBitMap: Created BitMap '$nvArgs'"
 }
 
 namespace eval ::wtk::nv {
@@ -205,4 +207,10 @@ namespace eval ::wtk::nv {
     variable version 1.0
     namespace export *
     log Notice "wtk::nv exports [namespace export]"
+}
+
+namespace eval ::wtk::nv {
+
+    variable version 1.0
+    namespace import -force ::wtk::log::*
 }
